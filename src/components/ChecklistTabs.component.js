@@ -1,34 +1,10 @@
 import React, { useContext, useState } from "react"
-import PropTypes from "prop-types"
-import { Box, Card, Tabs, Tab, Typography } from "@mui/material"
+import { Box, Card, Tabs, Tab } from "@mui/material"
 
 import { ItemsContext } from "../contexts/ItemsContext"
 
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  )
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-}
+import ChecklistTabPanel from "./ChecklistTabPanel.component"
+import ChecklistTable from "./ChecklistTable.component"
 
 function a11yProps(index) {
   return {
@@ -42,13 +18,12 @@ const ChecklistTabs = ({ checklist }) => {
   const items = selectItems()
 
   const categories = [
-    { id: "weapon", title: "Weapons" },
-    { id: "warframe", title: "Warframes" },
-    { id: "necramech", title: "Necramechs" },
-    { id: "companion", title: "Companions" },
-    { id: "vehicle", title: "Vehicles" },
+    "Weapon",
+    "Warframe",
+    "Necramech",
+    "Companion",
+    "Vehicle",
   ]
-  console.log(categories)
 
   const [tabValue, setTabValue] = useState(0)
   const handleTabChange = (event, newValue) => setTabValue(newValue)
@@ -62,19 +37,21 @@ const ChecklistTabs = ({ checklist }) => {
           aria-label="basic tabs example"
         >
           {categories.map((category, i) => (
-            <Tab key={category.id} label={category.title} {...a11yProps(i)} />
+            <Tab key={category} label={category} {...a11yProps(i)} />
           ))}
           <Tab label="Other" {...a11yProps(categories.length)} />
         </Tabs>
       </Box>
       {categories.map((category, i) => (
-        <TabPanel key={category.id} index={i} value={tabValue}>
-          {category.id}
-        </TabPanel>
+        <ChecklistTabPanel key={category} index={i} value={tabValue}>
+          <ChecklistTable
+            items={items.filter((item) => item.category === category)}
+          />
+        </ChecklistTabPanel>
       ))}
-      <TabPanel index={categories.length} value={tabValue}>
+      <ChecklistTabPanel index={categories.length} value={tabValue}>
         Other stuff
-      </TabPanel>
+      </ChecklistTabPanel>
     </Card>
   )
 }
