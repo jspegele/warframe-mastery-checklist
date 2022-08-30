@@ -30,6 +30,9 @@ const Header = () => {
           color: "text.secondary",
           display: "flex",
           textDecoration: "none",
+          "&:visited": {
+            color: "text.secondary",
+          }
         }}
       >
         <Box
