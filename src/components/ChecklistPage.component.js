@@ -1,88 +1,124 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database"
 
 import { Box, CircularProgress } from "@mui/material"
 
+import { ItemsContext } from "../contexts/ItemsContext"
+import Checklist from "./Checklist.component"
+
+const defaultChecklistState = {
+  listId: "",
+  owned: [],
+  mastered: [],
+  levels: [],
+  itemMastery: 0,
+  starChartMastery: 0,
+  steelPathMastery: 0,
+  intrinsics: {
+    tactical: 0,
+    piloting: 0,
+    gunnery: 0,
+    engineering: 0,
+    command: 0,
+  },
+}
+
+// Create object for checklist state
+const createChecklistObject = (listId, data) => ({
+  listId,
+  ...(data.starChartMastery && {
+    starChartMastery: data.starChartMastery,
+  }),
+  ...(data.steelPathMastery && {
+    steelPathMastery: data.steelPathMastery,
+  }),
+  ...(data.intrinsics && { intrinsics: data.intrinsics }),
+  ...(data.owned && { owned: data.owned }),
+  ...(data.mastered && { mastered: data.mastered }),
+  ...(data.levels && { levels: data.levels }),
+})
+
+// Calculate and set user mastery value in store
+const calculateItemMastery = (items, data) => {
+  let itemMastery = 0
+  items.forEach((item) => {
+    if (data.mastered.includes(item.id)) {
+      const masteryPerLevel =
+        ["Necramech", "Warframe"].includes(item.category) ||
+        ["Archwing", "Companion", "K-Drive"].includes(item.slot)
+          ? 200
+          : 100
+
+      const newMastery =
+        item.maxLevel === 30
+          ? 30 * masteryPerLevel
+          : data.levels
+          ? data.levels[item.id]
+            ? data.levels[item.id] * masteryPerLevel
+            : 30 * masteryPerLevel
+          : 30 * masteryPerLevel
+
+      itemMastery += newMastery
+    }
+  })
+  return itemMastery
+}
+
 const ChecklistPage = () => {
-  const { listId } = useParams()
   const database = getDatabase()
+  const { listId } = useParams()
+  const { selectItems } = useContext(ItemsContext)
 
   const [loading, setLoading] = useState(true)
-  // const [checklist, setChecklist] = useState(null)
+  const [checklist, setChecklist] = useState(defaultChecklistState)
 
-  // useEffect(() => {
-  //   const loadChecklist = () => {
-  //     if (listId) {
-  //       // get user saved info from firebase and send to store
-  //       database.ref(`checklists/${listId}`).once('value').then(snap => {
-  //         const data = snap.val()
-  //         if (data) {
-  //           // Set user info in store
-  //           setChecklist({
-  //             listId,
-  //             ...(data.starChartMastery && { starChartMastery: data.starChartMastery }),
-  //             ...(data.steelPathMastery && { steelPathMastery: data.steelPathMastery }),
-  //             ...(data.intrinsics && { intrinsics: data.intrinsics }),
-  //             ...(data.owned && { owned: data.owned }),
-  //             ...(data.mastered && { mastered: data.mastered }),
-  //             ...(data.levels && { levels: data.levels }),
-  //           })
-    
-  //           // Calculate and set user mastery value in store
-  //           if (data.mastered && data.mastered.length) {
-  //             // for each item, add mastery if item id is in 'mastered' array
-  //             let itemsMastery = 0
-  //             items.forEach(item => {
-  //               if (data.mastered.includes(item.id)) {
-  //                 const masteryPerLevel = (
-  //                   ['Necramech', 'Warframe'].includes(item.category) ||
-  //                   ['Archwing', 'Companion', 'K-Drive'].includes(item.slot)
-  //                 ) ? 200 : 100
-    
-  //                 const newMastery = item.maxLevel === 30 ? (
-  //                   30 * masteryPerLevel
-  //                 ) : (
-  //                   data.levels ? (
-  //                     data.levels[item.id] ? data.levels[item.id] * masteryPerLevel : 30 * masteryPerLevel
-  //                   ) : (
-  //                     30 * masteryPerLevel
-  //                   )
-  //                 )
-    
-  //                 itemsMastery += newMastery
-  //               }
-  //             })
-            
-  //             addItemMastery(itemsMastery)
-  //           }
-    
-  //           // Set user preferences in store
-  //           if (data.preferences) {
-  //             setHideOwned(data.preferences.hideOwned)
-  //             setHideMastered(data.preferences.hideMastered)
-  //           }
+  const setItemMastery = (itemMastery) =>
+    setChecklist((prevState) => ({ ...prevState, itemMastery }))
 
-  //           setLoading(false)
-  //         }
-  //       })
-  //     }
-  //   }
+  useEffect(() => {
+    const loadChecklist = () => {
+      if (!listId) return
 
-  //   loadChecklist()
-  // // eslint-disable-next-line
-  // }, [user, items])
+      const itemsRef = ref(database, "checklists/" + listId)
+      onValue(itemsRef, (snap) => {
+        const data = snap.val()
+
+        if (!data) return
+        setChecklist(createChecklistObject(listId, data))
+
+        if (!data.mastered || !data.mastered.length) return
+        const items = selectItems()
+        setItemMastery(calculateItemMastery(items, data))
+
+        // Set user preferences in store
+        // if (data.preferences) {
+        //   setHideOwned(data.preferences.hideOwned)
+        //   setHideMastered(data.preferences.hideMastered)
+        // }
+
+        setLoading(false)
+      })
+    }
+
+    loadChecklist()
+  }, [database, selectItems, listId])
 
   return (
     <>
       {loading ? (
-        <Box sx={{ alignItems: "center", display: "flex", height: "80%", justifyContent: "center" }}>
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            height: "80%",
+            justifyContent: "center",
+          }}
+        >
           <CircularProgress />
         </Box>
       ) : (
-        <Box>
-          
-        </Box>
+        <Checklist checklist={checklist} />
       )}
     </>
   )
