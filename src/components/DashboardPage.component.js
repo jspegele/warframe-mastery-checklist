@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 import { Box, Typography } from "@mui/material"
 
@@ -13,6 +14,7 @@ const DashboardPage = () => {
         mastery rank, learn how to obtain it, and see how many items you need to
         master to hit the next rank.
       </Typography>
+      <Typography><Link to="/list/anxious-average-aardvark">/list/anxious-average-aardvark</Link></Typography>
     </Box>
   )
 }

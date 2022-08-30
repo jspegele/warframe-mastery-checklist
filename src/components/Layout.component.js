@@ -4,6 +4,7 @@ import { Box, Container, CssBaseline } from "@mui/material"
 
 import CustomizedTheme from "../app/CustomizedTheme"
 import Header from "./Header.component"
+import Footer from "./Footer.component"
 
 const Layout = () => {
   return (
@@ -23,7 +24,7 @@ const Layout = () => {
           <Box display="flex" flexDirection="column" flexGrow="1">
             <Outlet />
           </Box>
-          <Box sx={{ marginTop: "auto" }}>Footer</Box>
+          <Footer />
         </Container>
       </Box>
     </CustomizedTheme>

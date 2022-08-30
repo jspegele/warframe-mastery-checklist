@@ -6,6 +6,7 @@ import { AuthContext } from "../contexts/AuthContext"
 
 import Layout from "../components/Layout.component"
 import DashboardPage from "../components/DashboardPage.component"
+import ChecklistPage from "../components/ChecklistPage.component"
 import AdminDashboardPage from "../admin/AdminDashboardPage.component"
 
 export const history = createBrowserHistory()
@@ -30,6 +31,7 @@ const AppRouter = () => {
         }
       >
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/list/:listId" element={<ChecklistPage />} />
       </Route>
       <Route
         element={
