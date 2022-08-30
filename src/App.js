@@ -15,16 +15,17 @@ const App = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      startSetItems().then(() => {
+      console.log("render")
         if (user) {
           setAuthState(user)
           setRenderApp(true)
         } else {
           setRenderApp(true)
         }
+      startSetItems().then(() => {
       })
     })
-  }, [auth, setAuthState, startSetItems])
+  }, [])
 
   return (
     <>{renderApp ? <AppRouter /> : <LoadingPage />}</>
