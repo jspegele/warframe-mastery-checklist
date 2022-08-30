@@ -1,17 +1,30 @@
 import React from "react"
 import { Outlet } from "react-router-dom"
-import { Box, CssBaseline } from "@mui/material"
+import { Box, Container, CssBaseline } from "@mui/material"
 
 import CustomizedTheme from "../app/CustomizedTheme"
+import Header from "./Header.component"
 
 const Layout = () => {
   return (
     <CustomizedTheme>
       <CssBaseline />
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <div>Header</div>
-        <Outlet />
-        <Box sx={{ marginTop: "auto" }}>Footer</Box>
+      <Box display="flex" minHeight="100vh">
+        <Container
+          maxWidth="lg"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flexGrow: 1,
+            pt: { xs: 2, md: 4 },
+          }}
+        >
+          <Header />
+          <Box display="flex" flexDirection="column" flexGrow="1">
+            <Outlet />
+          </Box>
+          <Box sx={{ marginTop: "auto" }}>Footer</Box>
+        </Container>
       </Box>
     </CustomizedTheme>
   )

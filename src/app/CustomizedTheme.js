@@ -1,17 +1,26 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-const theme = createTheme({
+const darkTheme = createTheme({
   typography: {
     "fontFamily": `"Roboto", "Arial", "Helvetica", sans-serif`,
    },
   palette: {
+    mode: 'dark',
+  },
+});
 
-  }
-})
+// const lightTheme = createTheme({
+//   typography: {
+//     "fontFamily": `"Roboto", "Arial", "Helvetica", sans-serif`,
+//    },
+//   palette: {
+
+//   }
+// })
 
 const CustomizedTheme = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
       {children}
     </ThemeProvider>
   )

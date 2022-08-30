@@ -1,9 +1,25 @@
-import React from "react"
-import { Routes, Route } from "react-router-dom"
+import React, { useContext } from "react"
+import { Routes, Route, Navigate, useLocation } from "react-router-dom"
+import { createBrowserHistory } from "history"
+
+import { AuthContext } from "../contexts/AuthContext"
 
 import Layout from "../components/Layout.component"
 import DashboardPage from "../components/DashboardPage.component"
+import AdminDashboardPage from "../admin/AdminDashboardPage.component"
 
+export const history = createBrowserHistory()
+
+function RequireAuth({ children }) {
+  const { authState } = useContext(AuthContext)
+  const location = useLocation()
+
+  if (!authState.uid) {
+    return <Navigate to="/" state={{ from: location }} />
+  }
+
+  return children
+}
 
 const AppRouter = () => {
   return (
@@ -14,6 +30,16 @@ const AppRouter = () => {
         }
       >
         <Route path="/" element={<DashboardPage />} />
+      </Route>
+      <Route
+        element={
+          <RequireAuth>
+            <Layout />
+          </RequireAuth>
+        }
+      >
+        <Route path="/admin/" element={<AdminDashboardPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
       </Route>
     </Routes>
   )
