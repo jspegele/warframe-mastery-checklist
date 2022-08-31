@@ -15,13 +15,13 @@ import { ChecklistContext } from "../contexts/ChecklistContext"
 
 import ChecklistTableHead from "./ChecklistTableHead.component"
 
-const ChecklistTable = ({ category }) => {
+const ChecklistTable = ({ category, textFilter }) => {
   const { selectItems } = useContext(ItemsContext)
   const { selectChecklist } = useContext(ChecklistContext)
   const items = selectItems()
   const checklist = selectChecklist()
   const preferences = checklist.preferences
-  
+
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
 
@@ -37,14 +37,26 @@ const ChecklistTable = ({ category }) => {
   const getVisibleItems = () => {
     return items
       .filter((item) => item.category === category)
+      .filter((item) => {
+        const needle = textFilter.toLowerCase()
+        return (
+          item.name.toLowerCase().includes(needle) ||
+          item.slot.toLowerCase().includes(needle) ||
+          item.type.toLowerCase().includes(needle) ||
+          item.source.toLowerCase().includes(needle)
+        )
+      })
       .sort((a, b) => {
-        if (orderBy === "name" && order === "asc") return a.name > b.name ? 1 : -1
+        if (orderBy === "name" && order === "asc")
+          return a.name > b.name ? 1 : -1
         if (orderBy === "name" && order === "desc")
           return a.name < b.name ? 1 : -1
-        if (orderBy === "slot" && order === "asc") return a.slot > b.slot ? 1 : -1
+        if (orderBy === "slot" && order === "asc")
+          return a.slot > b.slot ? 1 : -1
         if (orderBy === "slot" && order === "desc")
           return a.slot < b.slot ? 1 : -1
-        if (orderBy === "type" && order === "asc") return a.type > b.type ? 1 : -1
+        if (orderBy === "type" && order === "asc")
+          return a.type > b.type ? 1 : -1
         if (orderBy === "type" && order === "desc")
           return a.type < b.type ? 1 : -1
         if (orderBy === "mr" && order === "asc") return a.mr > b.mr ? 1 : -1
@@ -85,10 +97,18 @@ const ChecklistTable = ({ category }) => {
                 <TableCell align="right">{item.mr}</TableCell>
                 <TableCell>{item.source}</TableCell>
                 <TableCell align="center">
-                  <Checkbox color="primary" checked={isOwned(item.id)} size="small" />
+                  <Checkbox
+                    color="primary"
+                    checked={isOwned(item.id)}
+                    size="small"
+                  />
                 </TableCell>
                 <TableCell align="center">
-                  <Checkbox color="primary" checked={isMastered(item.id)} size="small" />
+                  <Checkbox
+                    color="primary"
+                    checked={isMastered(item.id)}
+                    size="small"
+                  />
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>

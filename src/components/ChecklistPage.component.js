@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { Box, CircularProgress, Typography } from "@mui/material"
+import { Box, CircularProgress, Stack, Typography } from "@mui/material"
 
 import { ItemsContext } from "../contexts/ItemsContext"
 import { ChecklistContext } from "../contexts/ChecklistContext"
 
 import ChecklistTabs from "./ChecklistTabs.component"
+import ChecklistFilterPanel from "./ChecklistFilterPanel.component"
 
 const ChecklistPage = () => {
   const { listId } = useParams()
@@ -15,13 +16,17 @@ const ChecklistPage = () => {
   const items = selectItems()
   const currentListId = selectChecklistId()
 
+  const [textFilter, setTextFilter] = useState("")
+
   const [loading, setLoading] = useState(listId !== currentListId)
   const [error, setError] = useState("")
 
   useEffect(() => {
     const loadChecklist = () => {
       if (!listId || listId === currentListId || items.length <= 0) return
-      startSetChecklist(listId, items).then(() => setLoading(false)).catch((err) => setError(err))
+      startSetChecklist(listId, items)
+        .then(() => setLoading(false))
+        .catch((err) => setError(err))
     }
 
     loadChecklist()
@@ -47,7 +52,13 @@ const ChecklistPage = () => {
       )}
 
       {!loading && (
-        <ChecklistTabs />
+        <Stack spacing={2}>
+          <ChecklistFilterPanel
+            textFilter={textFilter}
+            setTextFilter={setTextFilter}
+          />
+          <ChecklistTabs textFilter={textFilter} />
+        </Stack>
       )}
     </>
   )

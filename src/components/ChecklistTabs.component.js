@@ -11,7 +11,7 @@ function a11yProps(index) {
   }
 }
 
-const ChecklistTabs = () => {
+const ChecklistTabs = ({ textFilter }) => {
 
   const categories = ["Weapon", "Warframe", "Necramech", "Companion", "Vehicle"]
 
@@ -34,7 +34,7 @@ const ChecklistTabs = () => {
       </Box>
       {categories.map((category, i) => (
         <ChecklistTabPanel  index={i} key={category} value={tabValue}>
-          <ChecklistTable category={category} />
+          <ChecklistTable category={category} textFilter={textFilter} />
         </ChecklistTabPanel>
       ))}
       <ChecklistTabPanel index={categories.length} value={tabValue}>
