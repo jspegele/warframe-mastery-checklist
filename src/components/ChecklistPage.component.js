@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { Box, CircularProgress } from "@mui/material"
+import { Box, CircularProgress, Typography } from "@mui/material"
 
 import { ItemsContext } from "../contexts/ItemsContext"
 import { ChecklistContext } from "../contexts/ChecklistContext"
@@ -11,23 +11,25 @@ import ChecklistTabs from "./ChecklistTabs.component"
 const ChecklistPage = () => {
   const { listId } = useParams()
   const { selectItems } = useContext(ItemsContext)
-  const { startSetChecklist } = useContext(ChecklistContext)
+  const { startSetChecklist, selectChecklistId } = useContext(ChecklistContext)
   const items = selectItems()
+  const currentListId = selectChecklistId()
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(listId !== currentListId)
+  const [error, setError] = useState("")
 
   useEffect(() => {
     const loadChecklist = () => {
-      if (!listId && items.length <= 0) return
-      startSetChecklist(listId, items).then(() => setLoading(false))
+      if (!listId || listId === currentListId || items.length <= 0) return
+      startSetChecklist(listId, items).then(() => setLoading(false)).catch((err) => setError(err))
     }
 
     loadChecklist()
-  }, [listId, items])
+  }, [listId, currentListId, items])
 
   return (
     <>
-      {loading ? (
+      {loading && (
         <Box
           sx={{
             alignItems: "center",
@@ -36,9 +38,15 @@ const ChecklistPage = () => {
             justifyContent: "center",
           }}
         >
-          <CircularProgress />
+          {!!error ? (
+            <Typography color="error">{error}</Typography>
+          ) : (
+            <CircularProgress />
+          )}
         </Box>
-      ) : (
+      )}
+
+      {!loading && (
         <ChecklistTabs />
       )}
     </>

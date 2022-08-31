@@ -57,13 +57,14 @@ export const ChecklistProvider = (props) => {
     return new Promise((resolve, reject) => {
       get(ref(database, "checklists/" + listId))
         .then((snap) => {
+          if (!snap.exists()) reject("Checklist not found")
           console.log("database call")
+          
           const data = snap.val()
           let itemMastery = 0
 
           if (data.mastered && data.mastered.length) itemMastery = calculateItemMastery(items, data)
 
-          if (!snap.exists()) reject("Checklist not found")
           setChecklistState((prevState) => ({
             ...prevState,
             listId,
@@ -81,6 +82,7 @@ export const ChecklistProvider = (props) => {
   }
 
   const selectChecklist = () => checklistState
+  const selectChecklistId = () => checklistState.listId
 
   return (
     <ChecklistContext.Provider
@@ -88,6 +90,7 @@ export const ChecklistProvider = (props) => {
         clearChecklistState,
         startSetChecklist,
         selectChecklist,
+        selectChecklistId,
       }}
     >
       {props.children}
