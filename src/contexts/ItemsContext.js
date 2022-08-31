@@ -16,7 +16,7 @@ export const ItemsProvider = (props) => {
     return new Promise((resolve) => {
       get(ref(database, "items/"))
         .then((snap) => {
-          console.log('database call')
+          console.log("database call")
           const dataArray = []
           if (snap.exists()) {
             for (const [key, value] of Object.entries(snap.val())) {
@@ -37,6 +37,8 @@ export const ItemsProvider = (props) => {
   }
 
   const selectItems = () => itemsState
+  const selectItemsByCategory = (category) =>
+    itemsState.filter((item) => item.category === category)
 
   return (
     <ItemsContext.Provider
@@ -44,6 +46,7 @@ export const ItemsProvider = (props) => {
         clearItemsState,
         startSetItems,
         selectItems,
+        selectItemsByCategory,
       }}
     >
       {props.children}
