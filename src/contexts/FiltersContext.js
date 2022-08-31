@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react"
+import { getDatabase, ref, set } from "firebase/database"
 
 export const FiltersContext = createContext()
 
@@ -11,6 +12,8 @@ const initialState = {
 }
 
 export const FiltersProvider = ({ children }) => {
+  const database = getDatabase()
+
   const [filtersState, setFiltersState] = useState(initialState)
 
   const clearFiltersState = () => setFiltersState(initialState)
@@ -18,8 +21,21 @@ export const FiltersProvider = ({ children }) => {
   const setFilters = (filters) =>
     setFiltersState((prevState) => ({ ...prevState, ...filters }))
 
-  const setTextFilter = (text) =>
-    setFiltersState((prevState) => ({ ...prevState, text }))
+  const setValue = (preference, value) => {
+    setFiltersState((prevState) => ({ ...prevState, [preference]: value }))
+  }
+
+  const startSetValue = (listId, preference, value) => {
+    return new Promise((resolve, reject) => {
+      const preferencePath = "checklists/" + listId + "/preferences/" + preference
+      set(ref(database, preferencePath), value)
+        .then(() => {
+          setValue(preference, value)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
 
   const selectFilters = () => filtersState
   const selectTextFilter = () => filtersState.text
@@ -29,7 +45,8 @@ export const FiltersProvider = ({ children }) => {
       value={{
         clearFiltersState,
         setFilters,
-        setTextFilter,
+        setValue,
+        startSetValue,
         selectFilters,
         selectTextFilter,
       }}

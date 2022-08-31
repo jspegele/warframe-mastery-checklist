@@ -13,7 +13,7 @@ export const ItemsProvider = (props) => {
   const clearItemsState = () => setItemsState(initialState)
 
   const startSetItems = () => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       get(ref(database, "items/"))
         .then((snap) => {
           console.log("database call")
@@ -27,11 +27,11 @@ export const ItemsProvider = (props) => {
             }
           }
           setItemsState(dataArray.sort((a, b) => a.name > b.name))
-          resolve(true)
+          resolve("success")
         })
         .catch((error) => {
           console.error(error)
-          resolve([])
+          reject(error)
         })
     })
   }
