@@ -26,7 +26,7 @@ export const ItemsProvider = (props) => {
               })
             }
           }
-          setItemsState(dataArray.sort((a, b) => a.day > b.day))
+          setItemsState(dataArray.sort((a, b) => a.name > b.name))
           resolve(true)
         })
         .catch((error) => {

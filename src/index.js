@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
 import { CssBaseline } from "@mui/material"
 
+import CustomizedTheme from "./app/CustomizedTheme"
 import AuthProvider from "./contexts/AuthContext"
 import ItemsProvider from "./contexts/ItemsContext"
-import CustomizedTheme from "./app/CustomizedTheme"
+import ChecklistProvider from "./contexts/ChecklistContext"
 
 import App from "./App"
 import "./app/firebase"
@@ -19,7 +20,9 @@ root.render(
       <BrowserRouter>
         <AuthProvider>
           <ItemsProvider>
-            <App />
+            <ChecklistProvider>
+              <App />
+            </ChecklistProvider>
           </ItemsProvider>
         </AuthProvider>
       </BrowserRouter>

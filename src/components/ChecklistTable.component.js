@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 
 import {
   Box,
@@ -10,9 +10,14 @@ import {
   TableRow,
 } from "@mui/material"
 
+import { ChecklistContext } from "../contexts/ChecklistContext"
+
 import ChecklistTableHead from "./ChecklistTableHead.component"
 
-const ChecklistTable = ({ checklist, items }) => {
+const ChecklistTable = ({ items }) => {
+  const { selectChecklist } = useContext(ChecklistContext)
+  const checklist = selectChecklist()
+
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
 

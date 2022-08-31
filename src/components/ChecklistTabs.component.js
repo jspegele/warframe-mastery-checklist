@@ -13,17 +13,11 @@ function a11yProps(index) {
   }
 }
 
-const ChecklistTabs = ({ checklist }) => {
+const ChecklistTabs = () => {
   const { selectItems } = useContext(ItemsContext)
   const items = selectItems()
 
-  const categories = [
-    "Weapon",
-    "Warframe",
-    "Necramech",
-    "Companion",
-    "Vehicle",
-  ]
+  const categories = ["Weapon", "Warframe", "Necramech", "Companion", "Vehicle"]
 
   const [tabValue, setTabValue] = useState(0)
   const handleTabChange = (event, newValue) => setTabValue(newValue)
@@ -45,7 +39,6 @@ const ChecklistTabs = ({ checklist }) => {
       {categories.map((category, i) => (
         <ChecklistTabPanel key={category} index={i} value={tabValue}>
           <ChecklistTable
-            checklist={checklist}
             items={items.filter((item) => item.category === category)}
           />
         </ChecklistTabPanel>
