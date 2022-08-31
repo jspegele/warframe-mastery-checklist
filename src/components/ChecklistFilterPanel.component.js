@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import { Card, Grid, TextField } from "@mui/material"
 
-const ChecklistFilterPanel = ({ textFilter, setTextFilter }) => {
+import { FiltersContext } from "../contexts/FiltersContext"
+
+const ChecklistFilterPanel = () => {
+  const { selectTextFilter, setTextFilter } = useContext(FiltersContext)
   const onTextFilterChange = (e) => setTextFilter(e.target.value)
 
   return (
@@ -14,7 +17,7 @@ const ChecklistFilterPanel = ({ textFilter, setTextFilter }) => {
             onChange={onTextFilterChange}
             label="Filter by name, slot, type, or source"
             size="small"
-            value={textFilter}
+            value={selectTextFilter()}
             variant="outlined"
           />
         </Grid>

@@ -18,14 +18,20 @@ export const FiltersProvider = ({ children }) => {
   const setFilters = (filters) =>
     setFiltersState((prevState) => ({ ...prevState, ...filters }))
 
+  const setTextFilter = (text) =>
+    setFiltersState((prevState) => ({ ...prevState, text }))
+
   const selectFilters = () => filtersState
+  const selectTextFilter = () => filtersState.text
 
   return (
     <FiltersContext.Provider
       value={{
         clearFiltersState,
         setFilters,
+        setTextFilter,
         selectFilters,
+        selectTextFilter,
       }}
     >
       {children}

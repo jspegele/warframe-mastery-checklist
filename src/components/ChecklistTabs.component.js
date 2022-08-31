@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Box, Card, Tabs, Tab } from "@mui/material"
 
 import ChecklistTabPanel from "./ChecklistTabPanel.component"
@@ -11,8 +11,7 @@ function a11yProps(index) {
   }
 }
 
-const ChecklistTabs = ({ textFilter }) => {
-
+const ChecklistTabs = () => {
   const categories = ["Weapon", "Warframe", "Necramech", "Companion", "Vehicle"]
 
   const [tabValue, setTabValue] = useState(0)
@@ -34,7 +33,7 @@ const ChecklistTabs = ({ textFilter }) => {
       </Box>
       {categories.map((category, i) => (
         <ChecklistTabPanel  index={i} key={category} value={tabValue}>
-          <ChecklistTable category={category} textFilter={textFilter} />
+          <ChecklistTable category={category} />
         </ChecklistTabPanel>
       ))}
       <ChecklistTabPanel index={categories.length} value={tabValue}>

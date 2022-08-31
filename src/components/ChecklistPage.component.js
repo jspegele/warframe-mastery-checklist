@@ -16,8 +16,6 @@ const ChecklistPage = () => {
   const items = selectItems()
   const currentListId = selectChecklistId()
 
-  const [textFilter, setTextFilter] = useState("")
-
   const [loading, setLoading] = useState(listId !== currentListId)
   const [error, setError] = useState("")
 
@@ -53,11 +51,8 @@ const ChecklistPage = () => {
 
       {!loading && (
         <Stack spacing={2}>
-          <ChecklistFilterPanel
-            textFilter={textFilter}
-            setTextFilter={setTextFilter}
-          />
-          <ChecklistTabs textFilter={textFilter} />
+          <ChecklistFilterPanel />
+          <ChecklistTabs />
         </Stack>
       )}
     </>

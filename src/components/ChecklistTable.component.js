@@ -11,16 +11,17 @@ import {
 } from "@mui/material"
 
 import { ItemsContext } from "../contexts/ItemsContext"
+import { FiltersContext } from "../contexts/FiltersContext"
 import { ChecklistContext } from "../contexts/ChecklistContext"
 
 import ChecklistTableHead from "./ChecklistTableHead.component"
 
-const ChecklistTable = ({ category, textFilter }) => {
+const ChecklistTable = ({ category }) => {
   const { selectItemsByCategory } = useContext(ItemsContext)
+  const { selectTextFilter } = useContext(FiltersContext)
   const { selectChecklist } = useContext(ChecklistContext)
   const items = selectItemsByCategory(category)
   const checklist = selectChecklist()
-  const preferences = checklist.preferences
 
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
@@ -37,7 +38,7 @@ const ChecklistTable = ({ category, textFilter }) => {
   const getVisibleItems = () => {
     return items
       .filter((item) => {
-        const needle = textFilter.toLowerCase()
+        const needle = selectTextFilter().toLowerCase()
         return (
           item.name.toLowerCase().includes(needle) ||
           item.slot.toLowerCase().includes(needle) ||
