@@ -16,9 +16,9 @@ import { ChecklistContext } from "../contexts/ChecklistContext"
 import ChecklistTableHead from "./ChecklistTableHead.component"
 
 const ChecklistTable = ({ category, textFilter }) => {
-  const { selectItems } = useContext(ItemsContext)
+  const { selectItemsByCategory } = useContext(ItemsContext)
   const { selectChecklist } = useContext(ChecklistContext)
-  const items = selectItems()
+  const items = selectItemsByCategory(category)
   const checklist = selectChecklist()
   const preferences = checklist.preferences
 
@@ -36,7 +36,6 @@ const ChecklistTable = ({ category, textFilter }) => {
 
   const getVisibleItems = () => {
     return items
-      .filter((item) => item.category === category)
       .filter((item) => {
         const needle = textFilter.toLowerCase()
         return (
