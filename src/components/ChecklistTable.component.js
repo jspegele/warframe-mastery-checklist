@@ -18,7 +18,7 @@ import ChecklistTableHead from "./ChecklistTableHead.component"
 
 const ChecklistTable = ({ category }) => {
   const { selectItemsByCategory } = useContext(ItemsContext)
-  const { selectTextFilter } = useContext(FiltersContext)
+  const { selectFilters } = useContext(FiltersContext)
   const { selectChecklist } = useContext(ChecklistContext)
   const items = selectItemsByCategory(category)
   const checklist = selectChecklist()
@@ -36,15 +36,22 @@ const ChecklistTable = ({ category }) => {
   const isMastered = (id) => checklist.mastered.includes(id)
 
   const getVisibleItems = () => {
+    const filters = selectFilters()
+    const textFilter = filters.text.toLowerCase()
+
     return items
       .filter((item) => {
-        const needle = selectTextFilter().toLowerCase()
-        return (
-          item.name.toLowerCase().includes(needle) ||
-          item.slot.toLowerCase().includes(needle) ||
-          item.type.toLowerCase().includes(needle) ||
-          item.source.toLowerCase().includes(needle)
-        )
+        const textMatch =
+          item.name.toLowerCase().includes(textFilter) ||
+          item.slot.toLowerCase().includes(textFilter) ||
+          item.type.toLowerCase().includes(textFilter) ||
+          item.source.toLowerCase().includes(textFilter)
+
+        const masteredMatch = filters.hideMastered ? !checklist.mastered.includes(item.id) : true
+        const ownedMatch = filters.hideOwned ? !checklist.owned.includes(item.id) : true
+        const unownedMatch = filters.hideUnowned ? checklist.owned.includes(item.id) : true
+
+        return textMatch && masteredMatch && ownedMatch && unownedMatch
       })
       .sort((a, b) => {
         if (orderBy === "name" && order === "asc")
