@@ -10,14 +10,18 @@ import {
   TableRow,
 } from "@mui/material"
 
+import { ItemsContext } from "../contexts/ItemsContext"
 import { ChecklistContext } from "../contexts/ChecklistContext"
 
 import ChecklistTableHead from "./ChecklistTableHead.component"
 
-const ChecklistTable = ({ items }) => {
+const ChecklistTable = ({ category }) => {
+  const { selectItems } = useContext(ItemsContext)
   const { selectChecklist } = useContext(ChecklistContext)
+  const items = selectItems()
   const checklist = selectChecklist()
-
+  const preferences = checklist.preferences
+  
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
 
@@ -31,24 +35,26 @@ const ChecklistTable = ({ items }) => {
   const isMastered = (id) => checklist.mastered.includes(id)
 
   const getVisibleItems = () => {
-    return items.sort((a, b) => {
-      if (orderBy === "name" && order === "asc") return a.name > b.name ? 1 : -1
-      if (orderBy === "name" && order === "desc")
-        return a.name < b.name ? 1 : -1
-      if (orderBy === "slot" && order === "asc") return a.slot > b.slot ? 1 : -1
-      if (orderBy === "slot" && order === "desc")
-        return a.slot < b.slot ? 1 : -1
-      if (orderBy === "type" && order === "asc") return a.type > b.type ? 1 : -1
-      if (orderBy === "type" && order === "desc")
-        return a.type < b.type ? 1 : -1
-      if (orderBy === "mr" && order === "asc") return a.mr > b.mr ? 1 : -1
-      if (orderBy === "mr" && order === "desc") return a.mr < b.mr ? 1 : -1
-      if (orderBy === "source" && order === "asc")
-        return a.source > b.source ? 1 : -1
-      if (orderBy === "source" && order === "desc")
-        return a.source < b.source ? 1 : -1
-      return 1
-    })
+    return items
+      .filter((item) => item.category === category)
+      .sort((a, b) => {
+        if (orderBy === "name" && order === "asc") return a.name > b.name ? 1 : -1
+        if (orderBy === "name" && order === "desc")
+          return a.name < b.name ? 1 : -1
+        if (orderBy === "slot" && order === "asc") return a.slot > b.slot ? 1 : -1
+        if (orderBy === "slot" && order === "desc")
+          return a.slot < b.slot ? 1 : -1
+        if (orderBy === "type" && order === "asc") return a.type > b.type ? 1 : -1
+        if (orderBy === "type" && order === "desc")
+          return a.type < b.type ? 1 : -1
+        if (orderBy === "mr" && order === "asc") return a.mr > b.mr ? 1 : -1
+        if (orderBy === "mr" && order === "desc") return a.mr < b.mr ? 1 : -1
+        if (orderBy === "source" && order === "asc")
+          return a.source > b.source ? 1 : -1
+        if (orderBy === "source" && order === "desc")
+          return a.source < b.source ? 1 : -1
+        return 1
+      })
   }
 
   return (

@@ -1,7 +1,5 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { Box, Card, Tabs, Tab } from "@mui/material"
-
-import { ItemsContext } from "../contexts/ItemsContext"
 
 import ChecklistTabPanel from "./ChecklistTabPanel.component"
 import ChecklistTable from "./ChecklistTable.component"
@@ -14,8 +12,6 @@ function a11yProps(index) {
 }
 
 const ChecklistTabs = () => {
-  const { selectItems } = useContext(ItemsContext)
-  const items = selectItems()
 
   const categories = ["Weapon", "Warframe", "Necramech", "Companion", "Vehicle"]
 
@@ -37,10 +33,8 @@ const ChecklistTabs = () => {
         </Tabs>
       </Box>
       {categories.map((category, i) => (
-        <ChecklistTabPanel key={category} index={i} value={tabValue}>
-          <ChecklistTable
-            items={items.filter((item) => item.category === category)}
-          />
+        <ChecklistTabPanel  index={i} key={category} value={tabValue}>
+          <ChecklistTable category={category} />
         </ChecklistTabPanel>
       ))}
       <ChecklistTabPanel index={categories.length} value={tabValue}>

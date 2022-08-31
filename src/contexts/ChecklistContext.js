@@ -5,6 +5,7 @@ export const ChecklistContext = createContext()
 
 const initialState = {
   listId: "",
+  nickname: "",
   owned: [],
   mastered: [],
   levels: [],
@@ -17,6 +18,11 @@ const initialState = {
     gunnery: 0,
     engineering: 0,
     command: 0,
+  },
+  preferences: {
+    hideOwned: false,
+    hideMastered: false,
+    hideUnowned: false,
   },
 }
 
@@ -59,11 +65,12 @@ export const ChecklistProvider = (props) => {
         .then((snap) => {
           if (!snap.exists()) reject("Checklist not found")
           console.log("database call")
-          
+
           const data = snap.val()
           let itemMastery = 0
 
-          if (data.mastered && data.mastered.length) itemMastery = calculateItemMastery(items, data)
+          if (data.mastered && data.mastered.length)
+            itemMastery = calculateItemMastery(items, data)
 
           setChecklistState((prevState) => ({
             ...prevState,
@@ -83,6 +90,7 @@ export const ChecklistProvider = (props) => {
 
   const selectChecklist = () => checklistState
   const selectChecklistId = () => checklistState.listId
+  const selectChecklistPreferences = () => checklistState.preferences
 
   return (
     <ChecklistContext.Provider
@@ -91,6 +99,7 @@ export const ChecklistProvider = (props) => {
         startSetChecklist,
         selectChecklist,
         selectChecklistId,
+        selectChecklistPreferences,
       }}
     >
       {props.children}
