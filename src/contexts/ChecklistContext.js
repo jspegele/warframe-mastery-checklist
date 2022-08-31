@@ -1,6 +1,8 @@
 import React, { useState, createContext, useContext } from "react"
 import { getDatabase, ref, get } from "firebase/database"
 
+import { FiltersContext } from "./FiltersContext"
+
 export const ChecklistContext = createContext()
 
 const initialState = {
@@ -54,6 +56,7 @@ const calculateItemMastery = (items, data) => {
 
 export const ChecklistProvider = (props) => {
   const database = getDatabase()
+  const { setFilters } = useContext(FiltersContext)
 
   const [checklistState, setChecklistState] = useState(initialState)
 
@@ -78,6 +81,9 @@ export const ChecklistProvider = (props) => {
             itemMastery,
             ...data,
           }))
+
+          // set filters with stored preferences
+          if (data.preferences) setFilters(data.preferences)
 
           resolve("success")
         })

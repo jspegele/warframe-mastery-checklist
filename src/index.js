@@ -6,6 +6,7 @@ import { CssBaseline } from "@mui/material"
 import CustomizedTheme from "./app/CustomizedTheme"
 import AuthProvider from "./contexts/AuthContext"
 import ItemsProvider from "./contexts/ItemsContext"
+import FiltersProvider from "./contexts/FiltersContext"
 import ChecklistProvider from "./contexts/ChecklistContext"
 
 import App from "./App"
@@ -20,9 +21,11 @@ root.render(
       <BrowserRouter>
         <AuthProvider>
           <ItemsProvider>
-            <ChecklistProvider>
-              <App />
-            </ChecklistProvider>
+            <FiltersProvider>
+              <ChecklistProvider>
+                <App />
+              </ChecklistProvider>
+            </FiltersProvider>
           </ItemsProvider>
         </AuthProvider>
       </BrowserRouter>
