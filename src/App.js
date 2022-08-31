@@ -14,6 +14,7 @@ const App = () => {
   const [renderApp, setRenderApp] = useState(false)
 
   useEffect(() => {
+    startSetItems()
     auth.onAuthStateChanged(async (user) => {
       console.log("render")
         if (user) {
@@ -22,8 +23,6 @@ const App = () => {
         } else {
           setRenderApp(true)
         }
-      startSetItems().then(() => {
-      })
     })
   }, [])
 

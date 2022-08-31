@@ -16,6 +16,7 @@ export const ItemsProvider = (props) => {
     return new Promise((resolve) => {
       get(ref(database, "items/"))
         .then((snap) => {
+          console.log('database call')
           const dataArray = []
           if (snap.exists()) {
             for (const [key, value] of Object.entries(snap.val())) {

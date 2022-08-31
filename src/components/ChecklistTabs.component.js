@@ -45,6 +45,7 @@ const ChecklistTabs = ({ checklist }) => {
       {categories.map((category, i) => (
         <ChecklistTabPanel key={category} index={i} value={tabValue}>
           <ChecklistTable
+            checklist={checklist}
             items={items.filter((item) => item.category === category)}
           />
         </ChecklistTabPanel>

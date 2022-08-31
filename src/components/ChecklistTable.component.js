@@ -12,7 +12,7 @@ import {
 
 import ChecklistTableHead from "./ChecklistTableHead.component"
 
-const ChecklistTable = ({ items }) => {
+const ChecklistTable = ({ checklist, items }) => {
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
 
@@ -21,6 +21,9 @@ const ChecklistTable = ({ items }) => {
     setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
+
+  const isOwned = (id) => checklist.owned.includes(id)
+  const isMastered = (id) => checklist.mastered.includes(id)
 
   const getVisibleItems = () => {
     return items.sort((a, b) => {
@@ -60,7 +63,7 @@ const ChecklistTable = ({ items }) => {
             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                 rows.slice().sort(getComparator(order, orderBy)) */}
             {getVisibleItems().map((item) => (
-              <TableRow hover tabIndex={-1} key={item.name}>
+              <TableRow hover tabIndex={-1} key={item.id}>
                 <TableCell component="th" scope="row">
                   <a href={item.link} target="_blank" rel="noreferrer">
                     {item.name}
@@ -71,10 +74,10 @@ const ChecklistTable = ({ items }) => {
                 <TableCell align="right">{item.mr}</TableCell>
                 <TableCell>{item.source}</TableCell>
                 <TableCell align="center">
-                  <Checkbox color="primary" checked={false} size="small" />
+                  <Checkbox color="primary" checked={isOwned(item.id)} size="small" />
                 </TableCell>
                 <TableCell align="center">
-                  <Checkbox color="primary" checked={false} size="small" />
+                  <Checkbox color="primary" checked={isMastered(item.id)} size="small" />
                 </TableCell>
                 <TableCell></TableCell>
               </TableRow>

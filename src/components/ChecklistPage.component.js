@@ -82,6 +82,7 @@ const ChecklistPage = () => {
 
       const itemsRef = ref(database, "checklists/" + listId)
       onValue(itemsRef, (snap) => {
+        console.log('database call')
         const data = snap.val()
 
         if (!data) return
@@ -102,7 +103,7 @@ const ChecklistPage = () => {
     }
 
     loadChecklist()
-  }, [database, selectItems, listId])
+  }, [])
 
   return (
     <>
