@@ -8,6 +8,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Typography,
 } from "@mui/material"
 
 import { ItemsContext } from "../contexts/ItemsContext"
@@ -47,13 +48,23 @@ const ChecklistTable = ({ category }) => {
           item.type.toLowerCase().includes(textFilter) ||
           item.source.toLowerCase().includes(textFilter)
 
-        const mrMatch = Number.isInteger(parseInt(filters.maxMr)) ? parseInt(item.mr) <= parseInt(filters.maxMr) : true
+        const mrMatch = Number.isInteger(parseInt(filters.maxMr))
+          ? parseInt(item.mr) <= parseInt(filters.maxMr)
+          : true
 
-        const masteredMatch = filters.hideMastered ? !checklist.mastered.includes(item.id) : true
-        const ownedMatch = filters.hideOwned ? !checklist.owned.includes(item.id) : true
-        const unownedMatch = filters.hideUnowned ? checklist.owned.includes(item.id) : true
+        const masteredMatch = filters.hideMastered
+          ? !checklist.mastered.includes(item.id)
+          : true
+        const ownedMatch = filters.hideOwned
+          ? !checklist.owned.includes(item.id)
+          : true
+        const unownedMatch = filters.hideUnowned
+          ? checklist.owned.includes(item.id)
+          : true
 
-        return textMatch && mrMatch && masteredMatch && ownedMatch && unownedMatch
+        return (
+          textMatch && mrMatch && masteredMatch && ownedMatch && unownedMatch
+        )
       })
       .sort((a, b) => {
         if (orderBy === "name" && order === "asc")
@@ -80,6 +91,17 @@ const ChecklistTable = ({ category }) => {
 
   return (
     <Box sx={{ width: "100%" }}>
+      <Typography
+        sx={{
+          color: "text.secondary",
+          fontSize: ".875rem",
+          fontStyle: "italic",
+          pb: 1,
+          textAlign: "right",
+        }}
+      >
+        Showing {getVisibleItems().length} of {items.length} items
+      </Typography>
       <TableContainer>
         <Table
           aria-labelledby="checklistTable"
