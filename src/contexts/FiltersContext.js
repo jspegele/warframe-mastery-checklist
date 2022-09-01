@@ -7,7 +7,7 @@ const initialState = {
   hideOwned: false,
   hideMastered: false,
   hideUnowned: false,
-  maxMr: null,
+  maxMr: 16,
   text: "",
 }
 

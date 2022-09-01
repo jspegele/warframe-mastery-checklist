@@ -27,6 +27,11 @@ const ChecklistFilterPanel = () => {
 
   const onTextFilterChange = (e) => setValue("text", e.target.value)
 
+  const onMaxMrFilterChange = (e) => {
+    if (e.target.value >= 0 && e.target.value <= 16)
+      setValue("maxMr", e.target.value)
+  }
+
   const handleClearInput = () => {
     setValue("text", "")
   }
@@ -71,6 +76,16 @@ const ChecklistFilterPanel = () => {
               }
             />
           </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={3} md={2}>
+          <TextField
+            fullWidth
+            label="Max MR (0-16)"
+            onChange={onMaxMrFilterChange}
+            size="small"
+            type="number"
+            value={filters.maxMr}
+          />
         </Grid>
         <Grid item xs={12}>
           <FormGroup row={true}>

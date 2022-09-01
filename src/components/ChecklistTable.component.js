@@ -47,11 +47,13 @@ const ChecklistTable = ({ category }) => {
           item.type.toLowerCase().includes(textFilter) ||
           item.source.toLowerCase().includes(textFilter)
 
+        const mrMatch = Number.isInteger(parseInt(filters.maxMr)) ? parseInt(item.mr) <= parseInt(filters.maxMr) : true
+
         const masteredMatch = filters.hideMastered ? !checklist.mastered.includes(item.id) : true
         const ownedMatch = filters.hideOwned ? !checklist.owned.includes(item.id) : true
         const unownedMatch = filters.hideUnowned ? checklist.owned.includes(item.id) : true
 
-        return textMatch && masteredMatch && ownedMatch && unownedMatch
+        return textMatch && mrMatch && masteredMatch && ownedMatch && unownedMatch
       })
       .sort((a, b) => {
         if (orderBy === "name" && order === "asc")
