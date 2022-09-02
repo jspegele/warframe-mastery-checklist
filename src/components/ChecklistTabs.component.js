@@ -26,7 +26,7 @@ const ChecklistTabs = () => {
           aria-label="basic tabs example"
         >
           {categories.map((category, i) => (
-            <Tab key={category} label={category} {...a11yProps(i)} />
+            <Tab key={category} label={`${category}s`} {...a11yProps(i)} />
           ))}
           <Tab label="Other" {...a11yProps(categories.length)} />
         </Tabs>
