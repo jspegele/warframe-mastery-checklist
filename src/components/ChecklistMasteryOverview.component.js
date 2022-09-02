@@ -100,7 +100,7 @@ const ChecklistMasteryOverview = () => {
             }}
           >MR{rank}</Typography>
           <Typography sx={{ fontSize: ".875rem" }}>{formatNumber(toNextMR)} to next rank</Typography>
-          <Typography sx={{ fontSize: ".875rem" }}>~{numWeapons} weapons</Typography>
+          <Typography sx={{ fontSize: ".875rem", fontStyle: "italic" }}>~{numWeapons} weapons</Typography>
         </Grid>
       </Grid>
     </Card>
