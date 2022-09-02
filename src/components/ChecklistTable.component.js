@@ -1,11 +1,6 @@
 import React, { useContext, useState } from "react"
 
-import {
-  Box,
-  Table,
-  TableContainer,
-  Typography,
-} from "@mui/material"
+import { Box, Table, TableContainer, Typography } from "@mui/material"
 
 import { ItemsContext } from "../contexts/ItemsContext"
 import { FiltersContext } from "../contexts/FiltersContext"
@@ -30,6 +25,8 @@ const ChecklistTable = ({ category }) => {
 
     return items
       .filter((item) => {
+        const { mastered, levels, owned } = checklist
+
         const textMatch =
           item.name.toLowerCase().includes(textFilter) ||
           item.slot.toLowerCase().includes(textFilter) ||
@@ -41,13 +38,17 @@ const ChecklistTable = ({ category }) => {
           : true
 
         const masteredMatch = filters.hideMastered
-          ? !checklist.mastered.includes(item.id)
+          ? !mastered.includes(item.id) ||
+            (item.maxLevel > 30 &&
+              mastered.includes(item.id) &&
+              (!levels.hasOwnProperty(item.id) ||
+                levels[item.id] < 40))
           : true
         const ownedMatch = filters.hideOwned
-          ? !checklist.owned.includes(item.id)
+          ? !owned.includes(item.id)
           : true
         const unownedMatch = filters.hideUnowned
-          ? checklist.owned.includes(item.id)
+          ? owned.includes(item.id)
           : true
 
         return (

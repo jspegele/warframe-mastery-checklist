@@ -4,6 +4,7 @@ import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material"
 
 import { ChecklistContext } from "../contexts/ChecklistContext"
 import { useContext } from "react"
+import ItemMasterySelector from "./ItemMasterySelector.component"
 
 const ChecklistTableBody = ({ items }) => {
   const { selectChecklist } = useContext(ChecklistContext)
@@ -35,7 +36,17 @@ const ChecklistTableBody = ({ items }) => {
               size="small"
             />
           </TableCell>
-          <TableCell></TableCell>
+          <TableCell align="center">
+            {item.maxLevel > 30 ? (
+              <ItemMasterySelector
+                itemLevel={
+                  checklist.levels.hasOwnProperty(item.id)
+                    ? checklist.levels[item.id]
+                    : 30
+                }
+              />
+            ) : 30}
+          </TableCell>
         </TableRow>
       ))}
     </TableBody>
