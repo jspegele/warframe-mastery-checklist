@@ -78,6 +78,8 @@ const ChecklistTable = ({ category }) => {
       })
   }
 
+  const visibleItems = getVisibleItems()
+
   return (
     <Box sx={{ width: "100%" }}>
       <Typography
@@ -89,7 +91,7 @@ const ChecklistTable = ({ category }) => {
           textAlign: "right",
         }}
       >
-        Showing {getVisibleItems().length} of {items.length} items
+        Showing {visibleItems.length} of {items.length} items
       </Typography>
       <TableContainer>
         <Table
@@ -103,7 +105,7 @@ const ChecklistTable = ({ category }) => {
             orderBy={orderBy}
             setOrderBy={setOrderBy}
           />
-          <ChecklistTableBody items={getVisibleItems()} />
+          <ChecklistTableBody items={visibleItems} />
         </Table>
       </TableContainer>
     </Box>

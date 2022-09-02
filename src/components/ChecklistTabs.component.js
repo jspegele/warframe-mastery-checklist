@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { Box, Card, Tabs, Tab } from "@mui/material"
 
 import ChecklistTabPanel from "./ChecklistTabPanel.component"
@@ -18,7 +18,7 @@ const ChecklistTabs = () => {
   const handleTabChange = (event, newValue) => setTabValue(newValue)
 
   return (
-    <Card sx={{ width: "100%" }}>
+    <Card sx={{ minHeight: "33vh", width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={tabValue}

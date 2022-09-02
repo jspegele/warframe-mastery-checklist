@@ -30,6 +30,7 @@ const ChecklistPage = () => {
     }
 
     loadChecklist()
+  // eslint-disable-next-line
   }, [listId, currentListId, items])
 
   return (
