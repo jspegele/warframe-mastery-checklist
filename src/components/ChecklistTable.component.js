@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 
 import { Box, Table, TableContainer, Typography } from "@mui/material"
+import SearchIcon from '@mui/icons-material/Search';
 
 import { ItemsContext } from "../contexts/ItemsContext"
 import { FiltersContext } from "../contexts/FiltersContext"
@@ -82,32 +83,41 @@ const ChecklistTable = ({ category }) => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography
-        sx={{
-          color: "text.secondary",
-          fontSize: ".875rem",
-          fontStyle: "italic",
-          pb: 1,
-          textAlign: "right",
-        }}
-      >
-        Showing {visibleItems.length} of {items.length} items
-      </Typography>
-      <TableContainer>
-        <Table
-          aria-labelledby="checklistTable"
-          size="small"
-          sx={{ minWidth: 750 }}
-        >
-          <ChecklistTableHead
-            order={order}
-            setOrder={setOrder}
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
-          />
-          <ChecklistTableBody items={visibleItems} />
-        </Table>
-      </TableContainer>
+      {visibleItems.length === 0 ? (
+        <Box sx={{ alignItems: "center", color: "text.secondary", display: "flex", flexDirection: "column", pt: 10 }}>
+          <SearchIcon sx={{ fontSize: "4rem" }} />
+          <Typography>No {category}s found</Typography>
+        </Box>
+      ) : (
+        <>
+          <Typography
+            sx={{
+              color: "text.secondary",
+              fontSize: ".875rem",
+              fontStyle: "italic",
+              pb: 1,
+              textAlign: "right",
+            }}
+          >
+            Showing {visibleItems.length} of {items.length} items
+          </Typography>
+          <TableContainer>
+            <Table
+              aria-labelledby="checklistTable"
+              size="small"
+              sx={{ minWidth: 750 }}
+            >
+              <ChecklistTableHead
+                order={order}
+                setOrder={setOrder}
+                orderBy={orderBy}
+                setOrderBy={setOrderBy}
+              />
+              <ChecklistTableBody items={visibleItems} />
+            </Table>
+          </TableContainer>
+        </>
+      )}
     </Box>
   )
 }
