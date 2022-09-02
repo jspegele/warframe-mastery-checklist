@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from "react"
-import { getDatabase, ref, get } from "firebase/database"
+import { getDatabase, ref, get, set } from "firebase/database"
 
 import { FiltersContext } from "./FiltersContext"
 
@@ -94,6 +94,29 @@ export const ChecklistProvider = (props) => {
     })
   }
 
+  const setItemLevel = (itemId, level) => {
+    const { levels, ...restOfObject } = checklistState
+    setChecklistState({
+      ...restOfObject,
+      levels: {
+        ...levels,
+        [itemId]: level
+      }
+    })
+  }
+
+  const startSetItemLevel = (listId, itemId, level) => {
+    return new Promise((resolve, reject) => {
+      const preferencePath = "checklists/" + listId + "/levels/" + itemId
+      set(ref(database, preferencePath), level)
+        .then(() => {
+          setItemLevel(itemId, level)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
+
   const selectChecklist = () => checklistState
   const selectChecklistId = () => checklistState.listId
   const selectChecklistPreferences = () => checklistState.preferences
@@ -109,6 +132,7 @@ export const ChecklistProvider = (props) => {
       value={{
         clearChecklistState,
         startSetChecklist,
+        startSetItemLevel,
         selectChecklist,
         selectChecklistId,
         selectChecklistPreferences,

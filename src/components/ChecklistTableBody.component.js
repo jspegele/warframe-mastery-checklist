@@ -39,6 +39,8 @@ const ChecklistTableBody = ({ items }) => {
           <TableCell align="center">
             {item.maxLevel > 30 ? (
               <ItemMasterySelector
+                listId={checklist.listId}
+                itemId={item.id}
                 itemLevel={
                   checklist.levels.hasOwnProperty(item.id)
                     ? checklist.levels[item.id]
