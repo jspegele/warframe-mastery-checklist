@@ -105,9 +105,10 @@ function ChecklistTableHead({ order, orderBy, setOrder, setOrderBy }) {
 }
 
 ChecklistTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  setOrder: PropTypes.func.isRequired,
   orderBy: PropTypes.string.isRequired,
+  setOrderBy: PropTypes.func.isRequired,
 }
 
 export default ChecklistTableHead
