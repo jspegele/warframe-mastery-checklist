@@ -61,9 +61,15 @@ const headCells = [
   },
 ]
 
-function ChecklistTableHead({ order, orderBy, onRequestSort }) {
+function ChecklistTableHead({ order, orderBy, setOrder, setOrderBy }) {
   const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property)
+    handleRequestSort(event, property)
+  }
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
+    setOrderBy(property)
   }
 
   return (

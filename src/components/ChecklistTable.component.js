@@ -2,12 +2,8 @@ import React, { useContext, useState } from "react"
 
 import {
   Box,
-  Checkbox,
   Table,
-  TableBody,
-  TableCell,
   TableContainer,
-  TableRow,
   Typography,
 } from "@mui/material"
 
@@ -16,6 +12,7 @@ import { FiltersContext } from "../contexts/FiltersContext"
 import { ChecklistContext } from "../contexts/ChecklistContext"
 
 import ChecklistTableHead from "./ChecklistTableHead.component"
+import ChecklistTableBody from "./ChecklistTableBody.component"
 
 const ChecklistTable = ({ category }) => {
   const { selectItemsByCategory } = useContext(ItemsContext)
@@ -26,15 +23,6 @@ const ChecklistTable = ({ category }) => {
 
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
-    setOrderBy(property)
-  }
-
-  const isOwned = (id) => checklist.owned.includes(id)
-  const isMastered = (id) => checklist.mastered.includes(id)
 
   const getVisibleItems = () => {
     const filters = selectFilters()
@@ -110,41 +98,11 @@ const ChecklistTable = ({ category }) => {
         >
           <ChecklistTableHead
             order={order}
+            setOrder={setOrder}
             orderBy={orderBy}
-            onRequestSort={handleRequestSort}
+            setOrderBy={setOrderBy}
           />
-          <TableBody>
-            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                rows.slice().sort(getComparator(order, orderBy)) */}
-            {getVisibleItems().map((item) => (
-              <TableRow hover tabIndex={-1} key={item.id}>
-                <TableCell component="th" scope="row">
-                  <a href={item.link} target="_blank" rel="noreferrer">
-                    {item.name}
-                  </a>
-                </TableCell>
-                <TableCell>{item.slot}</TableCell>
-                <TableCell>{item.type}</TableCell>
-                <TableCell align="right">{item.mr}</TableCell>
-                <TableCell>{item.source}</TableCell>
-                <TableCell align="center">
-                  <Checkbox
-                    color="primary"
-                    checked={isOwned(item.id)}
-                    size="small"
-                  />
-                </TableCell>
-                <TableCell align="center">
-                  <Checkbox
-                    color="primary"
-                    checked={isMastered(item.id)}
-                    size="small"
-                  />
-                </TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <ChecklistTableBody items={getVisibleItems()} />
         </Table>
       </TableContainer>
     </Box>
