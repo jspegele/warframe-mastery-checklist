@@ -75,7 +75,7 @@ const ChecklistMasteryOverview = () => {
   ).toFixed(1)
 
   return (
-    <Card sx={{ maxWidth: { xs: "auto", sm: "50%", lg: "33%" }, p: 3 }}>
+    <Card sx={{ p: 3, width: "100%" }}>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Typography
