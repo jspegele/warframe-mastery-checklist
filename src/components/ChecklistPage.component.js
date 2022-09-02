@@ -8,6 +8,7 @@ import { ChecklistContext } from "../contexts/ChecklistContext"
 
 import ChecklistTabs from "./ChecklistTabs.component"
 import ChecklistFilterPanel from "./ChecklistFilterPanel.component"
+import ChecklistMasteryOverview from "./ChecklistMasteryOverview.component"
 
 const ChecklistPage = () => {
   const { listId } = useParams()
@@ -51,6 +52,7 @@ const ChecklistPage = () => {
 
       {!loading && (
         <Stack spacing={2}>
+          <ChecklistMasteryOverview />
           <ChecklistFilterPanel />
           <ChecklistTabs />
         </Stack>

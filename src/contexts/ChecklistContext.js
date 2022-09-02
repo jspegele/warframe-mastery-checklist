@@ -97,6 +97,12 @@ export const ChecklistProvider = (props) => {
   const selectChecklist = () => checklistState
   const selectChecklistId = () => checklistState.listId
   const selectChecklistPreferences = () => checklistState.preferences
+  const selectChecklistMastery = () => ({
+    itemMastery: checklistState.itemMastery,
+    starChartMastery: checklistState.starChartMastery,
+    steelPathMastery: checklistState.steelPathMastery,
+    intrinsics: checklistState.intrinsics,
+  })
 
   return (
     <ChecklistContext.Provider
@@ -106,6 +112,7 @@ export const ChecklistProvider = (props) => {
         selectChecklist,
         selectChecklistId,
         selectChecklistPreferences,
+        selectChecklistMastery,
       }}
     >
       {props.children}
