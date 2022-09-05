@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 import { MenuItem, Select } from "@mui/material"
 
-import { ChecklistContext } from "../contexts/ChecklistContext"
+import { ChecklistContext } from "../../contexts/ChecklistContext"
 
 const levels = [30, 32, 34, 36, 38, 40]
 

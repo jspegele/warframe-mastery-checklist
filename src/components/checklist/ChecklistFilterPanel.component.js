@@ -16,8 +16,8 @@ import {
 } from "@mui/material"
 import ClearIcon from "@mui/icons-material/Clear"
 
-import { FiltersContext } from "../contexts/FiltersContext"
-import { ChecklistContext } from "../contexts/ChecklistContext"
+import { FiltersContext } from "../../contexts/FiltersContext"
+import { ChecklistContext } from "../../contexts/ChecklistContext"
 
 const ChecklistFilterPanel = () => {
   const { selectFilters, setValue, startSetValue } = useContext(FiltersContext)

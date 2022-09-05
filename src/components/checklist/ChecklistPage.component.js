@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom"
 
 import { Box, CircularProgress, Stack, Typography } from "@mui/material"
 
-import { ItemsContext } from "../contexts/ItemsContext"
-import { ChecklistContext } from "../contexts/ChecklistContext"
+import { ItemsContext } from "../../contexts/ItemsContext"
+import { ChecklistContext } from "../../contexts/ChecklistContext"
 
 import ChecklistTabs from "./ChecklistTabs.component"
 import ChecklistFilterPanel from "./ChecklistFilterPanel.component"

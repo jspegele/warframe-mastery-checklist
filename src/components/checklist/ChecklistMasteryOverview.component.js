@@ -1,7 +1,7 @@
 import { Card, Grid, Typography } from "@mui/material"
 import React, { useContext } from "react"
 
-import { ChecklistContext } from "../contexts/ChecklistContext"
+import { ChecklistContext } from "../../contexts/ChecklistContext"
 
 const masteryRanks = [
   { rank: "0", mastery: 0 },

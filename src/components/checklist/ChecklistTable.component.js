@@ -3,9 +3,9 @@ import React, { useContext, useState } from "react"
 import { Box, Table, TableContainer, Typography } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 
-import { ItemsContext } from "../contexts/ItemsContext"
-import { FiltersContext } from "../contexts/FiltersContext"
-import { ChecklistContext } from "../contexts/ChecklistContext"
+import { ItemsContext } from "../../contexts/ItemsContext"
+import { FiltersContext } from "../../contexts/FiltersContext"
+import { ChecklistContext } from "../../contexts/ChecklistContext"
 
 import ChecklistTableHead from "./ChecklistTableHead.component"
 import ChecklistTableBody from "./ChecklistTableBody.component"

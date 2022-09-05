@@ -1,9 +1,8 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material"
 
-import { ChecklistContext } from "../contexts/ChecklistContext"
-import { useContext } from "react"
+import { ChecklistContext } from "../../contexts/ChecklistContext"
 import ItemMasterySelector from "./ItemMasterySelector.component"
 
 const ChecklistTableBody = ({ items }) => {
