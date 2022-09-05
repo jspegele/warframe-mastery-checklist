@@ -75,12 +75,12 @@ export const ChecklistProvider = (props) => {
           if (data.mastered && data.mastered.length)
             itemMastery = calculateItemMastery(items, data)
 
-          setChecklistState((prevState) => ({
-            ...prevState,
+          setChecklistState({
+            ...initialState,
             listId,
             itemMastery,
             ...data,
-          }))
+          })
 
           // set filters with stored preferences
           if (data.preferences) setFilters(data.preferences)

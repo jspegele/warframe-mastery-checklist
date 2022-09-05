@@ -1,9 +1,10 @@
 import React from "react"
-import { Alert } from "@mui/material"
+import { Alert, AlertTitle } from "@mui/material"
 
 const BookmarkAlert = () => (
   <Alert severity="warning">
-    Be sure to bookmark this page so you can return to your checklist.
+    <AlertTitle sx={{ fontSize: ".875rem" }}>Be sure to bookmark this page so you can return to your checklist:</AlertTitle>
+    {window.location.href}
   </Alert>
 )
 
