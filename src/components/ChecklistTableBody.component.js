@@ -7,11 +7,15 @@ import { useContext } from "react"
 import ItemMasterySelector from "./ItemMasterySelector.component"
 
 const ChecklistTableBody = ({ items }) => {
-  const { selectChecklist } = useContext(ChecklistContext)
+  const { selectChecklist, startSetOwnedList, startSetMasteredList } = useContext(ChecklistContext)
   const checklist = selectChecklist()
 
-  const isOwned = (id) => checklist.owned.includes(id)
-  const isMastered = (id) => checklist.mastered.includes(id)
+  const isOwned = (itemId) => checklist.owned.includes(itemId)
+  const isMastered = (itemId) => checklist.mastered.includes(itemId)
+
+  const handleOwnedCheck = (itemId) => startSetOwnedList(checklist.listId, itemId, !isOwned(itemId))
+
+  const handleMasteredCheck = (itemId) => startSetMasteredList(checklist.listId, itemId, !isMastered(itemId))
 
   return (
     <TableBody>
@@ -27,12 +31,18 @@ const ChecklistTableBody = ({ items }) => {
           <TableCell align="right">{item.mr}</TableCell>
           <TableCell>{item.source}</TableCell>
           <TableCell align="center">
-            <Checkbox color="primary" checked={isOwned(item.id)} size="small" />
+            <Checkbox
+              color="primary"
+              checked={isOwned(item.id)}
+              onChange={() => handleOwnedCheck(item.id)}
+              size="small"
+            />
           </TableCell>
           <TableCell align="center">
             <Checkbox
               color="primary"
               checked={isMastered(item.id)}
+              onChange={() => handleMasteredCheck(item.id)}
               size="small"
             />
           </TableCell>
