@@ -19,7 +19,7 @@ const Timer = ({ timeDiff }) => {
   return (
     <Chip
       color={currentTimeDiff > 1200000 ? 'success' : currentTimeDiff > 300000 ? 'warning' : 'error'}
-      label={Duration.fromMillis(timeDiff).toFormat(timeDiff >= 86400000 ? "d'd' h'h'" : timeDiff >= 3600000 ? "h'h' mm'm'" : "mm'm' ss's'" )}
+      label={Duration.fromMillis(currentTimeDiff).toFormat(currentTimeDiff >= 86400000 ? "d'd' h'h'" : currentTimeDiff >= 3600000 ? "h'h' mm'm'" : "mm'm' ss's'" )}
       size="small"
     />
   )
