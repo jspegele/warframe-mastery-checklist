@@ -6,7 +6,7 @@ import DailyReset from "./DailyReset"
 import WorldCycles from "./WorldCycles"
 import News from './News'
 import Alerts from './Alerts'
-// import Invasions from './Invasions'
+import Invasions from './Invasions'
 
 const WorldState = () => {
   return (
@@ -25,7 +25,7 @@ const WorldState = () => {
         <Grid item xs={12} sm={6}>
           <Stack spacing={2}>
             <Alerts />
-            {/* <Invasions /> */}
+            <Invasions />
           </Stack>
         </Grid>
       </Grid>
