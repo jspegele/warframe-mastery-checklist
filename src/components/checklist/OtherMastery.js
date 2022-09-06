@@ -1,11 +1,11 @@
 import React from "react"
 
-import { Box } from "@mui/material"
+import StarChartMastery from "./StarChartMastery"
 
-const OtherMastery = () => {
-  return (
-    <Box></Box>
-  )
-}
+const OtherMastery = () => (
+  <div>
+    <StarChartMastery />
+  </div>
+)
  
 export default OtherMastery

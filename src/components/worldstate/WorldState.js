@@ -12,7 +12,7 @@ import Arbitration from "./Arbitration"
 const WorldState = ({ elevation = 1 }) => {
   return (
     <Box>
-      <Typography fontSize="1.25rem" fontWeight="500">
+      <Typography component="h2" fontSize="1.25rem" fontWeight="500">
         PC World State
       </Typography>
       <Grid container spacing={2}>

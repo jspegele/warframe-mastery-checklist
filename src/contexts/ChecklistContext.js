@@ -157,6 +157,38 @@ export const ChecklistProvider = (props) => {
     })
   }
 
+  const setStarChartMastery = (starChartMastery) => {
+    setChecklistState((prevState) => ({ ...prevState, starChartMastery }))
+  }
+
+  const startSetStarChartMastery = (starChartMastery) => {
+    return new Promise((resolve, reject) => {
+      const path = "checklists/" + checklistState.listId + "/starChartMastery"
+      set(ref(database, path), starChartMastery)
+        .then(() => {
+          setStarChartMastery(starChartMastery)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
+
+  const setSteelPathMastery = (steelPathMastery) => {
+    setChecklistState((prevState) => ({ ...prevState, steelPathMastery }))
+  }
+
+  const startSetSteelPathMastery = (steelPathMastery) => {
+    return new Promise((resolve, reject) => {
+      const path = "checklists/" + checklistState.listId + "/steelPathMastery"
+      set(ref(database, path), steelPathMastery)
+        .then(() => {
+          setSteelPathMastery(steelPathMastery)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
+
   const selectChecklist = () => checklistState
   const selectChecklistId = () => checklistState.listId
   const selectChecklistPreferences = () => checklistState.preferences
@@ -175,6 +207,8 @@ export const ChecklistProvider = (props) => {
         startSetOwnedList,
         startSetMasteredList,
         startSetItemLevel,
+        startSetStarChartMastery,
+        startSetSteelPathMastery,
         selectChecklist,
         selectChecklistId,
         selectChecklistPreferences,
