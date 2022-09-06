@@ -12,9 +12,9 @@ const ChecklistTableBody = ({ items }) => {
   const isOwned = (itemId) => checklist.owned.includes(itemId)
   const isMastered = (itemId) => checklist.mastered.includes(itemId)
 
-  const handleOwnedCheck = (itemId) => startSetOwnedList(checklist.listId, itemId, !isOwned(itemId))
+  const handleOwnedCheck = (itemId) => startSetOwnedList(itemId, !isOwned(itemId))
 
-  const handleMasteredCheck = (itemId) => startSetMasteredList(checklist.listId, itemId, !isMastered(itemId))
+  const handleMasteredCheck = (itemId) => startSetMasteredList(itemId, !isMastered(itemId))
 
   return (
     <TableBody>
@@ -48,7 +48,6 @@ const ChecklistTableBody = ({ items }) => {
           <TableCell align="center">
             {item.maxLevel > 30 ? (
               <ItemMasterySelector
-                listId={checklist.listId}
                 itemId={item.id}
                 itemLevel={
                   checklist.levels.hasOwnProperty(item.id)

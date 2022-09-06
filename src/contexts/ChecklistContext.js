@@ -98,13 +98,13 @@ export const ChecklistProvider = (props) => {
     setChecklistState((prevState) => ({ ...prevState, owned }))
   }
 
-  const startSetOwnedList = (listId, itemId, owned) => {
+  const startSetOwnedList = (itemId, owned) => {
     let ownedList = []
     if (owned) ownedList = [...checklistState.owned, itemId]
     else ownedList = checklistState.owned.filter((id) => id !== itemId)
 
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + listId + "/owned"
+      const preferencePath = "checklists/" + checklistState.listId + "/owned"
       set(ref(database, preferencePath), ownedList)
         .then(() => {
           setOwnedList(ownedList)
@@ -118,13 +118,13 @@ export const ChecklistProvider = (props) => {
     setChecklistState((prevState) => ({ ...prevState, mastered }))
   }
 
-  const startSetMasteredList = (listId, itemId, mastered) => {
+  const startSetMasteredList = (itemId, mastered) => {
     let masteredList = []
     if (mastered) masteredList = [...checklistState.mastered, itemId]
     else masteredList = checklistState.mastered.filter((id) => id !== itemId)
 
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + listId + "/mastered"
+      const preferencePath = "checklists/" + checklistState.listId + "/mastered"
       set(ref(database, preferencePath), masteredList)
         .then(() => {
           setMasteredList(masteredList)
@@ -145,9 +145,9 @@ export const ChecklistProvider = (props) => {
     })
   }
 
-  const startSetItemLevel = (listId, itemId, level) => {
+  const startSetItemLevel = (itemId, level) => {
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + listId + "/levels/" + itemId
+      const preferencePath = "checklists/" + checklistState.listId + "/levels/" + itemId
       set(ref(database, preferencePath), level)
         .then(() => {
           setItemLevel(itemId, level)

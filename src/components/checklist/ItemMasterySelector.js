@@ -7,11 +7,11 @@ import { ChecklistContext } from "../../contexts/ChecklistContext"
 
 const levels = [30, 32, 34, 36, 38, 40]
 
-const ItemMasterySelector = ({ listId, itemId, itemLevel }) => {
+const ItemMasterySelector = ({ itemId, itemLevel }) => {
   const { startSetItemLevel } = useContext(ChecklistContext)
 
   const onLevelChange = (e) => {
-    startSetItemLevel(listId, itemId, e.target.value)
+    startSetItemLevel(itemId, e.target.value)
   }
 
   return (
