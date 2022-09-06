@@ -34,7 +34,7 @@ const DashboardPage = () => {
       >
         Warframe Mastery Checklist
       </Typography>
-      <Typography fontSize=".875rem">
+      <Typography fontSize=".875rem" maxWidth="75ch">
         Warframe Mastery Checklist is a site to help you plan what gear to grind
         for next. Check off frames, weapons, companions, etc that you already
         own and have mastered, find gear that is available to you at your
