@@ -18,7 +18,6 @@ const Alerts = () => {
       .then(
         (result) => {
           if (isSubscribed) {
-            console.log(result)
             setAlertsList(result)
             setIsLoaded(true)
           }

@@ -7,6 +7,7 @@ import WorldCycles from "./WorldCycles"
 import News from './News'
 import Alerts from './Alerts'
 import Invasions from './Invasions'
+import Arbitration from "./Arbitration"
 
 const WorldState = () => {
   return (
@@ -26,6 +27,7 @@ const WorldState = () => {
           <Stack spacing={2}>
             <Alerts />
             <Invasions />
+            <Arbitration />
           </Stack>
         </Grid>
       </Grid>
