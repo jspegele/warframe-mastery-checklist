@@ -4,22 +4,22 @@ import { Duration } from 'luxon'
 
 import { Chip } from "@mui/material"
 
-const Timer = props => {
-  const [timeDiff, setTimeDiff] = useState(props.timeDiff)     // millseconds remaining in cycle
+const Timer = ({ timeDiff }) => {
+  const [currentTimeDiff, setCurrentTimeDiff] = useState(timeDiff)     // millseconds remaining in cycle
 
   useEffect(() => {
-    if (timeDiff) {
-      let timer = setTimeout(() => setTimeDiff(timeDiff - 1000), 1000)
+    if (currentTimeDiff) {
+      let timer = setTimeout(() => setCurrentTimeDiff(currentTimeDiff - 1000), 1000)
       return () => {
         clearTimeout(timer)
       }
     }
-  }, [timeDiff])
+  }, [currentTimeDiff])
 
   return (
     <Chip
-      color={timeDiff > 1200000 ? 'success' : timeDiff > 300000 ? 'warning' : 'error'}
-      label={Duration.fromMillis(timeDiff).toFormat(timeDiff < 3600000 ? "mm'm' ss's'" : "h'h' mm'm' ss's'")}
+      color={currentTimeDiff > 1200000 ? 'success' : currentTimeDiff > 300000 ? 'warning' : 'error'}
+      label={Duration.fromMillis(timeDiff).toFormat(timeDiff >= 86400000 ? "d'd' h'h'" : timeDiff >= 3600000 ? "h'h' mm'm'" : "mm'm' ss's'" )}
       size="small"
     />
   )

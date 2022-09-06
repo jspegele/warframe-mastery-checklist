@@ -5,7 +5,7 @@ import { Box, Grid, Stack, Typography } from "@mui/material"
 import DailyReset from "./DailyReset"
 import WorldCycles from "./WorldCycles"
 import News from './News'
-// import Alerts from './Alerts'
+import Alerts from './Alerts'
 // import Invasions from './Invasions'
 
 const WorldState = () => {
@@ -24,7 +24,7 @@ const WorldState = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Stack spacing={2}>
-            {/* <Alerts /> */}
+            <Alerts />
             {/* <Invasions /> */}
           </Stack>
         </Grid>
