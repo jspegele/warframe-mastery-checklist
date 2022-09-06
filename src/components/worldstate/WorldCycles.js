@@ -4,9 +4,9 @@ import { Card, Grid, Typography } from "@mui/material"
 
 import WorldCycle from "./WorldCycle"
 
-const WorldCycles = () => {
+const WorldCycles = ({ elevation = 1 }) => {
   return (
-    <Card sx={{ p: 2 }}>
+    <Card elevation={elevation} sx={{ p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={2}>World Cycles</Typography>
       <Grid container fontSize=".875rem" spacing={2}>
         <WorldCycle

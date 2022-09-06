@@ -5,7 +5,7 @@ import { Box, Card, Skeleton, Stack, Typography } from "@mui/material"
 
 import Timer from "./Timer"
 
-const Arbitration = () => {
+const Arbitration = ({ elevation = 1 }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [arbitration, setArbitration] = useState(null)
@@ -34,7 +34,7 @@ const Arbitration = () => {
   }, [])
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card elevation={elevation} sx={{ p: 2 }}>
       <Stack direction="row" spacing={2} pb={2}>
         <Typography component="h3" fontWeight="500">
           Arbitration

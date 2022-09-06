@@ -10,7 +10,7 @@ import {
   useTheme,
 } from "@mui/material"
 
-const Invasions = () => {
+const Invasions = ({ elevation = 1 }) => {
   const theme = useTheme()
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -50,7 +50,7 @@ const Invasions = () => {
       : theme.palette.success.dark
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card elevation={elevation} sx={{ p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={2}>
         Invasions
       </Typography>

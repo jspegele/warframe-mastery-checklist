@@ -10,6 +10,7 @@ import ChecklistTabs from "./ChecklistTabs"
 import ChecklistFilterPanel from "./ChecklistFilterPanel"
 import ChecklistMasteryOverview from "./ChecklistMasteryOverview"
 import BookmarkAlert from "./BookmarkAlert"
+import WorldStateAccordion from "./WorldStateAccordion"
 
 const ChecklistPage = () => {
   const { listId } = useParams()
@@ -30,7 +31,7 @@ const ChecklistPage = () => {
     }
 
     loadChecklist()
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [listId, currentListId, items])
 
   return (
@@ -54,11 +55,17 @@ const ChecklistPage = () => {
 
       {!loading && (
         <Stack spacing={2}>
-          <Stack sx={{ flexDirection: { xs: "column-reverse", sm: "row" }}}>
-            <Box sx={{ width: { xs: "100%", sm: "50%", lg: "34%" }}}>
+          <WorldStateAccordion />
+          <Stack sx={{ flexDirection: { xs: "column-reverse", sm: "row" } }}>
+            <Box sx={{ width: { xs: "100%", sm: "50%", lg: "34%" } }}>
               <ChecklistMasteryOverview />
             </Box>
-            <Box sx={{ margin: { xs: "0 0 1rem", sm: "0 0 0 1rem" },  width: { xs: "100%", sm: "50%", lg: "66%" }}}>
+            <Box
+              sx={{
+                margin: { xs: "0 0 1rem", sm: "0 0 0 1rem" },
+                width: { xs: "100%", sm: "50%", lg: "66%" },
+              }}
+            >
               <BookmarkAlert />
             </Box>
           </Stack>

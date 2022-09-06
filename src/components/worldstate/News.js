@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import { Card, Chip, Grid, Skeleton, Tooltip, Typography } from "@mui/material"
 
-const News = () => {
+const News = ({ elevation = 1 }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [newsList, setNewsList] = useState(null)
@@ -44,7 +44,7 @@ const News = () => {
   ]
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card elevation={elevation} sx={{ p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={2}>
         News
       </Typography>

@@ -5,7 +5,7 @@ import { Card, Grid, Typography } from "@mui/material"
 
 import Timer from "./Timer"
 
-const DailyReset = () => {
+const DailyReset = ({ elevation = 1 }) => {
   const dailyReset = DateTime.now()
     .setZone("GMT")
     .plus({ days: 1 })
@@ -21,7 +21,7 @@ const DailyReset = () => {
   const toSortieReset = sortieReset.diff(now)
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card elevation={elevation} sx={{ p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={2}>
         Daily Resets
       </Typography>
