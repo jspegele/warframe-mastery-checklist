@@ -59,6 +59,7 @@ const Alerts = () => {
         )}
         {isLoaded &&
           !error &&
+          alertsList.length > 0 &&
           alertsList
             .sort((a, b) => (a.expiry < b.expiry ? 1 : -1))
             .map((alert) => {

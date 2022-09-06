@@ -65,7 +65,14 @@ const News = () => {
             {error}
           </Grid>
         )}
-        {isLoaded && !error && (
+        {isLoaded && !error && newsList.length === 0 && (
+          <Grid item xs={12}>
+            No active invasions
+          </Grid>
+        )}
+        {isLoaded &&
+          !error &&
+          newsList.length > 0 &&
           newsList
             .slice(0, 10)
             .sort((a, b) => (a.date < b.date ? 1 : -1))
@@ -88,8 +95,7 @@ const News = () => {
                   </a>
                 </Grid>
               </React.Fragment>
-            ))
-        )}
+            ))}
       </Grid>
     </Card>
   )

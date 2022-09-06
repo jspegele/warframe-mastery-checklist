@@ -69,8 +69,14 @@ const Invasions = () => {
             {error}
           </Grid>
         )}
+        {isLoaded && !error && invasionList.length === 0 && (
+          <Grid item xs={12}>
+            No active invasions
+          </Grid>
+        )}
         {isLoaded &&
           !error &&
+          invasionList.length > 0 &&
           invasionList.map((invasion, i) => {
             const attackFill = getFillColor(invasion.attackingFaction)
             const defendFill = getFillColor(invasion.defendingFaction)
