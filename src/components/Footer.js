@@ -12,7 +12,7 @@ const Footer = () => {
         </a>{" "}
         |{" "}
         <a
-          href="https://github.com/jspegele/warframe-checklist/issues"
+          href="https://github.com/jspegele/warframe-mastery-checklist/issues"
           target="_blank"
           rel="noreferrer"
         >
