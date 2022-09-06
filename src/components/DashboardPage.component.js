@@ -7,6 +7,7 @@ import { Box, Button, Card, Grid, Typography } from "@mui/material"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 import { generateDescriptiveId } from "../utilities/generateDescriptiveId"
+import WorldState from "./worldstate/WorldState"
 
 const DashboardPage = () => {
   const navigate = useNavigate()
@@ -90,6 +91,9 @@ const DashboardPage = () => {
           </Card>
         </Grid>
       </Grid>
+      <Box mt={4}>
+        <WorldState />
+      </Box>
     </Box>
   )
 }
