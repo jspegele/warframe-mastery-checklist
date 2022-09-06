@@ -66,7 +66,7 @@ const Invasions = ({ elevation = 1 }) => {
         )}
         {isLoaded && error && (
           <Grid item xs={12}>
-            {error}
+            Unable to retreive invasions
           </Grid>
         )}
         {isLoaded && !error && invasionList.length === 0 && (

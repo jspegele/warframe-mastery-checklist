@@ -46,7 +46,7 @@ const ChecklistPage = () => {
           }}
         >
           {!!error ? (
-            <Typography color="error">{error}</Typography>
+            <Typography color="error">Unable to retreive checklist}</Typography>
           ) : (
             <CircularProgress />
           )}

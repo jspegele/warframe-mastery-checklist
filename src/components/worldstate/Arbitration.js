@@ -49,12 +49,12 @@ const Arbitration = ({ elevation = 1 }) => {
       )}
       {isLoaded && error && (
         <Typography fontSize=".875rem">
-          {error}
+          Unable to retreive arbitration information
         </Typography>
       )}
       {isLoaded && !error && !arbitration?.id && (
         <Typography fontSize=".875rem">
-          No active alerts
+          Active arbitration not found
         </Typography>
       )}
       {isLoaded && !error && arbitration?.id && (

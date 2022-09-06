@@ -49,7 +49,7 @@ const Alerts = ({ elevation = 1 }) => {
         )}
         {isLoaded && error && (
           <Grid item xs={12}>
-            {error}
+            Unable to retreive alerts
           </Grid>
         )}
         {isLoaded && !error && alertsList.length === 0 && (

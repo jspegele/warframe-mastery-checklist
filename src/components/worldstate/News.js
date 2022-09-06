@@ -62,12 +62,12 @@ const News = ({ elevation = 1 }) => {
         )}
         {isLoaded && error && (
           <Grid item xs={12}>
-            {error}
+            Unable to retreive news
           </Grid>
         )}
         {isLoaded && !error && newsList.length === 0 && (
           <Grid item xs={12}>
-            No active invasions
+            No news items found
           </Grid>
         )}
         {isLoaded &&
