@@ -3,6 +3,7 @@ import { Box, Card, Tabs, Tab } from "@mui/material"
 
 import ChecklistTabPanel from "./ChecklistTabPanel"
 import ChecklistTable from "./ChecklistTable"
+import OtherMastery from "./OtherMastery"
 
 function a11yProps(index) {
   return {
@@ -37,7 +38,7 @@ const ChecklistTabs = () => {
         </ChecklistTabPanel>
       ))}
       <ChecklistTabPanel index={categories.length} value={tabValue}>
-        Other stuff
+        <OtherMastery />
       </ChecklistTabPanel>
     </Card>
   )
