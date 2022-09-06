@@ -75,11 +75,11 @@ const StarChartMastery = () => {
   }
 
   return (
-    <Box style={{ marginTop: "20px" }}>
+    <Box>
       <Typography component="h2" fontSize="1.25rem" fontWeight="500">
         Star Chart Mastery
       </Typography>
-      <Grid container mt={2} spacing={2}>
+      <Grid container mt={1} spacing={2}>
         <Grid
           item
           xs={12}

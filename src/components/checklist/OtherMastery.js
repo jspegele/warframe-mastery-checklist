@@ -1,11 +1,15 @@
 import React from "react"
 
+import { Stack } from "@mui/material"
+
 import StarChartMastery from "./StarChartMastery"
+import IntrinsicsMastery from "./IntrinsicsMastery"
 
 const OtherMastery = () => (
-  <div>
+  <Stack spacing={5}>
     <StarChartMastery />
-  </div>
+    <IntrinsicsMastery />
+  </Stack>
 )
  
 export default OtherMastery

@@ -189,6 +189,25 @@ export const ChecklistProvider = (props) => {
     })
   }
 
+  const setIntrinsic = (intrinsic, value) => {
+    setChecklistState((prevState) => ({
+      ...prevState,
+      intrinsics: { ...prevState.intrinsics, [intrinsic]: value },
+    }))
+  }
+
+  const startSetIntrinsic = (intrinsic, value) => {
+    return new Promise((resolve, reject) => {
+      const path = "checklists/" + checklistState.listId + "/intrinsics/" + intrinsic
+      set(ref(database, path), value)
+        .then(() => {
+          setIntrinsic(intrinsic, value)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
+
   const selectChecklist = () => checklistState
   const selectChecklistId = () => checklistState.listId
   const selectChecklistPreferences = () => checklistState.preferences
@@ -198,6 +217,7 @@ export const ChecklistProvider = (props) => {
     steelPathMastery: checklistState.steelPathMastery,
     intrinsics: checklistState.intrinsics,
   })
+  const selectIntrinsics = () => checklistState.intrinsics
 
   return (
     <ChecklistContext.Provider
@@ -209,10 +229,12 @@ export const ChecklistProvider = (props) => {
         startSetItemLevel,
         startSetStarChartMastery,
         startSetSteelPathMastery,
+        startSetIntrinsic,
         selectChecklist,
         selectChecklistId,
         selectChecklistPreferences,
         selectChecklistMastery,
+        selectIntrinsics,
       }}
     >
       {props.children}
