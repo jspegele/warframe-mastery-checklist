@@ -6,10 +6,10 @@ import { Box, CircularProgress, Stack, Typography } from "@mui/material"
 import { ItemsContext } from "../../contexts/ItemsContext"
 import { ChecklistContext } from "../../contexts/ChecklistContext"
 
-import ChecklistTabs from "./ChecklistTabs.component"
-import ChecklistFilterPanel from "./ChecklistFilterPanel.component"
-import ChecklistMasteryOverview from "./ChecklistMasteryOverview.component"
-import BookmarkAlert from "./BookmarkAlert.component"
+import ChecklistTabs from "./ChecklistTabs"
+import ChecklistFilterPanel from "./ChecklistFilterPanel"
+import ChecklistMasteryOverview from "./ChecklistMasteryOverview"
+import BookmarkAlert from "./BookmarkAlert"
 
 const ChecklistPage = () => {
   const { listId } = useParams()

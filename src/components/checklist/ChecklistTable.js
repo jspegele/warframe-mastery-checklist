@@ -7,8 +7,8 @@ import { ItemsContext } from "../../contexts/ItemsContext"
 import { FiltersContext } from "../../contexts/FiltersContext"
 import { ChecklistContext } from "../../contexts/ChecklistContext"
 
-import ChecklistTableHead from "./ChecklistTableHead.component"
-import ChecklistTableBody from "./ChecklistTableBody.component"
+import ChecklistTableHead from "./ChecklistTableHead"
+import ChecklistTableBody from "./ChecklistTableBody"
 
 const ChecklistTable = ({ category }) => {
   const { selectItemsByCategory } = useContext(ItemsContext)

@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material"
 
 import { ChecklistContext } from "../../contexts/ChecklistContext"
-import ItemMasterySelector from "./ItemMasterySelector.component"
+import ItemMasterySelector from "./ItemMasterySelector"
 
 const ChecklistTableBody = ({ items }) => {
   const { selectChecklist, startSetOwnedList, startSetMasteredList } = useContext(ChecklistContext)

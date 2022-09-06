@@ -5,7 +5,7 @@ import { AuthContext } from "./contexts/AuthContext"
 import { ItemsContext } from "./contexts/ItemsContext"
 
 import AppRouter from "./app/AppRouter"
-import LoadingPage from "./components/LoadingPage.component"
+import LoadingPage from "./components/LoadingPage"
 
 const App = () => {
   const auth = getAuth()

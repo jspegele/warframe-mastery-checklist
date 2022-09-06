@@ -4,10 +4,10 @@ import { createBrowserHistory } from "history"
 
 import { AuthContext } from "../contexts/AuthContext"
 
-import Layout from "../components/Layout.component"
-import DashboardPage from "../components/DashboardPage.component"
-import ChecklistPage from "../components/checklist/ChecklistPage.component"
-import AdminDashboardPage from "../admin/AdminDashboardPage.component"
+import Layout from "../components/Layout"
+import DashboardPage from "../components/DashboardPage"
+import ChecklistPage from "../components/checklist/ChecklistPage"
+import AdminDashboardPage from "../admin/AdminDashboardPage"
 
 export const history = createBrowserHistory()
 

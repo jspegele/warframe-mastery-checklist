@@ -2,8 +2,8 @@ import React from "react"
 import { Outlet } from "react-router-dom"
 import { Box, Container } from "@mui/material"
 
-import Header from "./Header.component"
-import Footer from "./Footer.component"
+import Header from "./Header"
+import Footer from "./Footer"
 
 const Layout = () => {
   return (

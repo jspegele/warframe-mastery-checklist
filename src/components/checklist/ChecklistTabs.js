@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Box, Card, Tabs, Tab } from "@mui/material"
 
-import ChecklistTabPanel from "./ChecklistTabPanel.component"
-import ChecklistTable from "./ChecklistTable.component"
+import ChecklistTabPanel from "./ChecklistTabPanel"
+import ChecklistTable from "./ChecklistTable"
 
 function a11yProps(index) {
   return {
