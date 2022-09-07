@@ -67,7 +67,7 @@ const ItemsTable = ({ visibleItems }) => {
                 >
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.category}</TableCell>
-                  <TableCell>{item.sort}</TableCell>
+                  <TableCell>{item.slot}</TableCell>
                   <TableCell>{item.type}</TableCell>
                   <TableCell>{item.source}</TableCell>
                   <TableCell align="right">{item.mastery}</TableCell>
