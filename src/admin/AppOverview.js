@@ -11,7 +11,7 @@ const AppOverview = () => {
   return (
     <Card sx={{ maxWidth: "650px", p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={2}>
-        Items
+        Overview
       </Typography>
       <Grid container spacing={5} sx={{ fontSize: ".875rem" }}>
         <Grid item xs={6} sm={3}>
