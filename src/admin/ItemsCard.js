@@ -26,13 +26,21 @@ const ItemsCard = () => {
       .sort((a, b) => (a.name > b.name ? 1 : -1))
   }
 
+  const visibleItems = getVisibleItems(selectItems())
+
   return (
     <Card sx={{ minHeight: "400px", p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={2}>
         Items
       </Typography>
       <ItemsActionBar textFilter={textFilter} setTextFilter={setTextFilter} />
-      <ItemsTable visibleItems={getVisibleItems(selectItems())} />
+      {visibleItems.length > 0 ? (
+        <ItemsTable visibleItems={visibleItems} />
+      ) : (
+        <Typography pt={10} textAlign="center">
+          No items found
+        </Typography>
+      )}
     </Card>
   )
 }
