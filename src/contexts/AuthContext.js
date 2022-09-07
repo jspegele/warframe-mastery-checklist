@@ -23,15 +23,16 @@ export const AuthProvider = (props) => {
       })
   }
 
+  const selectUser = () => authState
   const selectUid = () => authState.uid
 
   return (
     <AuthContext.Provider
       value={{
-        authState,
         setAuthState,
         clearAuthState,
         handleSignOut,
+        selectUser,
         selectUid,
       }}
     >

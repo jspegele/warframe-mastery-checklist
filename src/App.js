@@ -16,13 +16,12 @@ const App = () => {
   useEffect(() => {
     startSetItems()
     auth.onAuthStateChanged(async (user) => {
-      console.log("render")
-        if (user) {
-          setAuthState(user)
-          setRenderApp(true)
-        } else {
-          setRenderApp(true)
-        }
+      if (user) {
+        setAuthState(user)
+        setRenderApp(true)
+      } else {
+        setRenderApp(true)
+      }
     })
   }, [])
 
