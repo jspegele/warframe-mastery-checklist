@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 
 import { Card, Grid, Stack, Typography } from "@mui/material"
 
-import { ItemsContext } from "../contexts/ItemsContext"
+import { ItemsContext } from "../../contexts/ItemsContext"
 
 const AppOverview = () => {
   const { selectItems } = useContext(ItemsContext)

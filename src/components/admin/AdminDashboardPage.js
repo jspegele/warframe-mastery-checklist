@@ -3,7 +3,7 @@ import React from "react"
 import { Stack, Typography } from "@mui/material"
 
 import AppOverview from "./AppOverview"
-import ItemsCard from "./ItemsCard"
+import AdminTabs from "./AdminTabs"
 
 const AdminDashboardPage = () => {
   return (
@@ -15,7 +15,7 @@ const AdminDashboardPage = () => {
         Admin Dashboard
       </Typography>
       <AppOverview />
-      <ItemsCard />
+      <AdminTabs />
     </Stack>
   )
 }

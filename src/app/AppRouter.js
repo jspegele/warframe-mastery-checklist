@@ -8,7 +8,7 @@ import Layout from "../components/Layout"
 import DashboardPage from "../components/DashboardPage"
 import ChecklistPage from "../components/checklist/ChecklistPage"
 import LoginPage from "../components/login/LoginPage"
-import AdminDashboardPage from "../admin/AdminDashboardPage"
+import AdminDashboardPage from "../components/admin/AdminDashboardPage"
 
 export const history = createBrowserHistory()
 

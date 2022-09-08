@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Box } from "@mui/material"
 
-const ChecklistTabPanel = (props) => {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props
 
   return (
@@ -22,10 +22,10 @@ const ChecklistTabPanel = (props) => {
   )
 }
 
-ChecklistTabPanel.propTypes = {
+TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 }
 
-export default ChecklistTabPanel
+export default TabPanel

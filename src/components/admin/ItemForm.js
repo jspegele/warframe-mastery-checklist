@@ -25,7 +25,7 @@ import {
   sourceValues,
 } from "./admin-form-data"
 
-import { ItemsContext } from "../contexts/ItemsContext"
+import { ItemsContext } from "../../contexts/ItemsContext"
 
 const ItemForm = ({ item = {}, handleCloseModal }) => {
   const { startSetItem } = useContext(ItemsContext)

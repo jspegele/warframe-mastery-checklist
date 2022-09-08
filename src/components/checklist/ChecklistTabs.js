@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Box, Card, Tabs, Tab } from "@mui/material"
 
-import ChecklistTabPanel from "./ChecklistTabPanel"
+import TabPanel from "../common/TabPanel"
 import ChecklistTable from "./ChecklistTable"
 import OtherMastery from "./OtherMastery"
 
@@ -33,13 +33,13 @@ const ChecklistTabs = () => {
         </Tabs>
       </Box>
       {categories.map((category, i) => (
-        <ChecklistTabPanel  index={i} key={category} value={tabValue}>
+        <TabPanel  index={i} key={category} value={tabValue}>
           <ChecklistTable category={category} />
-        </ChecklistTabPanel>
+        </TabPanel>
       ))}
-      <ChecklistTabPanel index={categories.length} value={tabValue}>
+      <TabPanel index={categories.length} value={tabValue}>
         <OtherMastery />
-      </ChecklistTabPanel>
+      </TabPanel>
     </Card>
   )
 }
