@@ -4,7 +4,7 @@ import { Button, Stack, TextField, Typography } from "@mui/material"
 
 import ItemModal from "./ItemModal"
 
-const ItemsActionBar = ({ textFilter, setTextFilter }) => {
+const ItemsActionBar = ({ textFilter, setTextFilter, visibleItems }) => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleOpenModal = () => setModalOpen(true)
@@ -35,7 +35,7 @@ const ItemsActionBar = ({ textFilter, setTextFilter }) => {
           px: 1,
         }}
       >
-        Showing all items
+        Showing {visibleItems.length} items
       </Typography>
       <Button
         color="info"

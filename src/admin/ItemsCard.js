@@ -33,7 +33,11 @@ const ItemsCard = () => {
       <Typography component="h3" fontWeight="500" pb={2}>
         Items
       </Typography>
-      <ItemsActionBar textFilter={textFilter} setTextFilter={setTextFilter} />
+      <ItemsActionBar
+        textFilter={textFilter}
+        setTextFilter={setTextFilter}
+        visibleItems={visibleItems}
+      />
       {visibleItems.length > 0 ? (
         <ItemsTable visibleItems={visibleItems} />
       ) : (
