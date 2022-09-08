@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext } from "react"
 import { getDatabase, ref, get, set } from "firebase/database"
+import { DateTime } from "luxon"
 
 import { FiltersContext } from "./FiltersContext"
 
@@ -104,8 +105,9 @@ export const ChecklistProvider = (props) => {
     else ownedList = checklistState.owned.filter((id) => id !== itemId)
 
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + checklistState.listId + "/owned"
-      set(ref(database, preferencePath), ownedList)
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/owned"), ownedList)
         .then(() => {
           setOwnedList(ownedList)
           resolve("success")
@@ -124,8 +126,9 @@ export const ChecklistProvider = (props) => {
     else masteredList = checklistState.mastered.filter((id) => id !== itemId)
 
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + checklistState.listId + "/mastered"
-      set(ref(database, preferencePath), masteredList)
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/mastered"), masteredList)
         .then(() => {
           setMasteredList(masteredList)
           resolve("success")
@@ -147,8 +150,9 @@ export const ChecklistProvider = (props) => {
 
   const startSetItemLevel = (itemId, level) => {
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + checklistState.listId + "/levels/" + itemId
-      set(ref(database, preferencePath), level)
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/levels/" + itemId), level)
         .then(() => {
           setItemLevel(itemId, level)
           resolve("success")
@@ -163,8 +167,9 @@ export const ChecklistProvider = (props) => {
 
   const startSetStarChartMastery = (starChartMastery) => {
     return new Promise((resolve, reject) => {
-      const path = "checklists/" + checklistState.listId + "/starChartMastery"
-      set(ref(database, path), starChartMastery)
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/starChartMastery"), starChartMastery)
         .then(() => {
           setStarChartMastery(starChartMastery)
           resolve("success")
@@ -179,8 +184,9 @@ export const ChecklistProvider = (props) => {
 
   const startSetSteelPathMastery = (steelPathMastery) => {
     return new Promise((resolve, reject) => {
-      const path = "checklists/" + checklistState.listId + "/steelPathMastery"
-      set(ref(database, path), steelPathMastery)
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/steelPathMastery"), steelPathMastery)
         .then(() => {
           setSteelPathMastery(steelPathMastery)
           resolve("success")
@@ -198,8 +204,9 @@ export const ChecklistProvider = (props) => {
 
   const startSetIntrinsic = (intrinsic, value) => {
     return new Promise((resolve, reject) => {
-      const path = "checklists/" + checklistState.listId + "/intrinsics/" + intrinsic
-      set(ref(database, path), value)
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/intrinsics/" + intrinsic), value)
         .then(() => {
           setIntrinsic(intrinsic, value)
           resolve("success")

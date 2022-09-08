@@ -47,7 +47,6 @@ export const ItemsProvider = (props) => {
     const { id, ...restOfItem } = item
     return new Promise((resolve, reject) => {
       if (id) {
-        console.log('updating item')
         set(ref(database, "items/" + id), restOfItem)
           .then(() => {
             setItem(restOfItem, id)
@@ -55,7 +54,6 @@ export const ItemsProvider = (props) => {
           })
           .catch((error) => reject(error))
       } else {
-        console.log('creating new item')
         push(ref(database, "items/"), restOfItem)
           .then((response) => {
             setItem(restOfItem, response.key)

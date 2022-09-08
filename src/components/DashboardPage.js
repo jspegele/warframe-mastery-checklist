@@ -16,8 +16,10 @@ const DashboardPage = () => {
 
   const createChecklist = async () => {
     generateDescriptiveId().then((id) => {
-      console.log(id)
-      set(ref(database, `checklists/${id}/created/`), DateTime.now().toISO())
+      set(ref(database, `checklists/${id}`), {
+        created: DateTime.now().toISO(),
+        lastModified: DateTime.now().toISO()
+      })
         .then(() => {
           localStorage.setItem("checklists", JSON.stringify([...checklists, id]))
           navigate(`/list/${id}`)

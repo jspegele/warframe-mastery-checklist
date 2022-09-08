@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react"
 import { getDatabase, ref, set } from "firebase/database"
+import { DateTime } from "luxon"
 
 export const FiltersContext = createContext()
 
@@ -27,8 +28,9 @@ export const FiltersProvider = ({ children }) => {
 
   const startSetValue = (listId, preference, value) => {
     return new Promise((resolve, reject) => {
-      const preferencePath = "checklists/" + listId + "/preferences/" + preference
-      set(ref(database, preferencePath), value)
+      const listPath = "checklists/" + listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/preferences/" + preference), value)
         .then(() => {
           setValue(preference, value)
           resolve("success")
