@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 
 import {
   Autocomplete,
@@ -8,13 +8,16 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material"
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
 import {
   categoryValues,
@@ -43,6 +46,14 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
   })
   const [sourceValue, setSourceValue] = useState({ value: item.source || "" })
   const [sourceInputValue, setSourceInputValue] = useState(item.source || "")
+  const [copyTitle, setCopyTitle] = useState("Copy ID")
+  const instance = useRef({ timer: 0 })
+
+  // Timer cleanup
+  useEffect(() => {
+    const timer = instance.current.timer
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     setValues((prevState) => ({
@@ -59,6 +70,15 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
     setValues((prevState) => ({ ...prevState, [prop]: e.target.checked }))
   }
 
+  const handleCopy = (id) => {
+    navigator.clipboard.writeText(id)
+    setCopyTitle("Copied!")
+    clearTimeout(instance.current.timer)
+    instance.current.timer = setTimeout(() => {
+      setCopyTitle("Copy ID")
+    }, 2000)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     startSetItem({ ...item, ...values, source: sourceInputValue })
@@ -67,7 +87,14 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Typography fontSize=".875rem" pb={2}>{item.id}</Typography>
+      <Stack alignItems="center" direction="row" pb={2} spacing={1}>
+        <Typography fontSize=".875rem">{item.id}</Typography>
+        <Tooltip title={copyTitle}>
+          <IconButton aria-label="Copy Id" onClick={handleCopy} size="small">
+            <ContentCopyIcon sx={{ fontSize: "1rem" }} />
+          </IconButton>
+        </Tooltip>
+      </Stack>
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
           <TextField
