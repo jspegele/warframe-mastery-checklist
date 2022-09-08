@@ -85,13 +85,11 @@ const ItemsTable = ({ visibleItems }) => {
                   <TableCell align="center">
                     <Stack direction="row" justifyContent="center" spacing={0.5}>
                       {item.prime && (
-                        <Tooltip title="Prime">
-                          <Typography fontWeight="500">P</Typography>
-                        </Tooltip>
-                      )}
-                      {item.vaulted && (
-                        <Tooltip title="Vaulted">
-                          <Typography>(V)</Typography>
+                        <Tooltip title={`Prime${item.vaulted ? ` (vaulted)` : ""}`}>
+                          <Box>
+                            <Typography component="span" fontWeight="500">P</Typography>
+                            {item.vaulted && <Typography component="span"> (V)</Typography>}
+                          </Box>
                         </Tooltip>
                       )}
                     </Stack>
