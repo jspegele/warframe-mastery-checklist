@@ -13,6 +13,13 @@ const Lists = () => {
 
   const getVisibleLists = (lists) => {
     return lists
+      .filter((list) => {
+        const needle = textFilter.toLowerCase()
+        return (
+          list.id.toLowerCase().includes(needle) ||
+          list.nickname?.toLowerCase().includes(needle)
+        )
+      })
   }
 
   const visibleLists = getVisibleLists(selectAllChecklists())
