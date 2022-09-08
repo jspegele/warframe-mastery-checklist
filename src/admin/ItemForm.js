@@ -67,6 +67,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
+      <Typography fontSize=".875rem" pb={2}>{item.id}</Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
           <TextField

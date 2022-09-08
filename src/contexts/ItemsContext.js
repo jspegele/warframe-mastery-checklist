@@ -39,7 +39,7 @@ export const ItemsProvider = (props) => {
   const setItem = (item, id) => {
     setItemsState(prevState => ([
       ...prevState.filter(prevItem => prevItem.id !== id),
-      item
+      { id, ...item }
     ]))
   }
 
@@ -47,7 +47,6 @@ export const ItemsProvider = (props) => {
     const { id, ...restOfItem } = item
     return new Promise((resolve, reject) => {
       const preferencePath = "items/" + id
-      console.log(preferencePath, restOfItem)
       set(ref(database, preferencePath), restOfItem)
         .then(() => {
           setItem(restOfItem, id)
