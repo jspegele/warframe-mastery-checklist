@@ -54,6 +54,7 @@ const ListsTable = ({ visibleLists }) => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Created</TableCell>
+              <TableCell>Last Modified</TableCell>
               <TableCell>Owned</TableCell>
               <TableCell>Mastered</TableCell>
               <TableCell>Intrinsics</TableCell>
@@ -69,6 +70,10 @@ const ListsTable = ({ visibleLists }) => {
                   <TableCell>
                     {list.created &&
                         DateTime.fromISO(list.created).toFormat("yyyy-LL-dd")}
+                  </TableCell>
+                  <TableCell>
+                    {list.lastModified &&
+                        DateTime.fromISO(list.lastModified).toFormat("yyyy-LL-dd")}
                   </TableCell>
                   <TableCell>{list.owned && list.owned.length}</TableCell>
                   <TableCell>{list.mastered && list.mastered.length}</TableCell>
