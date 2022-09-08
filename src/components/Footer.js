@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material"
 
 const Footer = () => {
   return (
-    <Box py={2} textAlign="right">
+    <Box pb={2} pt={6} textAlign="right">
       <Typography>
         Created by{" "}
         <a href="https://justinspegele.com" target="_blank" rel="noreferrer">
