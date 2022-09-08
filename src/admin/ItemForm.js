@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import {
   Autocomplete,
@@ -25,15 +25,31 @@ import {
   sourceValues,
 } from "./admin-form-data"
 
+import { ItemsContext } from "../contexts/ItemsContext"
+
 const ItemForm = ({ item, handleCloseModal }) => {
-  const [values, setValues] = useState({ ...item })
+  const { startSetItem } = useContext(ItemsContext)
+  const [values, setValues] = useState({
+    name: item.name || "",
+    category: item.category || "",
+    slot: item.slot || "",
+    type: item.type || "",
+    prime: item.prime === true || item.prime === false ? item.prime : false,
+    vaulted: item.vaulted === true || item.vaulted === false ? item.vaulted : false,
+    link: item.link || "",
+    mr: item.mr ? parseInt(item.mr) : 0,
+    mastery: item.mastery ? parseInt(item.mastery) : 3000,
+    source: item.source || "",
+  })
   const [sourceValue, setSourceValue] = useState({ value: item.source })
   const [sourceInputValue, setSourceInputValue] = useState()
 
   useEffect(() => {
-    setValues((prevState) => ({ ...prevState, link: 'https://warframe.fandom.com/wiki/' + values.name.replace(' ', '_') }))
-    
-  }, [values.name]);
+    setValues((prevState) => ({
+      ...prevState,
+      link: "https://warframe.fandom.com/wiki/" + values.name.replace(" ", "_"),
+    }))
+  }, [values.name])
 
   const onValueChange = (prop) => (e) => {
     setValues((prevState) => ({ ...prevState, [prop]: e.target.value }))
@@ -43,7 +59,11 @@ const ItemForm = ({ item, handleCloseModal }) => {
     setValues((prevState) => ({ ...prevState, [prop]: e.target.checked }))
   }
 
-  const handleSubmit = () => {}
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    startSetItem({ ...item, ...values, source: sourceInputValue })
+    handleCloseModal()
+  }
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
@@ -85,7 +105,9 @@ const ItemForm = ({ item, handleCloseModal }) => {
           <FormControl fullWidth size="small">
             <InputLabel id="slot-select-label">Slot</InputLabel>
             <Select
-              disabled={!["Companion", "Weapon", "Vehicle"].includes(values.category)}
+              disabled={
+                !["Companion", "Weapon", "Vehicle"].includes(values.category)
+              }
               id="slot-select"
               label="Slot"
               labelId="slot-select-label"
@@ -110,7 +132,9 @@ const ItemForm = ({ item, handleCloseModal }) => {
           <FormControl fullWidth size="small">
             <InputLabel id="type-select-label">Type</InputLabel>
             <Select
-              disabled={!["Companion", "Weapon", "Vehicle"].includes(values.category)}
+              disabled={
+                !["Companion", "Weapon", "Vehicle"].includes(values.category)
+              }
               id="type-select"
               label="Type"
               labelId="type-select-label"
@@ -133,13 +157,23 @@ const ItemForm = ({ item, handleCloseModal }) => {
         </Grid>
         <Grid item xs={12} md={2}>
           <FormControlLabel
-            control={<Checkbox checked={values.prime === true} onChange={onCheckboxChange("prime")} />}
+            control={
+              <Checkbox
+                checked={values.prime === true}
+                onChange={onCheckboxChange("prime")}
+              />
+            }
             label="Prime"
           />
         </Grid>
         <Grid item xs={12} md={2}>
           <FormControlLabel
-            control={<Checkbox checked={values.vaulted === true} onChange={onCheckboxChange("vaulted")} />}
+            control={
+              <Checkbox
+                checked={values.vaulted === true}
+                onChange={onCheckboxChange("vaulted")}
+              />
+            }
             label="Vaulted"
           />
         </Grid>
@@ -151,8 +185,14 @@ const ItemForm = ({ item, handleCloseModal }) => {
             size="small"
             value={values.link}
           />
-          <Typography fontSize=".875rem" pt={.5}>
-            Validate Link: {(values.link !== 'https://warframe.fandom.com/wiki/' && values.link !== '') && (<a href={values.link} target="_blank" rel="noopener noreferrer">{values.link}</a>)}
+          <Typography fontSize=".875rem" pt={0.5}>
+            Validate Link:{" "}
+            {values.link !== "https://warframe.fandom.com/wiki/" &&
+              values.link !== "" && (
+                <a href={values.link} target="_blank" rel="noopener noreferrer">
+                  {values.link}
+                </a>
+              )}
           </Typography>
         </Grid>
         <Grid item xs={12} md={2}>
@@ -194,7 +234,12 @@ const ItemForm = ({ item, handleCloseModal }) => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <Stack sx={{ alignItems: "center", flexDirection: { xs: "column", md: "row" } }}>
+          <Stack
+            sx={{
+              alignItems: "center",
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
             <Autocomplete
               fullWidth
               getOptionLabel={(option) => option.value}
@@ -204,14 +249,25 @@ const ItemForm = ({ item, handleCloseModal }) => {
               value={sourceValue}
               onChange={(e, newValue) => setSourceValue(newValue)}
               inputValue={sourceInputValue}
-              onInputChange={(e, newInputValue) => setSourceInputValue(newInputValue)}
+              onInputChange={(e, newInputValue) =>
+                setSourceInputValue(newInputValue)
+              }
             />
           </Stack>
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2}>
-            <Button color="primary" type="submit" variant="contained">Save</Button>
-            <Button color="inherit" onClick={handleCloseModal} type="button" variant="outlined">Cancel</Button>
+            <Button color="primary" type="submit" variant="contained">
+              Save
+            </Button>
+            <Button
+              color="inherit"
+              onClick={handleCloseModal}
+              type="button"
+              variant="outlined"
+            >
+              Cancel
+            </Button>
           </Stack>
         </Grid>
       </Grid>

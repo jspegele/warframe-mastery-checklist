@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react"
-import { getDatabase, ref, get } from "firebase/database"
+import { getDatabase, ref, get, set } from "firebase/database"
 
 export const ItemsContext = createContext()
 
@@ -36,6 +36,27 @@ export const ItemsProvider = (props) => {
     })
   }
 
+  const setItem = (item, id) => {
+    setItemsState(prevState => ([
+      ...prevState.filter(prevItem => prevItem.id !== id),
+      item
+    ]))
+  }
+
+  const startSetItem = (item) => {
+    const { id, ...restOfItem } = item
+    return new Promise((resolve, reject) => {
+      const preferencePath = "items/" + id
+      console.log(preferencePath, restOfItem)
+      set(ref(database, preferencePath), restOfItem)
+        .then(() => {
+          setItem(restOfItem, id)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
+
   const selectItems = () => itemsState
   const selectItemsByCategory = (category) =>
     itemsState.filter((item) => item.category === category)
@@ -45,6 +66,7 @@ export const ItemsProvider = (props) => {
       value={{
         clearItemsState,
         startSetItems,
+        startSetItem,
         selectItems,
         selectItemsByCategory,
       }}
