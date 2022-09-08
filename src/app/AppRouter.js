@@ -9,6 +9,7 @@ import DashboardPage from "../components/DashboardPage"
 import ChecklistPage from "../components/checklist/ChecklistPage"
 import LoginPage from "../components/login/LoginPage"
 import AdminDashboardPage from "../components/admin/AdminDashboardPage"
+import AdminChecklistsProvider from "../contexts/AdminChecklistsContext"
 
 export const history = createBrowserHistory()
 
@@ -59,7 +60,9 @@ const AppRouter = () => {
       <Route
         element={
           <RequireAuth>
-            <Layout />
+            <AdminChecklistsProvider>
+              <Layout />
+            </AdminChecklistsProvider>
           </RequireAuth>
         }
       >
