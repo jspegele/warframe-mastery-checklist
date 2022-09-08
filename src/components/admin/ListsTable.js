@@ -70,10 +70,8 @@ const ListsTable = ({ visibleLists }) => {
           return a.created > b.created ? 1 : -1
         if (orderBy === "created" && order === "desc")
           return a.created < b.created ? 1 : -1
-        if (orderBy === "lastModified" && order === "asc") {
-          console.log('here')
+        if (orderBy === "lastModified" && order === "asc")
           return a.lastModified > b.lastModified ? 1 : -1
-        }
         if (orderBy === "lastModified" && order === "desc")
           return a.lastModified < b.lastModified ? 1 : -1
         if (orderBy === "owned" && order === "asc")
