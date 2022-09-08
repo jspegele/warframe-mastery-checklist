@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import {
   Box,
   Card,
+  Chip,
   Grid,
   Skeleton,
   Stack,
@@ -117,6 +118,11 @@ const Invasions = ({ elevation = 1 }) => {
             )
           })}
       </Grid>
+      <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
+        <Chip label="Grineer" size="small" sx={{ backgroundColor: "error.dark" }} />
+        <Chip label="Corpus" size="small" sx={{ backgroundColor: "info.dark" }} />
+        <Chip label="Infested" size="small" sx={{ backgroundColor: "success.dark" }} />
+      </Stack>
     </Card>
   )
 }
