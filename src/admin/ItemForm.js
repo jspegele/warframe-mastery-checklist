@@ -27,7 +27,7 @@ import {
 
 import { ItemsContext } from "../contexts/ItemsContext"
 
-const ItemForm = ({ item, handleCloseModal }) => {
+const ItemForm = ({ item = {}, handleCloseModal }) => {
   const { startSetItem } = useContext(ItemsContext)
   const [values, setValues] = useState({
     name: item.name || "",
@@ -41,8 +41,8 @@ const ItemForm = ({ item, handleCloseModal }) => {
     mastery: item.mastery ? parseInt(item.mastery) : 3000,
     source: item.source || "",
   })
-  const [sourceValue, setSourceValue] = useState({ value: item.source })
-  const [sourceInputValue, setSourceInputValue] = useState()
+  const [sourceValue, setSourceValue] = useState({ value: item.source || "" })
+  const [sourceInputValue, setSourceInputValue] = useState(item.source || "")
 
   useEffect(() => {
     setValues((prevState) => ({
