@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react"
+import React, { createContext, useEffect, useState } from "react"
 import { getDatabase, ref, get } from "firebase/database"
 
 export const AdminChecklistsContext = createContext()
@@ -32,8 +32,16 @@ export const AdminChecklistsProvider = (props) => {
         })
     })
   }
+  
+  useEffect(() => {
+    startSetAdminChecklists()
+  }, [])
 
-  startSetAdminChecklists()
+  const removeChecklist = (listId) => {
+    setAdminChecklistsState((prevState) => [
+      ...prevState.filter((prevList) => prevList.id !== listId),
+    ])
+  }
 
   const selectAllChecklists = () => adminChecklistsState
 
@@ -41,7 +49,8 @@ export const AdminChecklistsProvider = (props) => {
     <AdminChecklistsContext.Provider
       value={{
         startSetAdminChecklists,
-        selectAllChecklists
+        removeChecklist,
+        selectAllChecklists,
       }}
     >
       {props.children}

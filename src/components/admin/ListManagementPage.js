@@ -23,55 +23,6 @@ const ListManagementPage = () => {
     })
   }
 
-  const getAllEmptyLists = () => {
-    get(ref(database, "checklists")).then((snap) => {
-      const checklistArray = []
-      for (const [key, value] of Object.entries(snap.val())) {
-        if (
-          Object.keys(value).length === 1 &&
-          value.hasOwnProperty("created")
-        ) {
-          checklistArray.push({
-            num_properties: Object.keys(value).length,
-            id: key,
-            ...value,
-          })
-        }
-      }
-      setLists(checklistArray)
-    })
-  }
-
-  const removeAllEmptyLists = () => {
-    get(ref(database, "checklists")).then((snap) => {
-      for (const [key, value] of Object.entries(snap.val())) {
-        if (
-          Object.keys(value).length === 1 &&
-          value.hasOwnProperty("created")
-        ) {
-          remove(ref(database, "checklists/" + key))
-          console.log(key + "removed")
-        }
-      }
-    })
-  }
-
-  const getAllListsWithNothingOwned = () => {
-    get(ref(database, "checklists")).then((snap) => {
-      const checklistArray = []
-      for (const [key, value] of Object.entries(snap.val())) {
-        if (!value.hasOwnProperty("owned")) {
-          checklistArray.push({
-            num_properties: Object.keys(value).length,
-            id: key,
-            ...value,
-          })
-        }
-      }
-      setLists(checklistArray)
-    })
-  }
-
   const deleteList = (id) => {
     remove(ref(database, "checklists/" + id)).then(() => {
       setLists(prevState => [...prevState.filter(list => list.id !== id)])
