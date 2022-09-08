@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 
-import { Box, Table, TableContainer, Typography } from "@mui/material"
+import { Box, Table, TableContainer, TablePagination, Typography } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 
 import { ItemsContext } from "../../contexts/ItemsContext"
@@ -17,8 +17,19 @@ const ChecklistTable = ({ category }) => {
   const items = selectItemsByCategory(category)
   const checklist = selectChecklist()
 
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(25)
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   const getVisibleItems = () => {
     const filters = selectFilters()
@@ -77,6 +88,7 @@ const ChecklistTable = ({ category }) => {
           return a.source < b.source ? 1 : -1
         return 1
       })
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
   }
 
   const visibleItems = getVisibleItems()
@@ -116,6 +128,15 @@ const ChecklistTable = ({ category }) => {
               <ChecklistTableBody items={visibleItems} />
             </Table>
           </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[25, 50, 100]}
+            component="div"
+            count={items.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </>
       )}
     </Box>
