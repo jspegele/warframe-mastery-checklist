@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { Modal, Stack, Typography } from '@mui/material';
+import { IconButton, Modal, Stack, Tooltip, Typography } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+
 import ItemForm from "./ItemForm";
 
 const style = {
@@ -16,7 +18,24 @@ const style = {
   width: "80%",
 };
 
-const ItemModal = ({ item, modalOpen, handleCloseModal }) => {
+const ItemModal = ({ item = null, modalOpen, handleCloseModal }) => {
+  const [copyTitle, setCopyTitle] = useState("Copy ID")
+  const instance = useRef({ timer: 0 })
+
+  // Timer cleanup
+  useEffect(() => {
+    const timer = instance.current.timer
+    return () => clearTimeout(timer)
+  }, [])
+
+  const handleCopy = (id) => {
+    navigator.clipboard.writeText(id)
+    setCopyTitle("Copied!")
+    clearTimeout(instance.current.timer)
+    instance.current.timer = setTimeout(() => {
+      setCopyTitle("Copy ID")
+    }, 2000)
+  }
 
   return (
     <Modal
@@ -26,13 +45,25 @@ const ItemModal = ({ item, modalOpen, handleCloseModal }) => {
       aria-describedby="modal-modal-description"
     >
       <Stack spacing={4} sx={style}>
-        <Typography component="h3" fontWeight="500">
-          Edit Item
-        </Typography>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography component="h3" fontWeight="500">
+            {item ? "Edit Item" : "Add Item"}
+          </Typography>
+          {item && (
+            <Stack alignItems="center" direction="row" spacing={1}>
+              <Typography fontSize=".875rem">{item.id}</Typography>
+              <Tooltip title={copyTitle}>
+                <IconButton aria-label="Copy Id" onClick={() => handleCopy(item.id)}>
+                  <ContentCopyIcon sx={{ fontSize: "1rem" }} />
+                </IconButton>
+              </Tooltip>
+            </Stack>
+          )}
+        </Stack>
         <ItemForm item={item} handleCloseModal={handleCloseModal} />
       </Stack>
     </Modal>
-  );
+  )
 }
 
 export default ItemModal

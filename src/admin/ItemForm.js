@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import {
   Autocomplete,
@@ -8,16 +8,13 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   Stack,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material"
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
 import {
   categoryValues,
@@ -33,27 +30,20 @@ import { ItemsContext } from "../contexts/ItemsContext"
 const ItemForm = ({ item = {}, handleCloseModal }) => {
   const { startSetItem } = useContext(ItemsContext)
   const [values, setValues] = useState({
-    name: item.name || "",
-    category: item.category || "",
-    slot: item.slot || "",
-    type: item.type || "",
-    prime: item.prime === true || item.prime === false ? item.prime : false,
-    vaulted: item.vaulted === true || item.vaulted === false ? item.vaulted : false,
-    link: item.link || "",
-    mr: item.mr ? parseInt(item.mr) : 0,
-    mastery: item.mastery ? parseInt(item.mastery) : 3000,
-    source: item.source || "",
+    id: item?.id || null,
+    name: item?.name || "",
+    category: item?.category || "",
+    slot: item?.slot || "",
+    type: item?.type || "",
+    prime: item?.prime === true || item?.prime === false ? item?.prime : false,
+    vaulted: item?.vaulted === true || item?.vaulted === false ? item?.vaulted : false,
+    link: item?.link || "",
+    mr: item?.mr ? parseInt(item.mr) : 0,
+    mastery: item?.mastery ? parseInt(item.mastery) : 3000,
+    source: item?.source || "",
   })
-  const [sourceValue, setSourceValue] = useState({ value: item.source || "" })
-  const [sourceInputValue, setSourceInputValue] = useState(item.source || "")
-  const [copyTitle, setCopyTitle] = useState("Copy ID")
-  const instance = useRef({ timer: 0 })
-
-  // Timer cleanup
-  useEffect(() => {
-    const timer = instance.current.timer
-    return () => clearTimeout(timer)
-  }, [])
+  const [sourceValue, setSourceValue] = useState({ value: item?.source || "" })
+  const [sourceInputValue, setSourceInputValue] = useState(item?.source || "")
 
   useEffect(() => {
     setValues((prevState) => ({
@@ -70,15 +60,6 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
     setValues((prevState) => ({ ...prevState, [prop]: e.target.checked }))
   }
 
-  const handleCopy = (id) => {
-    navigator.clipboard.writeText(id)
-    setCopyTitle("Copied!")
-    clearTimeout(instance.current.timer)
-    instance.current.timer = setTimeout(() => {
-      setCopyTitle("Copy ID")
-    }, 2000)
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     startSetItem({ ...item, ...values, source: sourceInputValue })
@@ -87,14 +68,6 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
-      <Stack alignItems="center" direction="row" pb={2} spacing={1}>
-        <Typography fontSize=".875rem">{item.id}</Typography>
-        <Tooltip title={copyTitle}>
-          <IconButton aria-label="Copy Id" onClick={handleCopy} size="small">
-            <ContentCopyIcon sx={{ fontSize: "1rem" }} />
-          </IconButton>
-        </Tooltip>
-      </Stack>
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
           <TextField

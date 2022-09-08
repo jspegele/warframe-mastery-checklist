@@ -1,8 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { Button, Stack, TextField, Typography } from "@mui/material"
 
+import ItemModal from "./ItemModal"
+
 const ItemsActionBar = ({ textFilter, setTextFilter }) => {
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const handleOpenModal = () => setModalOpen(true)
+  const handleCloseModal = () => setModalOpen(false)
+
   const onTextFilterChange = (e) => setTextFilter(e.target.value)
 
   return (
@@ -32,6 +39,7 @@ const ItemsActionBar = ({ textFilter, setTextFilter }) => {
       </Typography>
       <Button
         color="info"
+        onClick={handleOpenModal}
         variant="contained"
         sx={{
           flexShrink: 0,
@@ -41,6 +49,7 @@ const ItemsActionBar = ({ textFilter, setTextFilter }) => {
       >
         Add New Item
       </Button>
+      <ItemModal modalOpen={modalOpen} handleCloseModal={handleCloseModal} />
     </Stack>
   )
 }

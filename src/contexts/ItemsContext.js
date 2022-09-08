@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react"
-import { getDatabase, ref, get, set } from "firebase/database"
+import { getDatabase, ref, get, set, push } from "firebase/database"
 
 export const ItemsContext = createContext()
 
@@ -46,13 +46,24 @@ export const ItemsProvider = (props) => {
   const startSetItem = (item) => {
     const { id, ...restOfItem } = item
     return new Promise((resolve, reject) => {
-      const preferencePath = "items/" + id
-      set(ref(database, preferencePath), restOfItem)
-        .then(() => {
-          setItem(restOfItem, id)
-          resolve("success")
-        })
-        .catch((error) => reject(error))
+      if (id) {
+        console.log('updating item')
+        set(ref(database, "items/" + id), restOfItem)
+          .then(() => {
+            setItem(restOfItem, id)
+            resolve("success")
+          })
+          .catch((error) => reject(error))
+      } else {
+        console.log('creating new item')
+        push(ref(database, "items/"), restOfItem)
+          .then((response) => {
+            setItem(restOfItem, response.key)
+            resolve("success")
+          })
+          .catch((error) => reject(error))
+      }
+      
     })
   }
 
