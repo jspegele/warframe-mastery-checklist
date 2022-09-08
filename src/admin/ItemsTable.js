@@ -14,12 +14,22 @@ import {
   Typography,
 } from "@mui/material"
 
+import ItemModal from "./ItemModal"
+
 const ItemsTable = ({ visibleItems }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(25)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [currentItem, setCurrentItem] = useState(null)
 
-  const handleOpenItem = (event, name) => {
+  const handleOpenModal = (item) => {
+    setCurrentItem(item)
+    setModalOpen(true)
+  }
 
+  const handleCloseModal = () => {
+    setCurrentItem(null)
+    setModalOpen(false)
   }
 
   const handleChangePage = (event, newPage) => {
@@ -61,7 +71,7 @@ const ItemsTable = ({ visibleItems }) => {
               .map((item) => (
                 <TableRow
                   hover
-                  onClick={(event) => handleOpenItem(event, item.name)}
+                  onClick={() => handleOpenModal(item)}
                   tabIndex={-1}
                   key={item.id}
                 >
@@ -109,6 +119,7 @@ const ItemsTable = ({ visibleItems }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <ItemModal item={currentItem} modalOpen={modalOpen} handleCloseModal={handleCloseModal} />
     </Box>
   )
 }

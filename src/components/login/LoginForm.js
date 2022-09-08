@@ -145,7 +145,7 @@ const LoginForm = () => {
         />
         <FormHelperText>{formValues.passwordError}</FormHelperText>
       </FormControl>
-      <Button color="info" type="submit" variant="contained">
+      <Button color="primary" type="submit" variant="contained">
         LOGIN
       </Button>
     </Stack>
