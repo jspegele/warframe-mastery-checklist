@@ -3,12 +3,12 @@ import React from "react"
 import { Stack } from "@mui/material"
 
 import StarChartMastery from "./StarChartMastery"
-import IntrinsicsMastery from "./IntrinsicsMastery"
+import RailjackMastery from "./RailjackMastery"
 
 const OtherMastery = () => (
   <Stack spacing={5}>
     <StarChartMastery />
-    <IntrinsicsMastery />
+    <RailjackMastery />
   </Stack>
 )
  

@@ -24,7 +24,7 @@ const headCells = [
     align: "left",
   },
   {
-    id: "lastModified",
+    id: "modified",
     isSortable: true,
     label: "Last Modified",
     align: "left",

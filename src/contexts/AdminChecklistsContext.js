@@ -17,8 +17,23 @@ export const AdminChecklistsProvider = (props) => {
           const dataArray = []
           if (snap.exists()) {
             for (const [key, value] of Object.entries(snap.val())) {
-              dataArray.push({
+              const initialList = {
                 id: key,
+                created: null,
+                lastModified: null,
+                owned: [],
+                mastered: [],
+                intrinsics: {
+                  command: 0,
+                  engineering: 0,
+                  gunnery: 0,
+                  piloting: 0,
+                  tactical: 0
+                }
+              }
+
+              dataArray.push({
+                ...initialList,
                 ...value,
               })
             }

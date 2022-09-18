@@ -22,6 +22,7 @@ const initialState = {
     engineering: 0,
     command: 0,
   },
+  plexusMastery: 0,
   preferences: {
     hideOwned: false,
     hideMastered: false,
@@ -215,6 +216,26 @@ export const ChecklistProvider = (props) => {
     })
   }
 
+  const setPlexusMastery = (value) => {
+    setChecklistState((prevState) => ({
+      ...prevState,
+      plexusMastery: value
+    }))
+  }
+
+  const startSetPlexusMastery = (value) => {
+    return new Promise((resolve, reject) => {
+      const listPath = "checklists/" + checklistState.listId
+      set(ref(database, listPath + "/lastModified"), DateTime.now().toISO())
+      set(ref(database, listPath + "/plexusMastery"), value)
+        .then(() => {
+          setPlexusMastery(value)
+          resolve("success")
+        })
+        .catch((error) => reject(error))
+    })
+  }
+
   const selectChecklist = () => checklistState
   const selectChecklistId = () => checklistState.listId
   const selectChecklistPreferences = () => checklistState.preferences
@@ -223,8 +244,10 @@ export const ChecklistProvider = (props) => {
     starChartMastery: checklistState.starChartMastery,
     steelPathMastery: checklistState.steelPathMastery,
     intrinsics: checklistState.intrinsics,
+    plexusMastery: checklistState.plexusMastery,
   })
   const selectIntrinsics = () => checklistState.intrinsics
+  const selectPlexusMastery = () => checklistState.plexusMastery
 
   return (
     <ChecklistContext.Provider
@@ -237,11 +260,14 @@ export const ChecklistProvider = (props) => {
         startSetStarChartMastery,
         startSetSteelPathMastery,
         startSetIntrinsic,
+        setPlexusMastery,
+        startSetPlexusMastery,
         selectChecklist,
         selectChecklistId,
         selectChecklistPreferences,
         selectChecklistMastery,
         selectIntrinsics,
+        selectPlexusMastery,
       }}
     >
       {props.children}

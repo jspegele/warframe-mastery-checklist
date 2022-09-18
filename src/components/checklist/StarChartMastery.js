@@ -88,7 +88,7 @@ const StarChartMastery = () => {
           sx={{ alignItems: "center", display: "flex" }}
         >
           <Typography component="span" fontSize=".875rem">
-            Star Chart
+            Normal
           </Typography>
         </Grid>
         <Grid item xs={12} sm={4} md={3} lg={2}>

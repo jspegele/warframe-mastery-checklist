@@ -53,8 +53,13 @@ const formatNumber = (num) => {
 
 const ChecklistMasteryOverview = () => {
   const { selectChecklistMastery } = useContext(ChecklistContext)
-  const { itemMastery, starChartMastery, steelPathMastery, intrinsics } =
-    selectChecklistMastery()
+  const {
+    itemMastery,
+    starChartMastery,
+    steelPathMastery,
+    intrinsics,
+    plexusMastery,
+  } = selectChecklistMastery()
 
   // total mastery from intrinsics
   let intrinsicsMastery = 0
@@ -63,7 +68,11 @@ const ChecklistMasteryOverview = () => {
   }
 
   const totalMastery =
-    itemMastery + starChartMastery + steelPathMastery + intrinsicsMastery
+    itemMastery +
+    starChartMastery +
+    steelPathMastery +
+    intrinsicsMastery +
+    plexusMastery
   const ranksAchieved = masteryRanks.filter(
     (rank) => totalMastery >= rank.mastery
   )
@@ -98,9 +107,15 @@ const ChecklistMasteryOverview = () => {
               fontSize: ".875rem",
               fontWeight: "500",
             }}
-          >MR{rank}</Typography>
-          <Typography sx={{ fontSize: ".875rem" }}>{formatNumber(toNextMR)} to next rank</Typography>
-          <Typography sx={{ fontSize: ".875rem", fontStyle: "italic" }}>~{numWeapons} weapons</Typography>
+          >
+            MR{rank}
+          </Typography>
+          <Typography sx={{ fontSize: ".875rem" }}>
+            {formatNumber(toNextMR)} to next rank
+          </Typography>
+          <Typography sx={{ fontSize: ".875rem", fontStyle: "italic" }}>
+            ~{numWeapons} weapons
+          </Typography>
         </Grid>
       </Grid>
     </Card>
