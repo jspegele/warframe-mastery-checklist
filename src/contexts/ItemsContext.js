@@ -44,6 +44,7 @@ export const ItemsProvider = (props) => {
   }
 
   const startSetItem = (item) => {
+    console.log(item)
     const { id, ...restOfItem } = item
     return new Promise((resolve, reject) => {
       if (id) {

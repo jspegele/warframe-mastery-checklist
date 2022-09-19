@@ -242,6 +242,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
             }}
           >
             <Autocomplete
+              freeSolo
               fullWidth
               getOptionLabel={(option) => option.value}
               id="controllable-states-demo"
