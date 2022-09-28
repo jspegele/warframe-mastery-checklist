@@ -62,7 +62,12 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    startSetItem({ ...item, ...values, source: sourceInputValue })
+    startSetItem({
+      ...item,
+      ...values,
+      source: sourceInputValue,
+      maxLevel: values.mastery === 3000 || values.mastery === 6000 ? 30 : 40,
+    })
     handleCloseModal()
   }
 
