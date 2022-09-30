@@ -94,7 +94,7 @@ const ChecklistMasteryOverview = () => {
   return (
     <Card sx={{ p: 3, width: "100%" }}>
       <Grid container spacing={1}>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Typography
             sx={{
               color: "text.secondary",
@@ -104,18 +104,18 @@ const ChecklistMasteryOverview = () => {
           >
             Mastery
           </Typography>
-          <Stack alignItems="center" direction="row" spacing={1}>
-            <Typography fontSize="1.25rem">
+          <Stack alignItems="center" direction="row" spacing={.5}>
+            <Typography fontSize="1.125rem">
               {formatNumber(totalMastery)}
             </Typography>
             <Tooltip title="View mastery breakdown">
               <IconButton onClick={handleOpenPopover}>
-                <InfoIcon sx={{ fontSize: "1.25rem" }} />
+                <InfoIcon sx={{ fontSize: "1.125rem" }} />
               </IconButton>
             </Tooltip>
           </Stack>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Typography
             sx={{
               color: "text.secondary",
@@ -125,7 +125,7 @@ const ChecklistMasteryOverview = () => {
           >
             MR{rank}
           </Typography>
-          <Typography sx={{ fontSize: ".875rem" }}>
+          <Typography sx={{ fontSize: "1.125rem" }}>
             {formatNumber(toNextMR)} to next rank
           </Typography>
           <Typography sx={{ fontSize: ".875rem", fontStyle: "italic" }}>
