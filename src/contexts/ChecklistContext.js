@@ -27,7 +27,7 @@ const initialState = {
     hideOwned: false,
     hideMastered: false,
     hideUnowned: false,
-  },
+  }
 }
 
 // Calculate and set user mastery value in store
@@ -51,6 +51,7 @@ const calculateItemMastery = (items, data) => {
           : 30 * masteryPerLevel
 
       itemMastery += newMastery
+
     }
   })
   return itemMastery
@@ -241,6 +242,8 @@ export const ChecklistProvider = (props) => {
   const selectChecklistPreferences = () => checklistState.preferences
   const selectChecklistMastery = () => ({
     itemMastery: checklistState.itemMastery,
+    masteredItemsIds: checklistState.mastered,
+    masteredItemsLevels: checklistState.levels,
     starChartMastery: checklistState.starChartMastery,
     steelPathMastery: checklistState.steelPathMastery,
     intrinsics: checklistState.intrinsics,

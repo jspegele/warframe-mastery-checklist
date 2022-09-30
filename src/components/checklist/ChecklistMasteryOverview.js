@@ -1,7 +1,10 @@
-import { Card, Grid, Typography } from "@mui/material"
 import React, { useContext } from "react"
 
+import { Card, Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material"
+import InfoIcon from "@mui/icons-material/Info"
+
 import { ChecklistContext } from "../../contexts/ChecklistContext"
+import ChecklistMasteryBreakdown from "./ChecklistMasteryBreakdown"
 
 const masteryRanks = [
   { rank: "0", mastery: 0 },
@@ -47,7 +50,7 @@ const masteryRanks = [
   { rank: "L10", mastery: 3725000 },
 ]
 
-const formatNumber = (num) => {
+export const formatNumber = (num) => {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
@@ -60,6 +63,11 @@ const ChecklistMasteryOverview = () => {
     intrinsics,
     plexusMastery,
   } = selectChecklistMastery()
+
+  // Popper
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const handleOpenPopover = (event) => setAnchorEl(event.currentTarget)
+  const handleClosePopover = () => setAnchorEl(null)
 
   // total mastery from intrinsics
   let intrinsicsMastery = 0
@@ -96,9 +104,16 @@ const ChecklistMasteryOverview = () => {
           >
             Mastery
           </Typography>
-          <Typography sx={{ fontSize: "1.25rem" }}>
-            {formatNumber(totalMastery)}
-          </Typography>
+          <Stack alignItems="center" direction="row" spacing={1}>
+            <Typography fontSize="1.25rem">
+              {formatNumber(totalMastery)}
+            </Typography>
+            <Tooltip title="View mastery breakdown">
+              <IconButton onClick={handleOpenPopover}>
+                <InfoIcon sx={{ fontSize: "1.25rem" }} />
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </Grid>
         <Grid item xs={6}>
           <Typography
@@ -118,6 +133,10 @@ const ChecklistMasteryOverview = () => {
           </Typography>
         </Grid>
       </Grid>
+      <ChecklistMasteryBreakdown
+        anchorEl={anchorEl}
+        handleClosePopover={handleClosePopover}
+      />
     </Card>
   )
 }
