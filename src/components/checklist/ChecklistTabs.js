@@ -22,9 +22,11 @@ const ChecklistTabs = () => {
     <Card sx={{ minHeight: "33vh", width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-          value={tabValue}
+          allowScrollButtonsMobile
+          aria-label="checklist tabs"
           onChange={handleTabChange}
-          aria-label="basic tabs example"
+          value={tabValue}
+          variant="scrollable"
         >
           {categories.map((category, i) => (
             <Tab key={category} label={`${category}s`} {...a11yProps(i)} />
