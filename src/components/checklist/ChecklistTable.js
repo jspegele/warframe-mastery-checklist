@@ -88,7 +88,6 @@ const ChecklistTable = ({ category }) => {
           return a.source < b.source ? 1 : -1
         return 1
       })
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
   }
 
   const visibleItems = getVisibleItems()
@@ -125,13 +124,13 @@ const ChecklistTable = ({ category }) => {
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}
               />
-              <ChecklistTableBody items={visibleItems} />
+              <ChecklistTableBody items={visibleItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)} />
             </Table>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[25, 50, 100]}
             component="div"
-            count={items.length}
+            count={visibleItems.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
