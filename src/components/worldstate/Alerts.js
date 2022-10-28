@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { DateTime } from "luxon"
 
-import { Card, Grid, Skeleton, Typography } from "@mui/material"
+import { Box, Card, Grid, Skeleton, Stack, Typography } from "@mui/material"
 
 import Timer from "./Timer"
 
@@ -67,25 +67,20 @@ const Alerts = ({ elevation = 1 }) => {
               const toExpiry = expiry.diff(DateTime.now().setZone("GMT"))
 
               return (
-                <React.Fragment key={alert.id}>
-                  <Grid item xs={8}>
-                    <Typography fontSize=".875rem" fontWeight="500">
-                      Alert
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} textAlign="right">
-                    <Typography fontSize=".875rem" fontWeight="500">
-                      Expires
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    `${alert.mission.description} (${alert.mission.node}/$
-                    {alert.mission.faction})`
-                  </Grid>
-                  <Grid item xs={4} textAlign="right">
-                    <Timer timeDiff={toExpiry} />
-                  </Grid>
-                </React.Fragment>
+                <Stack key={alert.id} direction="row" mb={2} spacing={1} width="100%">
+                  {alert.mission.reward.thumbnail ? (
+                    <Box component="img"src={alert.mission.reward.thumbnail} alt={alert.mission.reward.itemString} sx={{ alignSelf: "center", width: "100px" }} />
+                  ) : (
+                    <Box width="100px" />
+                  )}
+                  <Stack flexGrow="1">
+                    <Typography fontWeight="500">{alert.mission.node}</Typography>
+                    <Typography fontSize=".875rem">{alert.mission.type} - {alert.mission.faction}</Typography>
+                    <Typography fontSize=".875rem">Level: {alert.mission.minEnemyLevel} - {alert.mission.maxEnemyLevel}</Typography>
+                    <Typography fontSize=".875rem">Reward(s): {alert.mission.reward.asString}</Typography>
+                  </Stack>
+                  <Timer timeDiff={toExpiry} />
+                </Stack>
               )
             })}
       </Grid>
