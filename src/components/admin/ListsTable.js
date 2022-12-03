@@ -38,8 +38,12 @@ const ListsTable = ({ order, setOrder, orderBy, setOrderBy, visibleLists }) => {
 
   const deleteList = (id) => {
     if (window.confirm("Are you sure you want to delete this list?") === true) {
+      // Remove list from firebase
       remove(ref(database, "checklists/" + id)).then(() => {
-        removeChecklist(id)
+        // Remove id from secondary index
+        remove(ref(database, "checklists_index/" + id)).then(() => {
+          removeChecklist(id)
+        })
       })
     }
   }
