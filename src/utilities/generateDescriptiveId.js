@@ -14,7 +14,7 @@ export const generateDescriptiveId = () => {
   let descriptiveId = ''
 
   return new Promise((resolve, reject) => {
-    get(ref(database, "checklists"))
+    get(ref(database, "checklists_index"))
       .then((snap) => {
         if (!snap.exists()) reject("Unable to read from database")
 
