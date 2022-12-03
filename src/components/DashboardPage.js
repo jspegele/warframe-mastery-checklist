@@ -16,15 +16,21 @@ const DashboardPage = () => {
 
   const createChecklist = async () => {
     generateDescriptiveId().then((id) => {
+      // Set checklist data in firebase
       set(ref(database, `checklists/${id}`), {
         created: DateTime.now().toISO(),
         lastModified: DateTime.now().toISO()
       })
         .then(() => {
           localStorage.setItem("checklists", JSON.stringify([...checklists, id]))
-          navigate(`/list/${id}`)
+
+          // Add checklist id to secondary index then redirect user to list
+          set(ref(database, `checklists_index/${id}`), true)
+            .then(() => navigate(`/list/${id}`))
+            .catch((error) => console.log(error))
         })
         .catch((error) => console.log(error))
+        
     })
   }
 
