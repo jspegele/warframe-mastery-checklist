@@ -33,7 +33,6 @@ const loadItemsFromDatabase = () => {
   return new Promise((resolve, reject) => {
     get(ref(database, "items/"))
       .then((snap) => {
-        console.log("database call")
         const dataArray = []
         if (snap.exists()) {
           for (const [key, value] of Object.entries(snap.val())) {

@@ -16,7 +16,6 @@ export const SourcesProvider = (props) => {
     return new Promise((resolve, reject) => {
       get(ref(database, "sources/"))
         .then((snap) => {
-          console.log("database call")
           const dataArray = []
           if (snap.exists()) {
             for (const [key, value] of Object.entries(snap.val())) {

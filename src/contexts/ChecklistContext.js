@@ -70,7 +70,6 @@ export const ChecklistProvider = (props) => {
       get(ref(database, "checklists/" + listId))
         .then((snap) => {
           if (!snap.exists()) reject("Checklist not found")
-          console.log("database call")
 
           const data = snap.val()
           let itemMastery = 0
