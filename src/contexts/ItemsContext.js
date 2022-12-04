@@ -66,7 +66,6 @@ export const ItemsProvider = (props) => {
 
       // Local data not set, load from server
       if (!localDateText || !localDataSet) {
-        console.log("No local data found, loading server data")
         loadItemsFromDatabase()
           .then((data) => {
             setItemsState(data)
@@ -82,11 +81,9 @@ export const ItemsProvider = (props) => {
       get(ref(database, "itemsVersion"))
         .then((snap) => {
           const serverDateText = snap.val()
-          console.log("local", localDateText, " | server", serverDateText)
 
           // if local version is equal, load items from localStorage
           if (localDateText === serverDateText) {
-            console.log("load local data")
             loadItemsFromLocalStorage()
               .then((data) => {
                 setItemsState(data)
@@ -97,7 +94,6 @@ export const ItemsProvider = (props) => {
                 reject(error)
               })
           } else {
-            console.log("load server data")
             loadItemsFromDatabase()
               .then((data) => {
                 setItemsState(data)
