@@ -1,9 +1,56 @@
 import React, { useState, createContext } from "react"
 import { getDatabase, ref, get, set, push } from "firebase/database"
+import { DateTime } from "luxon"
 
 export const ItemsContext = createContext()
 
 const initialState = []
+
+const saveToLocalStorage = (items) => {
+  const database = getDatabase()
+
+  get(ref(database, "itemsVersion"))
+    .then((snap) => {
+      localStorage.setItem("checklistItems", JSON.stringify(items))
+      localStorage.setItem("checklistItemsVersion", JSON.stringify(snap.val()))
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+
+const loadItemsFromLocalStorage = () => {
+  return new Promise((resolve, reject) => {
+    if (localStorage.getItem("checklistItems") === null) reject("Local data not found")
+
+    resolve(JSON.parse(localStorage.getItem("checklistItems")))
+  })
+}
+
+const loadItemsFromDatabase = () => {
+  const database = getDatabase()
+
+  return new Promise((resolve, reject) => {
+    get(ref(database, "items/"))
+      .then((snap) => {
+        console.log("database call")
+        const dataArray = []
+        if (snap.exists()) {
+          for (const [key, value] of Object.entries(snap.val())) {
+            dataArray.push({
+              id: key,
+              ...value,
+            })
+          }
+        }
+        const sortedDataArray = dataArray.sort((a, b) => a.name > b.name)
+        resolve(sortedDataArray)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
 
 export const ItemsProvider = (props) => {
   const database = getDatabase()
@@ -14,36 +61,74 @@ export const ItemsProvider = (props) => {
 
   const startSetItems = () => {
     return new Promise((resolve, reject) => {
-      get(ref(database, "items/"))
+      // Compare versions, pull from db if local version is out of date
+      const localDateText = localStorage.getItem("checklistItemsVersion") ? JSON.parse(localStorage.getItem("checklistItemsVersion")) : null
+      const localDataSet = localStorage.getItem("checklistItems") ? true : false
+
+      // Local data not set, load from server
+      if (!localDateText || !localDataSet) {
+        console.log("No local data found, loading server data")
+        loadItemsFromDatabase()
+          .then((data) => {
+            setItemsState(data)
+            saveToLocalStorage(data)
+            resolve("success")
+          })
+          .catch((error) => {
+            console.error(error)
+            reject(error)
+          })
+      }
+      
+      get(ref(database, "itemsVersion"))
         .then((snap) => {
-          console.log("database call")
-          const dataArray = []
-          if (snap.exists()) {
-            for (const [key, value] of Object.entries(snap.val())) {
-              dataArray.push({
-                id: key,
-                ...value,
+          const serverDateText = snap.val()
+          console.log("local", localDateText, " | server", serverDateText)
+
+          // if local version is equal, load items from localStorage
+          if (localDateText === serverDateText) {
+            console.log("load local data")
+            loadItemsFromLocalStorage()
+              .then((data) => {
+                setItemsState(data)
+                resolve("success")
               })
-            }
+              .catch((error) => {
+                console.error(error)
+                reject(error)
+              })
+          } else {
+            console.log("load server data")
+            loadItemsFromDatabase()
+              .then((data) => {
+                setItemsState(data)
+                saveToLocalStorage(data)
+                resolve("success")
+              })
+              .catch((error) => {
+                console.error(error)
+                reject(error)
+              })
           }
-          setItemsState(dataArray.sort((a, b) => a.name > b.name))
-          resolve("success")
         })
         .catch((error) => {
           console.error(error)
-          reject(error)
         })
     })
   }
 
   const setItem = (item, id) => {
-    setItemsState(prevState => ([
-      ...prevState.filter(prevItem => prevItem.id !== id),
-      { id, ...item }
-    ]))
+    setItemsState((prevState) => [
+      ...prevState.filter((prevItem) => prevItem.id !== id),
+      { id, ...item },
+    ])
   }
 
   const startSetItem = (item) => {
+    // set version date
+    set(ref(database, "itemsVersion"), DateTime.now().toISO())
+
+    // set item
     const { id, ...restOfItem } = item
     return new Promise((resolve, reject) => {
       if (id) {
@@ -61,7 +146,6 @@ export const ItemsProvider = (props) => {
           })
           .catch((error) => reject(error))
       }
-      
     })
   }
 
