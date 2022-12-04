@@ -3,6 +3,7 @@ import { Box, Card, Tabs, Tab } from "@mui/material"
 
 import ChecklistTabPanel from "../common/TabPanel"
 import Items from "./Items"
+import Sources from "./Sources"
 import Lists from "./Lists"
 import APIItems from "./APIItems"
 
@@ -26,17 +27,21 @@ const AdminTabs = () => {
           aria-label="basic tabs example"
         >
           <Tab label="Items" {...a11yProps(0)} />
-          <Tab label="Lists" {...a11yProps(1)} />
-          <Tab label="API Items" {...a11yProps(2)} />
+          <Tab label="Sources" {...a11yProps(1)} />
+          <Tab label="Lists" {...a11yProps(2)} />
+          <Tab label="API Items" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <ChecklistTabPanel index={0} value={tabValue}>
         <Items />
       </ChecklistTabPanel>
       <ChecklistTabPanel index={1} value={tabValue}>
-        <Lists />
+        <Sources />
       </ChecklistTabPanel>
       <ChecklistTabPanel index={2} value={tabValue}>
+        <Lists />
+      </ChecklistTabPanel>
+      <ChecklistTabPanel index={3} value={tabValue}>
         <APIItems />
       </ChecklistTabPanel>
     </Card>

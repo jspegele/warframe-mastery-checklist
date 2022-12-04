@@ -1,20 +1,20 @@
 import React, { useState, createContext } from "react"
 import { getDatabase, ref, get, set, push } from "firebase/database"
 
-export const ItemsContext = createContext()
+export const SourcesContext = createContext()
 
 const initialState = []
 
-export const ItemsProvider = (props) => {
+export const SourcesProvider = (props) => {
   const database = getDatabase()
 
-  const [itemsState, setItemsState] = useState(initialState)
+  const [sourcesState, setSourcesState] = useState(initialState)
 
-  const clearItemsState = () => setItemsState(initialState)
+  const clearSourcesState = () => setSourcesState(initialState)
 
-  const startSetItems = () => {
+  const startSetSources = () => {
     return new Promise((resolve, reject) => {
-      get(ref(database, "items/"))
+      get(ref(database, "sources/"))
         .then((snap) => {
           console.log("database call")
           const dataArray = []
@@ -26,7 +26,7 @@ export const ItemsProvider = (props) => {
               })
             }
           }
-          setItemsState(dataArray.sort((a, b) => a.name > b.name))
+          setSourcesState(dataArray.sort((a, b) => a.name > b.name))
           resolve("success")
         })
         .catch((error) => {
@@ -36,27 +36,27 @@ export const ItemsProvider = (props) => {
     })
   }
 
-  const setItem = (item, id) => {
-    setItemsState(prevState => ([
-      ...prevState.filter(prevItem => prevItem.id !== id),
-      { id, ...item }
+  const setSource = (source, id) => {
+    setSourcesState(prevState => ([
+      ...prevState.filter(prevSource => prevSource.id !== id),
+      { id, ...source }
     ]))
   }
 
-  const startSetItem = (item) => {
-    const { id, ...restOfItem } = item
+  const startSetSource = (source) => {
+    const { id, ...restOfSource } = source
     return new Promise((resolve, reject) => {
       if (id) {
-        set(ref(database, "items/" + id), restOfItem)
+        set(ref(database, "sources/" + id), restOfSource)
           .then(() => {
-            setItem(restOfItem, id)
+            setSource(restOfSource, id)
             resolve("success")
           })
           .catch((error) => reject(error))
       } else {
-        push(ref(database, "items/"), restOfItem)
+        push(ref(database, "sources/"), restOfSource)
           .then((response) => {
-            setItem(restOfItem, response.key)
+            setSource(restOfSource, response.key)
             resolve("success")
           })
           .catch((error) => reject(error))
@@ -65,23 +65,20 @@ export const ItemsProvider = (props) => {
     })
   }
 
-  const selectItems = () => itemsState
-  const selectItemsByCategory = (category) =>
-    itemsState.filter((item) => item.category === category)
+  const selectSources = () => sourcesState
 
   return (
-    <ItemsContext.Provider
+    <SourcesContext.Provider
       value={{
-        clearItemsState,
-        startSetItems,
-        startSetItem,
-        selectItems,
-        selectItemsByCategory,
+        clearSourcesState,
+        startSetSources,
+        startSetSource,
+        selectSources,
       }}
     >
       {props.children}
-    </ItemsContext.Provider>
+    </SourcesContext.Provider>
   )
 }
 
-export default ItemsProvider
+export default SourcesProvider
