@@ -14,8 +14,9 @@ const WorldStateAccordion = () => (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
-      aria-controls="panel1a-content"
-      id="panel1a-header"
+      aria-controls="worldstate-panel-content"
+      id="worldstate-panel-header"
+      sx={{ color: "primary.main", '&:hover': { color: "primary.dark", 'svg': { color: "primary.dark" } }, 'svg': { color: "primary.main" }  }}
     >
       <Typography>Game News and Worldstate</Typography>
     </AccordionSummary>
