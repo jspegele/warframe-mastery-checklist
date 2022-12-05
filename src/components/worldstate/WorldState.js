@@ -9,6 +9,7 @@ import Alerts from './Alerts'
 import Invasions from './Invasions'
 import Arbitration from "./Arbitration"
 import Nightwave from "./Nightwave"
+import Sortie from "./Sortie"
 
 const WorldState = ({ elevation = 1 }) => {
   return (
@@ -23,6 +24,7 @@ const WorldState = ({ elevation = 1 }) => {
         <Grid item xs={12} sm={6}>
           <Stack spacing={2}>
             <DailyReset elevation={elevation} />
+            <Sortie elevation={elevation} />
             <WorldCycles elevation={elevation} />
             <News elevation={elevation} />
           </Stack>

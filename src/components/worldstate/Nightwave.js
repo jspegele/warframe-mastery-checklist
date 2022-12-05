@@ -73,7 +73,7 @@ const Nightwave = ({ elevation = 1 }) => {
             sx={{ marginLeft: 0, width: "100%" }}
           >
             {challenges.map((challenge) => (
-              <Grid item key={challenge.id} xs={15} sm={10} md={6}>
+              <Grid item key={challenge.id} xs={30} sm={15} md={10} lg={6}>
                 <Paper elevation={elevation + 1} sx={{ height: "100%", p: 1 }}>
                   <Typography fontWeight="500">{challenge.title}</Typography>
                   <Stack
