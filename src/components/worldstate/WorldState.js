@@ -14,7 +14,7 @@ const WorldState = ({ elevation = 1 }) => {
   return (
     <Box>
       <Typography component="h2" fontSize="1.25rem" fontWeight="500">
-        PC World State
+        World State
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
