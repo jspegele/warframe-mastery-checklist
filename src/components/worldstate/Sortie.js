@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { DateTime } from "luxon"
 
-import { Box, Card, Divider, Grid, Skeleton, Stack, Typography } from "@mui/material"
+import { Box, Card, Divider, Skeleton, Stack, Typography } from "@mui/material"
 
 import Timer from "./Timer"
 
@@ -44,7 +44,11 @@ const Sortie = ({ elevation = 1 }) => {
         </Typography>
         <Box sx={{ marginLeft: "auto !important" }}>
           {sortieInfo && sortieInfo.expiry && (
-            <Timer timeDiff={DateTime.fromISO(sortieInfo.expiry).diff(DateTime.now().setZone("GMT"))} />
+            <Timer
+              timeDiff={DateTime.fromISO(sortieInfo.expiry).diff(
+                DateTime.now().setZone("GMT")
+              )}
+            />
           )}
         </Box>
       </Stack>
@@ -54,43 +58,35 @@ const Sortie = ({ elevation = 1 }) => {
           sx={{ color: "grey.400", fontSize: "2rem", width: "100%" }}
         />
       )}
-      {isLoaded && error && (
-        "Unable to retreive sortie"
-      )}
-      {isLoaded && !error && sortieInfo.variants.length === 0 && (
-        "No active sortie"
-      )}
+      {isLoaded && error && "Unable to retreive sortie"}
+      {isLoaded &&
+        !error &&
+        sortieInfo.variants.length === 0 &&
+        "No active sortie"}
       {isLoaded &&
         !error &&
         sortieInfo.variants.length > 0 &&
         sortieInfo.variants
           .sort((a, b) => (a.expiry < b.expiry ? 1 : -1))
-          .map((mission, i) => {
-
-            return (
-              <Box>
-                <Stack
-                  key={i}
-                  spacing={.5}
-                  width="100%"
+          .map((mission, i) => (
+            <Box key={i}>
+              <Stack spacing={0.5} width="100%">
+                {i !== 0 && <Divider sx={{ my: 2 }} />}
+                <Typography fontWeight="500">{mission.node}</Typography>
+                <Typography fontSize=".875rem">
+                  Mission: {mission.missionType}
+                </Typography>
+                <Typography fontSize=".875rem">
+                  Conditions: {mission.modifier}
+                </Typography>
+                <Typography
+                  sx={{ color: "text.secondary", fontSize: ".875rem" }}
                 >
-                  {i !== 0 && <Divider sx={{ my: 2 }} />}
-                  <Typography fontWeight="500">
-                    {mission.node}
-                  </Typography>
-                  <Typography fontSize=".875rem">
-                    Mission: {mission.missionType}
-                  </Typography>
-                  <Typography fontSize=".875rem">
-                    Conditions: {mission.modifier}
-                  </Typography>
-                  <Typography sx={{ color: "text.secondary", fontSize: ".875rem" }}>
-                    {mission.modifierDescription}
-                  </Typography>
-                </Stack>
-              </Box>
-            )
-          })}
+                  {mission.modifierDescription}
+                </Typography>
+              </Stack>
+            </Box>
+          ))}
     </Card>
   )
 }

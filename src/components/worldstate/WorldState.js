@@ -10,6 +10,7 @@ import Invasions from './Invasions'
 import Arbitration from "./Arbitration"
 import Nightwave from "./Nightwave"
 import Sortie from "./Sortie"
+import ArchonHunt from "./ArchonHunt"
 
 const WorldState = ({ elevation = 1 }) => {
   return (
@@ -33,6 +34,7 @@ const WorldState = ({ elevation = 1 }) => {
           <Stack spacing={2}>
             <Alerts elevation={elevation} />
             <Arbitration elevation={elevation} />
+            <ArchonHunt elevation={elevation} />
             <Invasions elevation={elevation} />
           </Stack>
         </Grid>
