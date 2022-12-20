@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useReducer, useState } from "react"
 
 import {
   Autocomplete,
@@ -29,36 +29,37 @@ import { ItemsContext } from "../../contexts/ItemsContext"
 
 const ItemForm = ({ item = {}, handleCloseModal }) => {
   const { startSetItem } = useContext(ItemsContext)
-  const [values, setValues] = useState({
+
+  const initialState = {
     id: item?.id || null,
     name: item?.name || "",
     category: item?.category || "",
     slot: item?.slot || "",
     type: item?.type || "",
     prime: item?.prime === true || item?.prime === false ? item?.prime : false,
-    vaulted: item?.vaulted === true || item?.vaulted === false ? item?.vaulted : false,
+    vaulted:
+      item?.vaulted === true || item?.vaulted === false ? item?.vaulted : false,
     link: item?.link || "",
     mr: item?.mr ? parseInt(item.mr) : 0,
     mastery: item?.mastery ? parseInt(item.mastery) : 3000,
     source: item?.source || "",
+  }
+  const reducer = (state, values) => ({
+    ...state,
+    ...values,
   })
+  const [values, updateValues] = useReducer(reducer, initialState)
+
   const [sourceValue, setSourceValue] = useState({ value: item?.source || "" })
   const [sourceInputValue, setSourceInputValue] = useState(item?.source || "")
 
   useEffect(() => {
-    setValues((prevState) => ({
-      ...prevState,
-      link: "https://warframe.fandom.com/wiki/" + values.name.replace(" ", "_"),
-    }))
+    if (values.name) {
+      updateValues({
+        link: "https://warframe.fandom.com/wiki/" + values.name.replace(" ", "_"),
+      })
+    }
   }, [values.name])
-
-  const onValueChange = (prop) => (e) => {
-    setValues((prevState) => ({ ...prevState, [prop]: e.target.value }))
-  }
-
-  const onCheckboxChange = (prop) => (e) => {
-    setValues((prevState) => ({ ...prevState, [prop]: e.target.checked }))
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -78,7 +79,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
           <TextField
             fullWidth
             label="Item Name"
-            onChange={onValueChange("name")}
+            onChange={(e) => updateValues({ name: e.target.value })}
             size="small"
             value={values.name}
           />
@@ -90,7 +91,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
               id="category-select"
               label="Category"
               labelId="category-select-label"
-              onChange={onValueChange("category")}
+              onChange={(e) => updateValues({ category: e.target.value })}
               size="small"
               value={values.category}
             >
@@ -117,7 +118,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
               id="slot-select"
               label="Slot"
               labelId="slot-select-label"
-              onChange={onValueChange("slot")}
+              onChange={(e) => updateValues({ slot: e.target.value })}
               size="small"
               value={values.slot}
             >
@@ -144,7 +145,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
               id="type-select"
               label="Type"
               labelId="type-select-label"
-              onChange={onValueChange("type")}
+              onChange={(e) => updateValues({ type: e.target.value })}
               size="small"
               value={values.type}
             >
@@ -166,7 +167,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
             control={
               <Checkbox
                 checked={values.prime === true}
-                onChange={onCheckboxChange("prime")}
+                onChange={(e) => updateValues({ prime: e.target.checked })}
               />
             }
             label="Prime"
@@ -177,7 +178,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
             control={
               <Checkbox
                 checked={values.vaulted === true}
-                onChange={onCheckboxChange("vaulted")}
+                onChange={(e) => updateValues({ vaulted: e.target.checked })}
               />
             }
             label="Vaulted"
@@ -187,7 +188,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
           <TextField
             fullWidth
             label="Wiki Link"
-            onChange={onValueChange("link")}
+            onChange={(e) => updateValues({ link: e.target.value })}
             size="small"
             value={values.link}
           />
@@ -208,7 +209,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
               id="mr-select"
               label="MR"
               labelId="type-mr-label"
-              onChange={onValueChange("mr")}
+              onChange={(e) => updateValues({ mr: e.target.value })}
               size="small"
               value={values.mr}
             >
@@ -227,7 +228,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
               id="mastery-select"
               label="Mastery"
               labelId="type-mastery-label"
-              onChange={onValueChange("mastery")}
+              onChange={(e) => updateValues({ mastery: e.target.value })}
               size="small"
               value={values.mastery}
             >
