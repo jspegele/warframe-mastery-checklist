@@ -11,6 +11,7 @@ import Arbitration from "./Arbitration"
 import Nightwave from "./Nightwave"
 import Sortie from "./Sortie"
 import ArchonHunt from "./ArchonHunt"
+import Events from "./Events"
 
 const WorldState = ({ elevation = 1 }) => {
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'))
@@ -24,6 +25,7 @@ const WorldState = ({ elevation = 1 }) => {
         <Stack spacing={2}>
           <Nightwave elevation={elevation} />
           <Alerts elevation={elevation} />
+          <Events elevation={elevation} />
           <Arbitration elevation={elevation} />
           <Sortie elevation={elevation} />
           <ArchonHunt elevation={elevation} />
@@ -40,7 +42,7 @@ const WorldState = ({ elevation = 1 }) => {
           <Grid item xs={12} sm={6}>
             <Stack spacing={2}>
               <Alerts elevation={elevation} />
-              <Arbitration elevation={elevation} />
+              <Events elevation={elevation} />
               <DailyReset elevation={elevation} />
               <WorldCycles elevation={elevation} />
               <News elevation={elevation} />
@@ -48,6 +50,7 @@ const WorldState = ({ elevation = 1 }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Stack spacing={2}>
+              <Arbitration elevation={elevation} />
               <Sortie elevation={elevation} />
               <ArchonHunt elevation={elevation} />
               <Invasions elevation={elevation} />
