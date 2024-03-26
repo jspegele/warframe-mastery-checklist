@@ -108,10 +108,10 @@ const Invasions = ({ elevation = 1 }) => {
                 </Box>
                 <Stack direction="row" justifyContent="space-between">
                   <Typography fontSize=".75rem">
-                    {invasion.attackerReward.asString}
+                    {invasion.attacker?.reward?.asString}
                   </Typography>
                   <Typography fontSize=".75rem">
-                    {invasion.defenderReward.asString}
+                    {invasion.defender?.reward?.asString}
                   </Typography>
                 </Stack>
               </Grid>

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react"
+import React, { useEffect, useState, createContext } from "react"
 import { getAuth, signOut } from "firebase/auth"
 
 export const AuthContext = createContext()
@@ -11,7 +11,9 @@ export const AuthProvider = (props) => {
   const [authState, setAuthState] = useState(initialState)
   const auth = getAuth()
 
-  const clearAuthState = () => setAuthState(initialState)
+  useEffect(() => {
+    setAuthState(props.value)
+  }, [props.value])
 
   const handleSignOut = () => {
     signOut(auth)
@@ -23,8 +25,9 @@ export const AuthProvider = (props) => {
       })
   }
 
+  const clearAuthState = () => setAuthState(initialState)
   const selectUser = () => authState
-  const selectUid = () => authState.uid
+  const selectUid = () => authState?.uid ? authState.uid : null
 
   return (
     <AuthContext.Provider

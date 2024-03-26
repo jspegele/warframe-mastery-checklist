@@ -3,16 +3,15 @@ import ReactDOM from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
 import { CssBaseline } from "@mui/material"
 
-import CustomizedTheme from "./app/CustomizedTheme"
-import AuthProvider from "./contexts/AuthContext"
 import ItemsProvider from "./contexts/ItemsContext"
 import SourcesProvider from "./contexts/SourcesContext"
 import FiltersProvider from "./contexts/FiltersContext"
 import ChecklistProvider from "./contexts/ChecklistContext"
+import CustomizedTheme from "./app/CustomizedTheme"
 
-import App from "./App"
 import "./app/firebase"
 import "./index.css"
+import AuthCheck from "./AuthCheck"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
@@ -20,17 +19,15 @@ root.render(
     <CustomizedTheme>
       <CssBaseline />
       <BrowserRouter>
-        <AuthProvider>
-          <ItemsProvider>
-            <SourcesProvider>
-              <FiltersProvider>
-                <ChecklistProvider>
-                  <App />
-                </ChecklistProvider>
-              </FiltersProvider>
-            </SourcesProvider>
-          </ItemsProvider>
-        </AuthProvider>
+        <ItemsProvider>
+          <SourcesProvider>
+            <FiltersProvider>
+              <ChecklistProvider>
+                <AuthCheck />
+              </ChecklistProvider>
+            </FiltersProvider>
+          </SourcesProvider>
+        </ItemsProvider>
       </BrowserRouter>
     </CustomizedTheme>
   </React.StrictMode>
