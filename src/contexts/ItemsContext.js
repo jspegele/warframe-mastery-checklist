@@ -1,45 +1,19 @@
 import React, { useState, useEffect, createContext, useCallback } from "react"
-import { getDatabase, ref, get, set, push } from "firebase/database"
+import { getDatabase, ref, set, push, get } from "firebase/database"
 import { DateTime } from "luxon"
 import { useLocalStorage } from "../hooks/useLocalStorage"
+import { useDatabase } from "../hooks/useDatabase"
 
 export const ItemsContext = createContext()
 
 const initialState = []
 
-const loadItemsFromDatabase = () => {
-  const database = getDatabase()
-  return new Promise((resolve, reject) => {
-    get(ref(database, "items/"))
-      .then((snap) => {
-        const dataArray = []
-        if (snap.exists()) {
-          for (const [key, value] of Object.entries(snap.val())) {
-            dataArray.push({ id: key, ...value })
-          }
-        }
-        const sortedDataArray = dataArray.sort((a, b) =>
-          a.name > b.name ? 1 : -1
-        )
-        resolve(sortedDataArray)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 export const ItemsProvider = (props) => {
   const database = getDatabase()
+  const { loadItemsFromDatabase } = useDatabase()
   const [itemsState, setItemsState] = useState(initialState)
-  const [localItems, setLocalItems] = useLocalStorage(
-    "checklistItems",
-    initialState
-  )
-  const [localVersion, setLocalVersion] = useLocalStorage(
-    "checklistItemsVersion",
-    null
-  )
+  const [localItems, setLocalItems] = useLocalStorage("checklistItems", initialState)
+  const [localVersion, setLocalVersion] = useLocalStorage("checklistItemsVersion", null)
 
   const clearItemsState = () => setItemsState(initialState)
 
@@ -59,7 +33,7 @@ export const ItemsProvider = (props) => {
     } catch (error) {
       console.error("Error setting items", error)
     }
-  }, [database, localItems, localVersion, setLocalItems, setLocalVersion])
+  }, [database, localItems, localVersion, setLocalItems, setLocalVersion, loadItemsFromDatabase])
 
   useEffect(() => {
     startSetItems()
