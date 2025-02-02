@@ -7,6 +7,7 @@ import ItemsProvider from "./contexts/ItemsContext"
 import SourcesProvider from "./contexts/SourcesContext"
 import FiltersProvider from "./contexts/FiltersContext"
 import ChecklistProvider from "./contexts/ChecklistContext"
+import SystemAlertProvider from "./contexts/SystemAlertContext"
 import CustomizedTheme from "./app/CustomizedTheme"
 
 import "./app/firebase"
@@ -23,7 +24,9 @@ root.render(
           <SourcesProvider>
             <FiltersProvider>
               <ChecklistProvider>
-                <AuthCheck />
+                <SystemAlertProvider>
+                  <AuthCheck />
+                </SystemAlertProvider>
               </ChecklistProvider>
             </FiltersProvider>
           </SourcesProvider>
