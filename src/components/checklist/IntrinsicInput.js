@@ -22,7 +22,6 @@ const IntrinsicInput = ({ intrinsic }) => {
 
   const onValueChange = (e) => {
     const value = e.target.value
-    console.log(value)
     if (value >= 0 && value <= 10) {
       setValue(parseInt(value))
       startSetIntrinsic(intrinsic, parseInt(value))
