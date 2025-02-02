@@ -33,8 +33,8 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
   const initialState = {
     id: item?.id || null,
     name: item?.name || "",
-    category: item?.category || "Weapon",
-    slot: item?.slot || "Secondary",
+    category: item?.category || "",
+    slot: item?.slot || "",
     type: item?.type || "",
     prime: item?.prime === true || item?.prime === false ? item?.prime : false,
     vaulted:
