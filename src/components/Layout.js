@@ -1,20 +1,16 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Outlet } from "react-router-dom"
-import { Alert, Box, Container } from "@mui/material"
+import { Box, Container } from "@mui/material"
 
-import { SystemAlertContext } from "../contexts/SystemAlertContext"
 import Header from "./Header"
 import Footer from "./Footer"
+import SystemAlert from "./SystemAlert"
 
 const Layout = () => {
-  const { selectSystemAlert } = useContext(SystemAlertContext)
-  const alert = selectSystemAlert()
 
   return (
     <Box display="flex" flexDirection="column" minHeight="100vh">
-      {alert?.message && (
-        <Alert severity={alert.severity || "info"}>{alert.message}</Alert>
-      )}
+      <SystemAlert />
       <Container
         maxWidth="lg"
         sx={{
