@@ -1,20 +1,23 @@
 import React, { useContext } from "react"
 
-import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material"
+import { Checkbox, Link, TableBody, TableCell, TableRow } from "@mui/material"
 
 import { ChecklistContext } from "../../contexts/ChecklistContext"
 import ItemMasterySelector from "./ItemMasterySelector"
 
 const ChecklistTableBody = ({ items }) => {
-  const { selectChecklist, startSetOwnedList, startSetMasteredList } = useContext(ChecklistContext)
+  const { selectChecklist, startSetOwnedList, startSetMasteredList } =
+    useContext(ChecklistContext)
   const checklist = selectChecklist()
 
   const isOwned = (itemId) => checklist.owned.includes(itemId)
   const isMastered = (itemId) => checklist.mastered.includes(itemId)
 
-  const handleOwnedCheck = (itemId) => startSetOwnedList(itemId, !isOwned(itemId))
+  const handleOwnedCheck = (itemId) =>
+    startSetOwnedList(itemId, !isOwned(itemId))
 
-  const handleMasteredCheck = (itemId) => startSetMasteredList(itemId, !isMastered(itemId))
+  const handleMasteredCheck = (itemId) =>
+    startSetMasteredList(itemId, !isMastered(itemId))
 
   return (
     <TableBody>
@@ -28,7 +31,19 @@ const ChecklistTableBody = ({ items }) => {
           <TableCell>{item.slot}</TableCell>
           <TableCell>{item.type}</TableCell>
           <TableCell align="right">{item.mr}</TableCell>
-          <TableCell>{item.source}</TableCell>
+          <TableCell>
+            {item.source}{" "}
+            {item.vaulted && (
+              <Link
+                href="https://warframe.fandom.com/wiki/Prime_Vault"
+                target="_blank"
+                rel="noreferrer"
+                sx={{ textDecoration: "none" }}
+              >
+                (v)
+              </Link>
+            )}
+          </TableCell>
           <TableCell align="center">
             <Checkbox
               color="primary"
@@ -55,7 +70,9 @@ const ChecklistTableBody = ({ items }) => {
                     : 30
                 }
               />
-            ) : 30}
+            ) : (
+              30
+            )}
           </TableCell>
         </TableRow>
       ))}
