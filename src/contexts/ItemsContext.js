@@ -21,14 +21,16 @@ export const ItemsProvider = (props) => {
     try {
       const serverVersionSnap = await get(ref(database, "itemsVersion"))
       const serverVersion = serverVersionSnap.val()
-      console.log(localVersion, serverVersion)
+
       if (localVersion == null || localVersion !== serverVersion) {
         const data = await loadItemsFromDatabase()
         setItemsState(data)
         setLocalItems(data)
         setLocalVersion(serverVersion)
+        console.log('retrieved items from db')
       } else {
         setItemsState(localItems)
+        console.log('retrieved items from local storage')
       }
     } catch (error) {
       console.error("Error setting items", error)
