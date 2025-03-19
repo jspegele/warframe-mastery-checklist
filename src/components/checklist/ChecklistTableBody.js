@@ -35,7 +35,7 @@ const ChecklistTableBody = ({ items }) => {
             {item.source}{" "}
             {item.vaulted && (
               <Link
-                href="https://warframe.fandom.com/wiki/Prime_Vault"
+                href="https://wiki.warframe.com/w/Prime_Vault"
                 target="_blank"
                 rel="noreferrer"
                 sx={{ textDecoration: "none" }}

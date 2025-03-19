@@ -56,7 +56,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
   useEffect(() => {
     if (values.name) {
       updateValues({
-        link: "https://warframe.fandom.com/wiki/" + values.name.replace(" ", "_"),
+        link: "https://wiki.warframe.com/w/" + values.name.replace(" ", "_"),
       })
     }
   }, [values.name])
@@ -194,7 +194,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
           />
           <Typography fontSize=".875rem" pt={0.5}>
             Validate Link:{" "}
-            {values.link !== "https://warframe.fandom.com/wiki/" &&
+            {values.link !== "https://wiki.warframe.com/w/" &&
               values.link !== "" && (
                 <a href={values.link} target="_blank" rel="noopener noreferrer">
                   {values.link}
