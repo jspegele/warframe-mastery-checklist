@@ -21,8 +21,8 @@ export const ItemsProvider = (props) => {
     try {
       const serverVersionSnap = await get(ref(database, "itemsVersion"))
       const serverVersion = serverVersionSnap.val()
-
-      if (localVersion !== serverVersion) {
+      console.log(localVersion, serverVersion)
+      if (localVersion == null || localVersion !== serverVersion) {
         const data = await loadItemsFromDatabase()
         setItemsState(data)
         setLocalItems(data)

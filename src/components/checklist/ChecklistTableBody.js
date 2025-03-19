@@ -23,64 +23,61 @@ const ChecklistTableBody = ({ items }) => {
 
   return (
     <TableBody>
-      {items.map((item) => {
-        console.log(item)
-        return (
-          <TableRow hover tabIndex={-1} key={item.id}>
-            <TableCell component="th" scope="row">
-              <a href={wikiBase + item.wiki_slug} target="_blank" rel="noreferrer">
-                {item.name}
-              </a>
-            </TableCell>
-            <TableCell>{item.slot}</TableCell>
-            <TableCell>{item.type}</TableCell>
-            <TableCell align="right">{item.mr}</TableCell>
-            <TableCell>
-              {item.source}{" "}
-              {item.vaulted && (
-                <Link
-                  href={`${wikiBase}Prime_Vault`}
-                  target="_blank"
-                  rel="noreferrer"
-                  sx={{ textDecoration: "none" }}
-                >
-                  (v)
-                </Link>
-              )}
-            </TableCell>
-            <TableCell align="center">
-              <Checkbox
-                color="primary"
-                checked={isOwned(item.id)}
-                onChange={() => handleOwnedCheck(item.id)}
-                size="small"
+      {items.map((item) => (
+        <TableRow hover tabIndex={-1} key={item.id}>
+          <TableCell component="th" scope="row">
+            <a href={wikiBase + item.wiki_slug} target="_blank" rel="noreferrer">
+              {item.name}
+            </a>
+          </TableCell>
+          <TableCell>{item.slot}</TableCell>
+          <TableCell>{item.type}</TableCell>
+          <TableCell align="right">{item.mr}</TableCell>
+          <TableCell>
+            {item.source}{" "}
+            {item.vaulted && (
+              <Link
+                href={`${wikiBase}Prime_Vault`}
+                target="_blank"
+                rel="noreferrer"
+                sx={{ textDecoration: "none" }}
+              >
+                (v)
+              </Link>
+            )}
+          </TableCell>
+          <TableCell align="center">
+            <Checkbox
+              color="primary"
+              checked={isOwned(item.id)}
+              onChange={() => handleOwnedCheck(item.id)}
+              size="small"
+            />
+          </TableCell>
+          <TableCell align="center">
+            <Checkbox
+              color="primary"
+              checked={isMastered(item.id)}
+              onChange={() => handleMasteredCheck(item.id)}
+              size="small"
+            />
+          </TableCell>
+          <TableCell align="center">
+            {item.maxLevel > 30 ? (
+              <ItemMasterySelector
+                itemId={item.id}
+                itemLevel={
+                  checklist.levels.hasOwnProperty(item.id)
+                    ? checklist.levels[item.id]
+                    : 30
+                }
               />
-            </TableCell>
-            <TableCell align="center">
-              <Checkbox
-                color="primary"
-                checked={isMastered(item.id)}
-                onChange={() => handleMasteredCheck(item.id)}
-                size="small"
-              />
-            </TableCell>
-            <TableCell align="center">
-              {item.maxLevel > 30 ? (
-                <ItemMasterySelector
-                  itemId={item.id}
-                  itemLevel={
-                    checklist.levels.hasOwnProperty(item.id)
-                      ? checklist.levels[item.id]
-                      : 30
-                  }
-                />
-              ) : (
-                30
-              )}
-            </TableCell>
-          </TableRow>
-        )
-      })}
+            ) : (
+              30
+            )}
+          </TableCell>
+        </TableRow>
+      ))}
     </TableBody>
   )
 }
