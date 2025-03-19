@@ -5,6 +5,8 @@ import { Checkbox, Link, TableBody, TableCell, TableRow } from "@mui/material"
 import { ChecklistContext } from "../../contexts/ChecklistContext"
 import ItemMasterySelector from "./ItemMasterySelector"
 
+const wikiBase = "https://wiki.warframe.com/w/"
+
 const ChecklistTableBody = ({ items }) => {
   const { selectChecklist, startSetOwnedList, startSetMasteredList } =
     useContext(ChecklistContext)
@@ -24,7 +26,7 @@ const ChecklistTableBody = ({ items }) => {
       {items.map((item) => (
         <TableRow hover tabIndex={-1} key={item.id}>
           <TableCell component="th" scope="row">
-            <a href={item.link} target="_blank" rel="noreferrer">
+            <a href={wikiBase + item.wiki_slug} target="_blank" rel="noreferrer">
               {item.name}
             </a>
           </TableCell>
@@ -35,7 +37,7 @@ const ChecklistTableBody = ({ items }) => {
             {item.source}{" "}
             {item.vaulted && (
               <Link
-                href="https://wiki.warframe.com/w/Prime_Vault"
+                href={`${wikiBase}Prime_Vault`}
                 target="_blank"
                 rel="noreferrer"
                 sx={{ textDecoration: "none" }}

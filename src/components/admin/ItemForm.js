@@ -27,6 +27,8 @@ import {
 
 import { ItemsContext } from "../../contexts/ItemsContext"
 
+const wikiBase = "https://wiki.warframe.com/w/"
+
 const ItemForm = ({ item = {}, handleCloseModal }) => {
   const { startSetItem } = useContext(ItemsContext)
 
@@ -39,7 +41,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
     prime: item?.prime === true || item?.prime === false ? item?.prime : false,
     vaulted:
       item?.vaulted === true || item?.vaulted === false ? item?.vaulted : false,
-    link: item?.link || "",
+    wiki_slug: item?.wiki_slug || "",
     mr: item?.mr ? parseInt(item.mr) : 0,
     mastery: item?.mastery ? parseInt(item.mastery) : 3000,
     source: item?.source || "",
@@ -56,7 +58,7 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
   useEffect(() => {
     if (values.name) {
       updateValues({
-        link: "https://wiki.warframe.com/w/" + values.name.replace(" ", "_"),
+        wiki_slug: values.name.replace(" ", "_"),
       })
     }
   }, [values.name])
@@ -187,17 +189,17 @@ const ItemForm = ({ item = {}, handleCloseModal }) => {
         <Grid item xs={12} md={8}>
           <TextField
             fullWidth
-            label="Wiki Link"
-            onChange={(e) => updateValues({ link: e.target.value })}
+            label="Wiki Slug"
+            onChange={(e) => updateValues({ wiki_slug: e.target.value })}
             size="small"
-            value={values.link}
+            value={values.wiki_slug}
           />
           <Typography fontSize=".875rem" pt={0.5}>
-            Validate Link:{" "}
-            {values.link !== "https://wiki.warframe.com/w/" &&
-              values.link !== "" && (
-                <a href={values.link} target="_blank" rel="noopener noreferrer">
-                  {values.link}
+            Validate Slug:{" "}
+            {values.wiki_slug !== wikiBase &&
+              values.wiki_slug !== "" && (
+                <a href={wikiBase + values.wiki_slug} target="_blank" rel="noopener noreferrer">
+                  {`${wikiBase}${values.wiki_slug}`}
                 </a>
               )}
           </Typography>
