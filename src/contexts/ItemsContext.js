@@ -24,6 +24,7 @@ export const ItemsProvider = (props) => {
 
       if (localVersion == null || localVersion !== serverVersion) {
         const data = await loadItemsFromDatabase()
+        console.log(data)
         setItemsState(data)
         setLocalItems(data)
         setLocalVersion(serverVersion)

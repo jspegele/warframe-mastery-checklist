@@ -28,7 +28,7 @@ const ChecklistFilterPanel = () => {
   const onTextFilterChange = (e) => setValue("text", e.target.value)
 
   const onMaxMrFilterChange = (e) => {
-    if (e.target.value >= 0 && e.target.value <= 16)
+    if (e.target.value >= 0 && e.target.value <= 17)
       setValue("maxMr", e.target.value)
   }
 
@@ -80,7 +80,7 @@ const ChecklistFilterPanel = () => {
         <Grid item xs={12} sm={3} md={2}>
           <TextField
             fullWidth
-            label="Max MR (0-16)"
+            label="Max MR (0-17)"
             onChange={onMaxMrFilterChange}
             size="small"
             type="number"
