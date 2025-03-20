@@ -32,7 +32,7 @@ const headCells = [
   {
     id: "mr",
     isSortable: true,
-    label: "MR",
+    label: "Req MR",
     align: "right",
   },
   {

@@ -80,7 +80,7 @@ const ChecklistFilterPanel = () => {
         <Grid item xs={12} sm={3} md={2}>
           <TextField
             fullWidth
-            label="Max MR (0-17)"
+            label="Max Required MR (0-17)"
             onChange={onMaxMrFilterChange}
             size="small"
             type="number"
