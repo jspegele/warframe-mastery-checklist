@@ -3,7 +3,6 @@ import React, { useContext } from "react"
 import { Box, Card, Grid, Stack, Typography } from "@mui/material"
 
 import { ItemsContext } from "../../contexts/ItemsContext"
-import SystemAlerts from "./SystemAlerts"
 
 const AppOverview = () => {
   const { selectItems } = useContext(ItemsContext)
@@ -11,7 +10,7 @@ const AppOverview = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row"}, gap: "1rem", width: "100%" }}>
-      <Box sx={{ width: { xs: "100%", md: "67%" } }}>
+      <Box sx={{ width: { xs: "100%" } }}>
         <Card sx={{ p: 2, height: "100%" }}>
           <Typography component="h3" fontWeight="500" pb={2}>
             Overview
@@ -131,9 +130,6 @@ const AppOverview = () => {
             </Grid>
           </Grid>
         </Card>
-      </Box>
-      <Box sx={{ width: { xs: "100%", md: "33%" } }}>
-        <SystemAlerts />
       </Box>
     </Box>
   )

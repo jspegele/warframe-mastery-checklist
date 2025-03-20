@@ -27,10 +27,8 @@ export const ItemsProvider = (props) => {
         setItemsState(data)
         setLocalItems(data)
         setLocalVersion(serverVersion)
-        console.log('retrieved items from db')
       } else {
         setItemsState(localItems)
-        console.log('retrieved items from local storage')
       }
     } catch (error) {
       console.error("Error setting items", error)

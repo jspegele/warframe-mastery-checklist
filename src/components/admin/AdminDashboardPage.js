@@ -4,6 +4,7 @@ import { Stack, Typography } from "@mui/material"
 
 import AppOverview from "./AppOverview"
 import AdminTabs from "./AdminTabs"
+import SystemInfo from "./SystemInfo"
 
 const AdminDashboardPage = () => {
   return (
@@ -15,6 +16,7 @@ const AdminDashboardPage = () => {
         Admin Dashboard
       </Typography>
       <AppOverview />
+      <SystemInfo />
       <AdminTabs />
     </Stack>
   )
