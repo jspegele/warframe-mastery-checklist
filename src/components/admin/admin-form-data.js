@@ -34,6 +34,7 @@ export const typeValues = [
   {key: 'dual-nikanas', text: 'Dual Nikanas', value: 'Dual Nikanas'},
   {key: 'dual-pistols', text: 'Dual Pistols', value: 'Dual Pistols'},
   {key: 'dual-shotguns', text: 'Dual Shotguns', value: 'Dual Shotguns'},
+  {key: 'dual-sickles', text: 'Dual Sickles', value: 'Dual Sickles'},
   {key: 'dual-swords', text: 'Dual Swords', value: 'Dual Swords'},
   {key: 'fist', text: 'Fist', value: 'Fist'},
   {key: 'glaive', text: 'Glaive', value: 'Glaive'},
@@ -59,6 +60,7 @@ export const typeValues = [
   {key: 'scythe', text: 'Scythe', value: 'Scythe'},
   {key: 'shotgun', text: 'Shotgun', value: 'Shotgun'},
   {key: 'shotgun-sidearm', text: 'Shotgun Sidearm', value: 'Shotgun Sidearm'},
+  {key: 'slug-launcher', text: 'Slug Launcher', value: 'Slug Launcher'},
   {key: 'sniper-rifle', text: 'Sniper Rifle', value: 'Sniper Rifle'},
   {key: 'sparring', text: 'Sparring', value: 'Sparring'},
   {key: 'speargun', text: 'Speargun', value: 'Speargun'},
@@ -96,7 +98,8 @@ export const mrValues = [
   {key: '13', text: 'MR13', value: 13},
   {key: '14', text: 'MR14', value: 14},
   {key: '15', text: 'MR15', value: 15},
-  {key: '16', text: 'MR16', value: 16}
+  {key: '16', text: 'MR16', value: 16},
+  {key: '17', text: 'MR17', value: 17}
 ]
 
 export const masteryValues = [
@@ -130,7 +133,9 @@ export const sourceValues = [
   {key: 'perrin', text: 'Syndicate - Perrin Sequence', value: 'Syndicate - Perrin Sequence'},
   {key: 'veil', text: 'Syndicate - Red Veil', value: 'Syndicate - Red Veil'},
   {key: 'solaris-united', text: 'Syndicate - Solaris United', value: 'Syndicate - Solaris United'},
+  {key: 'technocyte-coda', text: 'Technocyte Coda', value: 'Technocyte Coda'},
   {key: 'meridian', text: 'Syndicate - Steel Meridian', value: 'Syndicate - Steel Meridian'},
+  {key: 'hex-minerva', text: 'Syndicate - The Hex (Minerva)', value: 'Syndicate - The Hex (Minerva)'},
   {key: 'quills', text: 'Syndicate - The Quills', value: 'Syndicate - The Quills'},
   {key: 'ventkids', text: 'Syndicate - Ventkids', value: 'Syndicate - Ventkids'},
   {key: 'vox-solaris', text: 'Syndicate - Vox Solaris', value: 'Syndicate - Vox Solaris'}
