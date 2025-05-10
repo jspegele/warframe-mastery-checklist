@@ -11,7 +11,7 @@ import {
 
 import { ChecklistContext } from "../../contexts/ChecklistContext"
 
-const maxStarChartMastery = 27501
+const maxStarChartMastery = 27519
 
 const StarChartMastery = () => {
   const { startSetStarChartMastery, startSetSteelPathMastery, selectChecklistMastery } = useContext(ChecklistContext)
