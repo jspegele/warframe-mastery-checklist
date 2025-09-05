@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
+import { DateTime } from "luxon"
 
-import { Card, Chip, Grid, Skeleton, Tooltip, Typography } from "@mui/material"
+import { Card, Grid, Skeleton, Typography } from "@mui/material"
 
 const News = ({ elevation = 1 }) => {
   const [error, setError] = useState(null)
@@ -76,26 +77,21 @@ const News = ({ elevation = 1 }) => {
           newsList
             .slice(0, 10)
             .sort((a, b) => (a.date < b.date ? 1 : -1))
-            .map((item) => (
-              <React.Fragment key={item.id}>
-                {item.eta.split(" ")[0] === "in" ? (
-                  <Grid item xs={3} md={2}>
-                    <Tooltip title={`ends ${item.eta}`}>
-                      <Chip color="success" label="Live" size="small" />
-                    </Tooltip>
+            .map((item) => {
+              const datePosted = DateTime.fromISO(item.date || DateTime.now().setZone("GMT"))
+              const dateDiff = -Math.round(datePosted.diffNow('days').days)
+
+              return (
+                <React.Fragment key={item.id}>
+                  <Grid item xs={9} md={10}>
+                    <Typography component="span" color="textSecondary">[{dateDiff > 90 ? ">90" : dateDiff}d]{" "}</Typography>
+                    <a href={item.link} target="_blank" rel="noreferrer">
+                      {item.message}
+                    </a>
                   </Grid>
-                ) : (
-                  <Grid item xs={3} md={2}>
-                    <span>{item.eta.split(" ")[0]} ago</span>
-                  </Grid>
-                )}
-                <Grid item xs={9} md={10}>
-                  <a href={item.link} target="_blank" rel="noreferrer">
-                    {item.message}
-                  </a>
-                </Grid>
-              </React.Fragment>
-            ))}
+                </React.Fragment>
+              )
+            })}
       </Grid>
     </Card>
   )
