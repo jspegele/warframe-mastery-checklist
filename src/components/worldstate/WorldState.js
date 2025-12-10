@@ -25,14 +25,14 @@ const WorldState = ({ elevation = 1 }) => {
         <Stack spacing={2}>
           <Nightwave elevation={elevation} />
           <Alerts elevation={elevation} />
-          <Events elevation={elevation} />
+          {/* <Events elevation={elevation} /> */}
           <Arbitration elevation={elevation} />
-          <Sortie elevation={elevation} />
+          {/* <Sortie elevation={elevation} />
           <ArchonHunt elevation={elevation} />
           <Invasions elevation={elevation} />
           <DailyReset elevation={elevation} />
           <WorldCycles elevation={elevation} />
-          <News elevation={elevation} />
+          <News elevation={elevation} /> */}
         </Stack>
       ) : (
         <Grid container spacing={2}>
@@ -42,18 +42,18 @@ const WorldState = ({ elevation = 1 }) => {
           <Grid item xs={12} sm={6}>
             <Stack spacing={2}>
               <Alerts elevation={elevation} />
-              <Events elevation={elevation} />
+              {/* <Events elevation={elevation} />
               <DailyReset elevation={elevation} />
               <WorldCycles elevation={elevation} />
-              <News elevation={elevation} />
+              <News elevation={elevation} /> */}
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Stack spacing={2}>
               <Arbitration elevation={elevation} />
-              <Sortie elevation={elevation} />
+              {/* <Sortie elevation={elevation} />
               <ArchonHunt elevation={elevation} />
-              <Invasions elevation={elevation} />
+              <Invasions elevation={elevation} /> */}
             </Stack>
           </Grid>
         </Grid>

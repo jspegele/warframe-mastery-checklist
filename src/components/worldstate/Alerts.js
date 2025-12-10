@@ -1,37 +1,41 @@
 import React, { useEffect, useState } from "react"
 import { DateTime } from "luxon"
-
 import { Box, Card, Grid, Skeleton, Stack, Typography } from "@mui/material"
-
 import Timer from "./Timer"
 
 const Alerts = ({ elevation = 1 }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [alertsList, setAlertsList] = useState(null)
+  const [alertsList, setAlertsList] = useState([])
 
   useEffect(() => {
-    let isSubscribed = true
+    const controller = new AbortController()
+    const { signal } = controller
 
-    fetch("https://api.warframestat.us/pc/alerts")
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (isSubscribed) {
-            setAlertsList(result)
-            setIsLoaded(true)
-          }
-        },
-        (error) => {
-          if (isSubscribed) {
-            setError(error)
-            setIsLoaded(true)
-          }
+    ;(async () => {
+      try {
+        const res = await fetch("https://api.warframestat.us/pc/alerts", { signal })
+        if (!res.ok) {
+          let detail = ""
+          try { detail = await res.text() } catch {}
+          throw new Error(`HTTP ${res.status} ${res.statusText}${detail ? ` — ${detail}` : ""}`)
         }
-      )
+        const data = await res.json()
+        setAlertsList(Array.isArray(data) ? data : [])
+        setError(null)
+      } catch (err) {
+        if (signal.aborted) return
+        setError(err instanceof Error ? err : new Error("Unknown error"))
+        setAlertsList([])
+      } finally {
+        if (!signal.aborted) setIsLoaded(true)
+      }
+    })()
 
-    return () => (isSubscribed = false)
+    return () => controller.abort()
   }, [])
+
+  const hasAlerts = alertsList.length > 0
 
   return (
     <Card elevation={elevation} sx={{ p: 2 }}>
@@ -41,45 +45,70 @@ const Alerts = ({ elevation = 1 }) => {
       <Grid container fontSize=".875rem" spacing={2}>
         {!isLoaded && (
           <Grid item xs={12}>
-            <Skeleton
-              variant="text"
-              sx={{ color: "grey.400", fontSize: "2rem", width: "100%" }}
-            />
+            <Skeleton variant="text" sx={{ color: "grey.400", fontSize: "2rem", width: "100%" }} />
           </Grid>
         )}
+
         {isLoaded && error && (
           <Grid item xs={12}>
-            Unable to retreive alerts
+            Unable to retrieve alerts
           </Grid>
         )}
-        {isLoaded && !error && alertsList.length === 0 && (
+
+        {isLoaded && !error && !hasAlerts && (
           <Grid item xs={12}>
             No active alerts
           </Grid>
         )}
-        {isLoaded &&
-          !error &&
-          alertsList.length > 0 &&
+
+        {isLoaded && !error && hasAlerts &&
           alertsList
-            .sort((a, b) => (a.expiry < b.expiry ? 1 : -1))
+            .slice()
+            .sort((a, b) => (a?.expiry < b?.expiry ? 1 : -1))
             .map((alert) => {
-              const expiry = DateTime.fromISO(alert.expiry)
-              const toExpiry = expiry.diff(DateTime.now().setZone("GMT"))
+              const expiryISO = alert?.expiry
+              const expiry = expiryISO ? DateTime.fromISO(expiryISO) : null
+              const toExpiry = expiry ? expiry.diff(DateTime.now().setZone("GMT")) : null
+
+              const rewardThumb = alert?.mission?.reward?.thumbnail
+              const rewardStr = alert?.mission?.reward?.asString
+              const node = alert?.mission?.node
+              const type = alert?.mission?.type
+              const faction = alert?.mission?.faction
+              const minLvl = alert?.mission?.minEnemyLevel
+              const maxLvl = alert?.mission?.maxEnemyLevel
 
               return (
-                <Stack key={alert.id} direction="row" mb={2} spacing={1} width="100%">
-                  {alert.mission.reward.thumbnail ? (
-                    <Box component="img"src={alert.mission.reward.thumbnail} alt={alert.mission.reward.itemString} sx={{ alignSelf: "center", width: "100px" }} />
+                <Stack key={alert?.id ?? `${expiryISO}-${node}`} direction="row" mb={2} spacing={1} width="100%">
+                  {rewardThumb ? (
+                    <Box
+                      component="img"
+                      src={rewardThumb}
+                      alt={rewardStr || "Alert reward"}
+                      sx={{ alignSelf: "center", width: "100px" }}
+                    />
                   ) : (
                     <Box width="100px" />
                   )}
-                  <Stack flexGrow="1">
-                    <Typography fontWeight="500">{alert.mission.node}</Typography>
-                    <Typography fontSize=".875rem">{alert.mission.type} - {alert.mission.faction}</Typography>
-                    <Typography fontSize=".875rem">Level: {alert.mission.minEnemyLevel} - {alert.mission.maxEnemyLevel}</Typography>
-                    <Typography fontSize=".875rem">Reward(s): {alert.mission.reward.asString}</Typography>
+
+                  <Stack flexGrow={1}>
+                    <Typography fontWeight="500">{node || "Unknown Node"}</Typography>
+                    <Typography fontSize=".875rem">
+                      {(type || "Unknown Type")} {faction ? ` - ${faction}` : ""}
+                    </Typography>
+                    {(minLvl != null || maxLvl != null) && (
+                      <Typography fontSize=".875rem">
+                        Level: {minLvl ?? "?"} - {maxLvl ?? "?"}
+                      </Typography>
+                    )}
+                    {rewardStr && (
+                      <Typography fontSize=".875rem">
+                        Reward(s): {rewardStr}
+                      </Typography>
+                    )}
                   </Stack>
-                  <Timer timeDiff={toExpiry} />
+
+                  {toExpiry && <Timer timeDiff={toExpiry} />}
                 </Stack>
               )
             })}

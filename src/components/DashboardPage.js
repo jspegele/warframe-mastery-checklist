@@ -98,9 +98,9 @@ const DashboardPage = () => {
           </Card>
         </Grid>
       </Grid>
-      {/* <Box mt={4}>
+      <Box mt={4}>
         <WorldState />
-      </Box> */}
+      </Box>
     </Box>
   )
 }

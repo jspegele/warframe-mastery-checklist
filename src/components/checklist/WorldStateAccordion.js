@@ -20,9 +20,9 @@ const WorldStateAccordion = () => (
     >
       <Typography>Game News and Worldstate</Typography>
     </AccordionSummary>
-    {/* <AccordionDetails>
+    <AccordionDetails>
       <WorldState elevation={2} />
-    </AccordionDetails> */}
+    </AccordionDetails>
   </Accordion>
 )
 

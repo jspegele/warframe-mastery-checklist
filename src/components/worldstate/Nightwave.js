@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-
 import {
   Box,
   Card,
@@ -10,42 +9,63 @@ import {
   Stack,
   Typography,
 } from "@mui/material"
-
 import reputationIcon from "../../images/reputation.png"
 
 const Nightwave = ({ elevation = 1 }) => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [challenges, setChallenges] = useState(null)
+  const [challenges, setChallenges] = useState([]) // default to []
 
   useEffect(() => {
-    let isSubscribed = true
+    const controller = new AbortController()
+    const { signal } = controller
 
-    fetch("https://api.warframestat.us/pc/nightwave")
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (isSubscribed) {
-            setChallenges(result.activeChallenges)
-            setIsLoaded(true)
+    ;(async () => {
+      try {
+        const res = await fetch("https://api.warframestat.us/pc/nightwave", {
+          signal,
+        })
+
+        if (!res.ok) {
+          let detail = ""
+          try {
+            detail = await res.text()
+          } catch {
+            /* ignore */
           }
-        },
-        (error) => {
-          if (isSubscribed) {
-            setError(error)
-            setIsLoaded(true)
-          }
+          throw new Error(
+            `HTTP ${res.status} ${res.statusText}${
+              detail ? ` — ${detail}` : ""
+            }`
+          )
         }
-      )
 
-    return () => (isSubscribed = false)
+        const data = await res.json()
+        // use empty array if field missing
+        setChallenges(
+          Array.isArray(data?.activeChallenges) ? data.activeChallenges : []
+        )
+        setError(null)
+      } catch (err) {
+        if (signal.aborted) return
+        setError(err instanceof Error ? err : new Error("Unknown error"))
+        setChallenges([]) // ensure it’s an array so rendering stays safe
+      } finally {
+        if (!signal.aborted) setIsLoaded(true)
+      }
+    })()
+
+    return () => controller.abort()
   }, [])
+
+  const hasChallenges = challenges.length > 0
 
   return (
     <Card elevation={elevation} sx={{ p: 2 }}>
       <Typography component="h3" fontWeight="500" pb={3}>
         Active Nightwave Challenges
       </Typography>
+
       <Grid container fontSize=".875rem" spacing={2}>
         {!isLoaded && (
           <Grid item xs={12}>
@@ -55,17 +75,20 @@ const Nightwave = ({ elevation = 1 }) => {
             />
           </Grid>
         )}
+
         {isLoaded && error && (
           <Grid item xs={12}>
-            Unable to retreive Nightwave challenges
+            Unable to retrieve Nightwave challenges
           </Grid>
         )}
-        {isLoaded && !error && challenges.length === 0 && (
+
+        {isLoaded && !error && !hasChallenges && (
           <Grid item xs={12}>
             No active Nightwave challenges
           </Grid>
         )}
-        {isLoaded && !error && challenges.length > 0 && (
+
+        {isLoaded && !error && hasChallenges && (
           <Grid
             container
             columns={30}
@@ -76,6 +99,7 @@ const Nightwave = ({ elevation = 1 }) => {
               <Grid item key={challenge.id} xs={30} sm={15} md={10} lg={6}>
                 <Paper elevation={elevation + 1} sx={{ height: "100%", p: 1 }}>
                   <Typography fontWeight="500">{challenge.title}</Typography>
+
                   <Stack
                     direction="row"
                     justifyContent="space-between"
@@ -92,11 +116,14 @@ const Nightwave = ({ elevation = 1 }) => {
                         {challenge.reputation}
                       </Typography>
                     </Stack>
+
                     <Typography fontSize=".875rem">
                       {challenge.isDaily ? "Daily" : "Weekly"}
                     </Typography>
                   </Stack>
+
                   <Divider sx={{ my: 1 }} />
+
                   <Typography fontSize=".875rem">{challenge.desc}</Typography>
                 </Paper>
               </Grid>
