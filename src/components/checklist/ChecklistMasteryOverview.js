@@ -43,7 +43,7 @@ const masteryRanks = [
   { rank: "L3", mastery: 2692500 },
   { rank: "L4", mastery: 2840000 },
   { rank: "L5", mastery: 2987500 },
-  { rank: "L6", mastery: 3315000 },
+  { rank: "L6", mastery: 3135000 },
   { rank: "L7", mastery: 3282500 },
   { rank: "L8", mastery: 3430000 },
   { rank: "L9", mastery: 3577500 },
