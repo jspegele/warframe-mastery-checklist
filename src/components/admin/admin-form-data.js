@@ -25,6 +25,7 @@ export const typeValues = [
   {key: 'amp', text: 'Amp', value: 'Amp'},
   {key: 'arch-gun', text: 'Arch-Gun', value: 'Arch-Gun'},
   {key: 'arm-cannon', text: 'Arm-Cannon', value: 'Arm-Cannon'},
+  {key: 'assault-saw', text: 'Assault Saw', value: 'Assault Saw'},
   {key: 'bayonet', text: 'Bayonet', value: 'Bayonet'},
   {key: 'blade-and-whip', text: 'Blade and Whip', value: 'Blade and Whip'},
   {key: 'bow', text: 'Bow', value: 'Bow'},
